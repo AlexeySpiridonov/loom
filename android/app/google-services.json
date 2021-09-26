@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810925929680",
+    "project_id": "loom-a39f5",
+    "storage_bucket": "loom-a39f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810925929680:android:5a9571b934cc4f0e8b1ad5",
+        "android_client_info": {
+          "package_name": "com.example.wifi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810925929680-kvlpugn85rultkmj78vt6bd18013hb4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnpBSDGBmQE9VTejzm-frCKWK6WEhiw58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810925929680-kvlpugn85rultkmj78vt6bd18013hb4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
