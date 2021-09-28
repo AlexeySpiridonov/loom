@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
-import 'package:wifi_app/bloc/nav/nav_bloc.dart';
-import 'package:wifi_app/screens_data.dart';
+import 'package:loom/bloc/nav/nav_bloc.dart';
+import 'package:loom/screens_data.dart';
 
 class StepsWidget extends StatelessWidget {
   const StepsWidget({Key? key}) : super(key: key);

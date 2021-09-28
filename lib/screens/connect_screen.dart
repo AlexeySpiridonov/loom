@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:wifi_app/bloc/nav/nav_bloc.dart';
-import 'package:wifi_app/widget/steps_widget.dart';
+import 'package:loom/bloc/nav/nav_bloc.dart';
+import 'package:loom/widget/steps_widget.dart';
 
 class ConnectScreen extends StatelessWidget {
   const ConnectScreen({Key? key}) : super(key: key);

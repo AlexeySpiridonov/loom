@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wifi_app/widget/steps_widget.dart';
+import 'package:loom/widget/steps_widget.dart';
 
 class NetworksScreen extends StatelessWidget {
   const NetworksScreen({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wifi_app/widget/steps_widget.dart';
+import 'package:loom/widget/steps_widget.dart';
 import '../bloc/wifi/wifi_bloc.dart';
 
 class MainScreen extends StatelessWidget {

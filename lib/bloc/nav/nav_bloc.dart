@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:wifi_app/screens_data.dart';
+import 'package:loom/screens_data.dart';
 
 part 'nav_event.dart';
 part 'nav_state.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:wifi_app/bloc/nav/nav_bloc.dart';
+import 'package:loom/bloc/nav/nav_bloc.dart';
 import '../widget/steps_widget.dart';
 
 class InfoScreen extends StatelessWidget {
