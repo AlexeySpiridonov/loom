@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/nav/nav_bloc.dart';
+import 'bloc/networks/networks_bloc.dart';
 import 'bloc/wifi/wifi_bloc.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,6 +13,7 @@ import 'screens/connect_screen.dart';
 import 'screens/networks_screen.dart';
 import 'screens/settings_network_screen.dart';
 import 'screens/wait_screen.dart';
+import 'services/http_api_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<NavBloc>(
           create: (BuildContext context) => NavBloc(),
+        ),
+        BlocProvider<NetworksBloc>(
+          create: (BuildContext context) =>
+              NetworksBloc(httpApiProvider: HttpApiProvider()),
         ),
       ],
       child: MaterialApp(

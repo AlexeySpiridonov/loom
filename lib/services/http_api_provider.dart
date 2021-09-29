@@ -27,8 +27,8 @@ class HttpApiProvider {
   }
 
   Future<List<NetworkModel>> apList() async {
-    var url = Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
-    var response = await http.get(url);
+    // var url = Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
+    // var response = await http.get(url);
 
     List<NetworkModel> neworksList =
         (json.decode(answers[2]) as List) // response.body

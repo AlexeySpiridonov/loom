@@ -8,15 +8,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class NetworksScreen extends StatelessWidget {
   const NetworksScreen({Key? key}) : super(key: key);
 
-  Widget _networks(List<NetworkModel> netList) {
+  Widget _networks(List<NetworkModel> netList, double width) {
     return Column(
       children: [
         for (int i = 0; i < netList.length; i++)
-          Container(
-            decoration: BoxDecoration(border: Border.all()),
-            child: Padding(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Container(
+              width: width / 2,
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(8.0),
-              child: Text(netList[i].wl_ss_ssid),
+              child: Text(
+                netList[i].wl_ss_ssid,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20),
+              ),
             ),
           )
       ],
@@ -32,12 +38,18 @@ class NetworksScreen extends StatelessWidget {
           children: [
             const StepsWidget(),
             const Spacer(),
-            Text(AppLocalizations.of(context)!.message4),
-            const SizedBox(height: 10),
+            Text(
+              AppLocalizations.of(context)!.message4,
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 20),
             BlocBuilder<NetworksBloc, NetworksState>(
               builder: (context, state) {
                 if (state is NetworksListState) {
-                  return _networks(state.netList);
+                  return _networks(
+                    state.netList,
+                    MediaQuery.of(context).size.width,
+                  );
                 }
                 // if (state is NetworksListState) {
                 return const Center(child: CircularProgressIndicator());
@@ -46,7 +58,8 @@ class NetworksScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextButton(
-              onPressed: () {},
+              onPressed: () =>
+                  context.read<NetworksBloc>().add(NetworksGetEvent()),
               child: Text(AppLocalizations.of(context)!.rescan),
             ),
             const Spacer(),
