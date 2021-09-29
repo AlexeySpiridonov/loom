@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
-import 'package:loom/bloc/nav/nav_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loom/widget/loom_button.dart';
 import 'package:loom/widget/steps_widget.dart';
+import '../bloc/wifi/wifi_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConnectScreen extends StatelessWidget {
   const ConnectScreen({Key? key}) : super(key: key);
@@ -11,51 +13,63 @@ class ConnectScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const StepsWidget(),
             const Spacer(),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                minimumSize: MaterialStateProperty.all(const Size(150, 2)),
-              ),
-              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
-              child: const Text(
-                "Подключиться к домашней сети  myHomeNet [>]",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextFormField(
+                initialValue: "",
+                onChanged: (newValue) => context
+                    .read<WifiBloc>()
+                    .add(WifiLoginChangeEvent(data: newValue)),
+                decoration: InputDecoration(
+                  labelText: "Network name",
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
             ),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                minimumSize: MaterialStateProperty.all(const Size(150, 2)),
-              ),
-              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
-              child: const Text(
-                "Подключиться к сети Loom: myHomeNet-R [>]",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextFormField(
+                initialValue: "",
+                onChanged: (newValue) => context
+                    .read<WifiBloc>()
+                    .add(WifiPasswordChangeEvent(data: newValue)),
+                decoration: InputDecoration(
+                  labelText: "Network password",
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
             ),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                minimumSize: MaterialStateProperty.all(const Size(150, 2)),
-              ),
-              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
-              child: const Text(
-                "[настроить другой Loom]",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+            const SizedBox(height: 10),
+            BlocBuilder<WifiBloc, WifiState>(
+              builder: (context, state) {
+                if (state is WifiConnectedState) return Text(state.result);
+                return const Text("nothing");
+              },
+            ),
+            const SizedBox(height: 10),
+            LoomButton(
+              onPressed: () {
+                context.read<WifiBloc>().add(WifiConnectEvent());
+              },
+              text: AppLocalizations.of(context)!.connect,
             ),
             const Spacer(),
           ],

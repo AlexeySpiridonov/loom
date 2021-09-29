@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loom/widget/loom_button.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 import 'package:loom/bloc/nav/nav_bloc.dart';
 import 'package:loom/widget/steps_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsNetworkScreen extends StatelessWidget {
   const SettingsNetworkScreen({Key? key}) : super(key: key);
@@ -15,41 +18,25 @@ class SettingsNetworkScreen extends StatelessWidget {
           children: [
             const StepsWidget(),
             const Spacer(),
-            const Text("Введите пароль от домашней сети myHomeNet"),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                minimumSize: MaterialStateProperty.all(const Size(150, 2)),
-              ),
-              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
-              child: const Text(
-                "Далее",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+            LoomButton(
+              onPressed: () {},
+              text: "test",
             ),
-            const Text("Сеть Loom будет называться:"),
+            Text(AppLocalizations.of(context)!.message5),
+            LoomButton(
+              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
+              text: AppLocalizations.of(context)!.next,
+            ),
+            Text(AppLocalizations.of(context)!.message6),
             TextFormField(
               initialValue: "myHomeNet-R",
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
               ),
             ),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                minimumSize: MaterialStateProperty.all(const Size(150, 2)),
-              ),
+            LoomButton(
               onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
-              child: const Text(
-                "Поменять",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+              text: AppLocalizations.of(context)!.change,
             ),
             const Spacer(),
           ],

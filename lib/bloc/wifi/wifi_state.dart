@@ -6,6 +6,6 @@ abstract class WifiState {}
 class WifiInitial extends WifiState {}
 
 class WifiConnectedState extends WifiState {
-  String result;
+  final String result;
   WifiConnectedState({required this.result});
 }

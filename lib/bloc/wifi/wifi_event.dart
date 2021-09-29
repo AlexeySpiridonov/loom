@@ -6,11 +6,11 @@ abstract class WifiEvent {}
 class WifiConnectEvent extends WifiEvent {}
 
 class WifiLoginChangeEvent extends WifiEvent {
-  String data;
+  final String data;
   WifiLoginChangeEvent({required this.data});
 }
 
 class WifiPasswordChangeEvent extends WifiEvent {
-  String data;
+  final String data;
   WifiPasswordChangeEvent({required this.data});
 }

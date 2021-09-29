@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 import 'package:loom/bloc/nav/nav_bloc.dart';
-import 'package:loom/screens_data.dart';
+
+import '../main.dart';
 
 class StepsWidget extends StatelessWidget {
   const StepsWidget({Key? key}) : super(key: key);
@@ -24,9 +25,13 @@ class StepsWidget extends StatelessWidget {
                           .read<NavBloc>()
                           .add(NavChangePageEvent(screenNumber: i)),
                       child: CircleAvatar(
-                        backgroundColor:
-                            state.screenNumber == i ? Colors.red : Colors.black,
-                        child: Text((i + 1).toString()),
+                        backgroundColor: state.screenNumber == i
+                            ? Theme.of(context).primaryColor
+                            : Colors.black,
+                        child: Text(
+                          (i + 1).toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),

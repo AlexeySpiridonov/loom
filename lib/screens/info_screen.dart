@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loom/widget/loom_button.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 import 'package:loom/bloc/nav/nav_bloc.dart';
 import '../widget/steps_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key? key, required this.text}) : super(key: key);
@@ -38,22 +41,10 @@ class InfoScreen extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Center(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(150, 2)),
-                    ),
+                  child: LoomButton(
                     onPressed: () =>
                         context.read<NavBloc>().add(NavNextPageEvent()),
-                    child: const Text(
-                      "Далее",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
+                    text: AppLocalizations.of(context)!.next,
                   ),
                 ),
               ),

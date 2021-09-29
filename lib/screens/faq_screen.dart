@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
 import 'package:loom/widget/steps_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FAQScreen extends StatelessWidget {
   const FAQScreen({Key? key}) : super(key: key);
 
-  final List<String> results = const [
-    "1. ****************",
-    "2. ****************",
-    "3. ****************",
-    "4. ****************",
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<String> results = [
+      AppLocalizations.of(context)!.faq1,
+      AppLocalizations.of(context)!.faq2,
+      AppLocalizations.of(context)!.faq3,
+      AppLocalizations.of(context)!.faq4,
+    ];
+
     return Scaffold(
       body: SafeArea(
         child: Column(

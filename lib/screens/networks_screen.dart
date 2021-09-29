@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loom/bloc/networks/networks_bloc.dart';
+import 'package:loom/models/network_model.dart';
 import 'package:loom/widget/steps_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NetworksScreen extends StatelessWidget {
   const NetworksScreen({Key? key}) : super(key: key);
 
-  Widget _networks() {
+  Widget _networks(List<NetworkModel> netList) {
     return Column(
       children: [
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < netList.length; i++)
           Container(
             decoration: BoxDecoration(border: Border.all()),
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("NetworkName"),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(netList[i].wl_ss_ssid),
             ),
           )
       ],
@@ -28,13 +32,22 @@ class NetworksScreen extends StatelessWidget {
           children: [
             const StepsWidget(),
             const Spacer(),
-            const Text("Выберите вашу домашнюю сеть:"),
+            Text(AppLocalizations.of(context)!.message4),
             const SizedBox(height: 10),
-            _networks(),
+            BlocBuilder<NetworksBloc, NetworksState>(
+              builder: (context, state) {
+                if (state is NetworksListState) {
+                  return _networks(state.netList);
+                }
+                // if (state is NetworksListState) {
+                return const Center(child: CircularProgressIndicator());
+                // }
+              },
+            ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {},
-              child: const Text("Rescan"),
+              child: Text(AppLocalizations.of(context)!.rescan),
             ),
             const Spacer(),
           ],
