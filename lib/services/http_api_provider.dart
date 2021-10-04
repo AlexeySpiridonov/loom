@@ -10,17 +10,17 @@ class HttpApiProvider {
   HttpApiProvider();
 
   Future<InfoStatusModel> sysStatus() async {
-    var url =
-        Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
-    var response = await http.get(url);
+    // var url =
+    //     Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
+    // var response = await http.get(url);
 
     Map<String, dynamic> body = jsonDecode(answers[0]); // response.body
     return InfoStatusModel.fromJson(body);
   }
 
   Future<ErrorAnswerModel> formScanningAp() async {
-    var url = Uri.parse('http://192.168.10.1/mobile/form_scanning_ap.htm');
-    var response = await http.post(url, body: {'errCode': '0', 'errMsg': ''});
+    // var url = Uri.parse('http://192.168.10.1/mobile/form_scanning_ap.htm');
+    // var response = await http.post(url, body: {'errCode': '0', 'errMsg': ''});
 
     Map<String, dynamic> body = jsonDecode(answers[1]); // response.body
     return ErrorAnswerModel.fromJson(body);
@@ -39,39 +39,41 @@ class HttpApiProvider {
   }
 
   Future<ErrorAnswerModel> formSetRepeater() async {
-    var url = Uri.parse('http://192.168.10.1/mobile/form_set_repeater.htm');
-    var response = await http.post(url, body: {
-      "pocket_wpa_tkip_aes": "",
-      "pocket_wpa2_tkip_aes": "aes",
-      "wpa2ciphersuite0": "aes",
-      "ciphersuite0": "",
-      "pocket_channel": "11",
-      "pocketAP_ssid": "98:de:d0:33:19:49",
-      "pocket_encrypt": "wpa2-psk",
-      "select": "sel0",
-      "opmode": "2",
-      "ssid0": "spallNet-plus",
-      "authType0": "open",
-      "method0": "6",
-      "pskValue0": "novosibirsk",
-      "wlanif": "wlan0",
-      "wlan_idx": "0",
-      "band0": "11",
-      "mode0": "3",
-      "wps_clear_configure_by_reg0": "0",
-      "wpaAuth0": "psk",
-      "pskFormat0": "0",
-      "eapType0": "0",
-      "eapInsideType0": "0",
-      "eapUserId0": "",
-      "radiusUserName0": "",
-      "radiusUserPass0": "",
-      "radiusUserCertPass0": "",
-      "wapiPskFormat0": "0",
-      "wapiPskValue0": "",
-      "wapiASIP0": "0.0.0.0",
-      "connect": "connect",
-    });
+    // var url = Uri.parse('http://192.168.10.1/mobile/form_set_repeater.htm');
+    // var response = await http.post(url, body: {
+    //   "pocket_wpa_tkip_aes": "",
+    //   "pocket_wpa2_tkip_aes": "aes",
+    //   "wpa2ciphersuite0": "aes",
+    //   "ciphersuite0": "",
+    //   "pocket_channel": "11",
+    //   "pocketAP_ssid": "98:de:d0:33:19:49",
+    //   "pocket_encrypt": "wpa2-psk",
+    //   "select": "sel0",
+    //   "opmode": "2",
+    //   "ssid0": "spallNet-plus",
+    //   "authType0": "open",
+    //   "method0": "6",
+    //   "pskValue0": "novosibirsk",
+    //   "wlanif": "wlan0",
+    //   "wlan_idx": "0",
+    //   "band0": "11",
+    //   "mode0": "3",
+    //   "wps_clear_configure_by_reg0": "0",
+    //   "wpaAuth0": "psk",
+    //   "pskFormat0": "0",
+    //   "eapType0": "0",
+    //   "eapInsideType0": "0",
+    //   "eapUserId0": "",
+    //   "radiusUserName0": "",
+    //   "radiusUserPass0": "",
+    //   "radiusUserCertPass0": "",
+    //   "wapiPskFormat0": "0",
+    //   "wapiPskValue0": "",
+    //   "wapiASIP0": "0.0.0.0",
+    //   "connect": "connect",
+    // });
+
+    await Future.delayed(const Duration(seconds: 1), () {});
 
     Map<String, dynamic> body = jsonDecode(answers[1]); // response.body
     return ErrorAnswerModel.fromJson(body);
@@ -123,7 +125,7 @@ List<String> answers = [
     "login_flag":'',
   }
   ''',
-  '{errCode: 0,errMsg: ""}',
+  '{"errCode": "0", "errMsg": ""}',
   '''
     [{"wl_ss_ssid":"spallNet","wl_ss_bssid":"98:de:d0:33:19:49",  					"wl_ss_channel":"11","wl_ss_secmo":"WPA2-PSK",					"wl_ss_sin":"66","wl_ss_param":"",													"wl_wpa_tkip_aes":"","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"0"	},{"wl_ss_ssid":"Sosedi","wl_ss_bssid":"84:c9:b2:6d:e4:a7",  					"wl_ss_channel":"2","wl_ss_secmo":"WPA-PSK/WPA2-PSK",											"wl_ss_sin":"46","wl_ss_param":"",													"wl_wpa_tkip_aes":"aes/tkip","wl_wpa2_tkip_aes":"aes/tkip",										"wl_count_num":"1"	},{"wl_ss_ssid":"NetGate","wl_ss_bssid":"98:de:d0:33:04:01",  					"wl_ss_channel":"4","wl_ss_secmo":"WPA2-PSK",											"wl_ss_sin":"38","wl_ss_param":"",													"wl_wpa_tkip_aes":"","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"2"	},{"wl_ss_ssid":"Novotelecom 8 168","wl_ss_bssid":"f0:7d:68:47:f5:f8",  					"wl_ss_channel":"1","wl_ss_secmo":"WPA-PSK/WPA2-PSK",											"wl_ss_sin":"34","wl_ss_param":"",													"wl_wpa_tkip_aes":"aes","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"3"	},{"wl_ss_ssid":"Keenetic-0047","wl_ss_bssid":"1c:74:0d:8d:13:40",  					"wl_ss_channel":"6","wl_ss_secmo":"WPA2-PSK",											"wl_ss_sin":"26","wl_ss_param":"",													"wl_wpa_tkip_aes":"","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"4"	},{"wl_ss_ssid":"Zyzik","wl_ss_bssid":"d8:47:32:31:f9:2a",  					"wl_ss_channel":"4","wl_ss_secmo":"WPA2-PSK",											"wl_ss_sin":"22","wl_ss_param":"",													"wl_wpa_tkip_aes":"","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"5"	},{"wl_ss_ssid":"DaNet-RT","wl_ss_bssid":"20:10:7a:a2:95:6f",  					"wl_ss_channel":"1","wl_ss_secmo":"WPA2-PSK",											"wl_ss_sin":"18","wl_ss_param":"",													"wl_wpa_tkip_aes":"","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"6"	},{"wl_ss_ssid":"DIR-615","wl_ss_bssid":"78:32:1b:6a:14:67",  					"wl_ss_channel":"5","wl_ss_secmo":"WPA2-PSK",											"wl_ss_sin":"16","wl_ss_param":"",													"wl_wpa_tkip_aes":"","wl_wpa2_tkip_aes":"aes",										"wl_count_num":"7"	}]
   ''',

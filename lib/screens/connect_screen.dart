@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loom/bloc/nav/nav_bloc.dart';
+import 'package:loom/widget/loom_app_bar.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:loom/widget/steps_widget.dart';
 import '../bloc/wifi/wifi_bloc.dart';
@@ -11,6 +13,9 @@ class ConnectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const LoomAppBar(
+        questionMark: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -58,9 +63,16 @@ class ConnectScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            BlocBuilder<WifiBloc, WifiState>(
+            BlocConsumer<WifiBloc, WifiState>(
+              listener: (context, state) {
+                if (state is WifiConnectedState) {
+                  context.read<NavBloc>().add(NavNextPageEvent());
+                }
+              },
               builder: (context, state) {
-                if (state is WifiConnectedState) return Text(state.result);
+                if (state is WifiConnectedState) {
+                  return Text(state.result);
+                }
                 return const Text("nothing");
               },
             ),

@@ -1,27 +1,18 @@
 import 'package:bloc/bloc.dart';
+import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter/services.dart';
 
 part 'wifi_event.dart';
 part 'wifi_state.dart';
 
 class WifiBloc extends Bloc<WifiEvent, WifiState> {
-  static const platform = MethodChannel('samples.flutter.dev/battery');
+  final WifiApiProvider wifiApiProvider;
+
   String _result = 'Nothing';
   String login = "";
   String password = "";
 
-  WifiBloc() : super(WifiInitial());
-
-  Future<String> _getBatteryLevel() async {
-    try {
-      final String result = await platform.invokeMethod(
-          'getBatteryLevel', {"login": login, "password": password});
-      return 'Connect with result: $result.';
-    } on PlatformException catch (e) {
-      return "Failed to connect. Error: $e";
-    }
-  }
+  WifiBloc({required this.wifiApiProvider}) : super(WifiInitial());
 
   @override
   Stream<WifiState> mapEventToState(WifiEvent event) async* {
@@ -32,7 +23,7 @@ class WifiBloc extends Bloc<WifiEvent, WifiState> {
       password = event.data;
     }
     if (event is WifiConnectEvent) {
-      _result = await _getBatteryLevel();
+      _result = await wifiApiProvider.connectWifi(login, password);
       yield WifiConnectedState(result: _result);
     }
   }

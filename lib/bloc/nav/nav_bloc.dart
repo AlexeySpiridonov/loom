@@ -7,16 +7,32 @@ part 'nav_state.dart';
 
 class NavBloc extends Bloc<NavEvent, NavState> {
   int screenNumber = 0;
+  List<int> history = [];
 
   NavBloc() : super(NavScreenState(screenNumber: 0)) {
     on<NavEvent>((event, emit) {
       if (event is NavChangePageEvent) {
+        history.add(screenNumber);
         screenNumber = event.screenNumber;
         emit(NavScreenState(screenNumber: screenNumber));
       }
       if (event is NavNextPageEvent) {
-        screenNumber++;
-        if (screenNumber >= screens.length) screenNumber = screens.length - 1;
+        if (screenNumber < screens.length - 1) {
+          history.add(screenNumber);
+          screenNumber++;
+          emit(NavScreenState(screenNumber: screenNumber));
+        }
+      }
+      if (event is NavPreviousPageEvent) {
+        if (history.isNotEmpty) {
+          screenNumber = history.last;
+          history.removeLast();
+          emit(NavScreenState(screenNumber: screenNumber));
+        }
+      }
+      if (event is NavClearEvent) {
+        history = [];
+        screenNumber = 0;
         emit(NavScreenState(screenNumber: screenNumber));
       }
     });

@@ -19,18 +19,19 @@ class StepsWidget extends StatelessWidget {
             child: Row(
               children: [
                 for (int i = 0; i < screens.length; i++)
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => context
-                          .read<NavBloc>()
-                          .add(NavChangePageEvent(screenNumber: i)),
-                      child: CircleAvatar(
-                        backgroundColor: state.screenNumber == i
-                            ? Theme.of(context).primaryColor
-                            : Colors.black,
-                        child: Text(
-                          (i + 1).toString(),
-                          style: const TextStyle(color: Colors.white),
+                  GestureDetector(
+                    onTap: () => context
+                        .read<NavBloc>()
+                        .add(NavChangePageEvent(screenNumber: i)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ClipOval(
+                        child: Container(
+                          color: state.screenNumber == i
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey,
+                          width: 15,
+                          height: 15,
                         ),
                       ),
                     ),

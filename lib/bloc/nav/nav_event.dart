@@ -9,3 +9,7 @@ class NavChangePageEvent extends NavEvent {
 }
 
 class NavNextPageEvent extends NavEvent {}
+
+class NavPreviousPageEvent extends NavEvent {}
+
+class NavClearEvent extends NavEvent {}

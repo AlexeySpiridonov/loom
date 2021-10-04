@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loom/widget/loom_app_bar.dart';
 import 'package:loom/widget/loom_button.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
@@ -12,39 +13,37 @@ class ButtonsConnectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const StepsWidget(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LoomButton(
-                onPressed: () =>
-                    context.read<NavBloc>().add(NavNextPageEvent()),
-                text: AppLocalizations.of(context)!.message10,
-              ),
+      appBar: const LoomAppBar(
+        questionMark: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const StepsWidget(),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LoomButton(
+              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
+              text: AppLocalizations.of(context)!.message10,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LoomButton(
-                onPressed: () =>
-                    context.read<NavBloc>().add(NavNextPageEvent()),
-                text: AppLocalizations.of(context)!.message11,
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LoomButton(
+              onPressed: () => context.read<NavBloc>().add(NavNextPageEvent()),
+              text: AppLocalizations.of(context)!.message11,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LoomButton(
-                onPressed: () =>
-                    context.read<NavBloc>().add(NavNextPageEvent()),
-                text: AppLocalizations.of(context)!.message12,
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LoomButton(
+              onPressed: () => context.read<NavBloc>().add(NavClearEvent()),
+              text: AppLocalizations.of(context)!.message12,
             ),
-            const Spacer(),
-          ],
-        ),
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }

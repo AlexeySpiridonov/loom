@@ -1,6 +1,6 @@
 class ErrorAnswerModel {
-  int errCode = 0;
-  String errMsg = "";
+  final String errCode;
+  final String errMsg;
   ErrorAnswerModel({
     required this.errCode,
     required this.errMsg,
