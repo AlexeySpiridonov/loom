@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/buttons_connect/buttons_connect_bloc.dart';
+import 'bloc/loom/loom_bloc.dart';
+import 'bloc/loom_connect/loom_connect_bloc.dart';
 import 'bloc/nav/nav_bloc.dart';
 import 'bloc/networks/networks_bloc.dart';
 import 'bloc/settings/settings_bloc.dart';
-import 'bloc/wifi/wifi_bloc.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'screens/buttons_connect_screen.dart';
 import 'screens/faq_screen.dart';
 import 'screens/info_screen.dart';
-import 'screens/connect_screen.dart';
+import 'screens/loom_connect_screen.dart';
 import 'screens/networks_screen.dart';
 import 'screens/settings_network_screen.dart';
 import 'services/http_api_provider.dart';
@@ -33,8 +34,8 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<WifiBloc>(
-          create: (BuildContext context) => WifiBloc(
+        BlocProvider<LoomConnectBloc>(
+          create: (BuildContext context) => LoomConnectBloc(
             wifiApiProvider: wifiApiProvider,
           ),
         ),
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
             InfoScreen(text: AppLocalizations.of(context)!.message1),
             InfoScreen(text: AppLocalizations.of(context)!.message2),
             InfoScreen(text: AppLocalizations.of(context)!.message3),
-            const ConnectScreen(),
+            const LoomConnectScreen(),
             const NetworksScreen(),
             const SettingsNetworkScreen(),
             InfoScreen(text: AppLocalizations.of(context)!.message9),
@@ -90,7 +91,10 @@ class MyApp extends StatelessWidget {
           if (state is NavScreenState) {
             return screens[state.screenNumber];
           }
+
+          // if (state is LoomInitState) {
           return const Center(child: CircularProgressIndicator());
+          // }
         }),
       ),
     );

@@ -6,10 +6,10 @@ part 'nav_event.dart';
 part 'nav_state.dart';
 
 class NavBloc extends Bloc<NavEvent, NavState> {
-  int screenNumber = 0;
+  int screenNumber = 4;
   List<int> history = [];
 
-  NavBloc() : super(NavScreenState(screenNumber: 0)) {
+  NavBloc() : super(NavScreenState(screenNumber: 4)) {
     on<NavEvent>((event, emit) {
       if (event is NavChangePageEvent) {
         history.add(screenNumber);

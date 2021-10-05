@@ -36,7 +36,7 @@ class LoomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? TextButton(
                     onPressed: () => context
                         .read<NavBloc>()
-                        .add(NavChangePageEvent(screenNumber: 9)),
+                        .add(NavChangePageEvent(screenNumber: 8)),
                     child: const Text(
                       "?",
                       style: TextStyle(

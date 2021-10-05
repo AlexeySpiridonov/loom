@@ -10,25 +10,37 @@ part 'settings_state.dart';
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final HttpApiProvider httpApiProvider;
 
-  String login = "myHomeNet-R";
+  String loomName = "";
   String password = "";
 
   SettingsBloc({required this.httpApiProvider}) : super(SettingsInitState()) {
     on<SettingsEvent>((event, emit) async {
-      if (event is SettingsLoginChangeEvent) {
-        login = event.data;
+      final prefs = await SharedPreferences.getInstance();
+
+      if (event is SettingsGetNetworkNameEvent) {
+        String networkName = prefs.getString("network_name") ?? "myHomeNetwork";
+        loomName = networkName + "-plus";
+        emit(SettingsEditState(networkName: networkName));
+      }
+      if (event is SettingsLoomNameChangeEvent) {
+        loomName = event.data;
       }
       if (event is SettingsPasswordChangeEvent) {
         password = event.data;
       }
       if (event is SettingsSaveEvent) {
         emit(SettingsWaitState());
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString('login2', login);
-        prefs.setString('password2', password);
+        prefs.setString('loom_name', loomName);
+        prefs.setString('password', password);
+        String bssid = prefs.getString('bssid') ?? "";
+        String channal = prefs.getString('channal') ?? "";
 
-        ErrorAnswerModel formScanningAp =
-            await httpApiProvider.formSetRepeater();
+        ErrorAnswerModel formScanningAp = await httpApiProvider.formSetRepeater(
+          ssid: bssid,
+          channal: channal,
+          networkName: loomName,
+          password: password,
+        );
         if (formScanningAp.errCode == "0") {
           emit(SettingsSuccessSaveState());
         } else {

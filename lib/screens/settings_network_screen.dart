@@ -14,6 +14,7 @@ class SettingsNetworkScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<SettingsBloc>().add(SettingsGetNetworkNameEvent());
     return Scaffold(
       appBar: const LoomAppBar(
         questionMark: true,
@@ -38,43 +39,48 @@ class SettingsNetworkScreen extends StatelessWidget {
               ],
             );
           }
+          if (state is SettingsEditState) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const StepsWidget(),
+                const Spacer(),
+                Text(
+                    "${AppLocalizations.of(context)!.message5} ${state.networkName}"),
+                TextFormField(
+                  initialValue: "",
+                  onChanged: (newValue) => context
+                      .read<SettingsBloc>()
+                      .add(SettingsPasswordChangeEvent(data: newValue)),
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                Text(AppLocalizations.of(context)!.message6),
+                TextFormField(
+                  initialValue: state.networkName + "-plus",
+                  onChanged: (newValue) => context
+                      .read<SettingsBloc>()
+                      .add(SettingsLoomNameChangeEvent(data: newValue)),
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                LoomButton(
+                  onPressed: () =>
+                      context.read<SettingsBloc>().add(SettingsSaveEvent()),
+                  text: AppLocalizations.of(context)!.save,
+                ),
+                const Spacer(),
+              ],
+            );
+          }
           //if (state is SettingsInitState) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const StepsWidget(),
-              const Spacer(),
-              Text(AppLocalizations.of(context)!.message6),
-              TextFormField(
-                initialValue: "myHomeNet-R",
-                onChanged: (newValue) => context
-                    .read<SettingsBloc>()
-                    .add(SettingsLoginChangeEvent(data: newValue)),
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(AppLocalizations.of(context)!.message5),
-              TextFormField(
-                initialValue: "",
-                onChanged: (newValue) => context
-                    .read<SettingsBloc>()
-                    .add(SettingsPasswordChangeEvent(data: newValue)),
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                ),
-              ),
-              LoomButton(
-                onPressed: () =>
-                    context.read<SettingsBloc>().add(SettingsSaveEvent()),
-                text: AppLocalizations.of(context)!.save,
-              ),
-              const Spacer(),
-            ],
-          );
+          return const Center(child: CircularProgressIndicator());
           //}
         },
       ),

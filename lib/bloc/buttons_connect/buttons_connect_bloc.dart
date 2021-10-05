@@ -19,13 +19,13 @@ class ButtonsConnectBloc
     on<ButtonsConnectEvent>((event, emit) async {
       final prefs = await SharedPreferences.getInstance();
       if (event is ButtonsHomeConnectEvent) {
-        String login = prefs.getString('login') ?? "";
+        String login = prefs.getString('network_name') ?? "";
         String password = prefs.getString('password') ?? "";
         String _result = await wifiApiProvider.connectWifi(login, password);
       }
       if (event is ButtonsLoomConnectEvent) {
-        String login = prefs.getString('login2') ?? "";
-        String password = prefs.getString('password2') ?? "";
+        String login = prefs.getString('loom_name') ?? "";
+        String password = prefs.getString('password') ?? "";
         String _result = await wifiApiProvider.connectWifi(login, password);
       }
     });

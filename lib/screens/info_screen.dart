@@ -39,7 +39,7 @@ class InfoScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Image.network("https://picsum.photos/80"),
+                  Image.asset("assets/images/loom.jpg"),
                 ],
               ),
             ),

@@ -5,9 +5,11 @@ abstract class SettingsEvent {}
 
 class SettingsSaveEvent extends SettingsEvent {}
 
-class SettingsLoginChangeEvent extends SettingsEvent {
+class SettingsGetNetworkNameEvent extends SettingsEvent {}
+
+class SettingsLoomNameChangeEvent extends SettingsEvent {
   final String data;
-  SettingsLoginChangeEvent({required this.data});
+  SettingsLoomNameChangeEvent({required this.data});
 }
 
 class SettingsPasswordChangeEvent extends SettingsEvent {
