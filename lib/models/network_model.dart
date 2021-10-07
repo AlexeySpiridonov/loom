@@ -6,7 +6,7 @@ class NetworkModel {
   final String wl_ss_channel;
   final String wl_ss_param;
   final String wl_ss_secmo;
-  final String wl_ss_sin;
+  final int wl_ss_sin;
   final String wl_ss_ssid;
   final String wl_wpa2_tkip_aes;
   final String wl_wpa_tkip_aes;
@@ -29,7 +29,7 @@ class NetworkModel {
         wl_ss_channel = json['wl_ss_channel'],
         wl_ss_param = json['wl_ss_param'],
         wl_ss_secmo = json['wl_ss_secmo'],
-        wl_ss_sin = json['wl_ss_sin'],
+        wl_ss_sin = int.parse(json['wl_ss_sin']),
         wl_ss_ssid = json['wl_ss_ssid'],
         wl_wpa2_tkip_aes = json['wl_wpa2_tkip_aes'],
         wl_wpa_tkip_aes = json['wl_wpa_tkip_aes'];

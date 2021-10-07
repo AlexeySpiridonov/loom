@@ -1,88 +1,122 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loom/bloc/settings/settings_bloc.dart';
+import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_app_bar.dart';
 import 'package:loom/widget/loom_button.dart';
+import 'package:loom/widget/loom_text.dart';
+import 'package:loom/widget/loom_text_field.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
-import 'package:loom/bloc/nav/nav_bloc.dart';
-import 'package:loom/widget/steps_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsNetworkScreen extends StatelessWidget {
-  const SettingsNetworkScreen({Key? key}) : super(key: key);
+  const SettingsNetworkScreen({Key? key, required this.networkName})
+      : super(key: key);
+
+  final String networkName;
 
   @override
   Widget build(BuildContext context) {
-    context.read<SettingsBloc>().add(SettingsGetNetworkNameEvent());
     return Scaffold(
-      appBar: const LoomAppBar(
+      appBar: LoomAppBar(
+        loomEvent: LoomOpenNetworksEvent(),
         questionMark: true,
       ),
-      body: BlocConsumer<SettingsBloc, SettingsState>(
-        listener: (context, state) {
-          if (state is SettingsSuccessSaveState) {
-            context.read<NavBloc>().add(NavNextPageEvent());
-          }
-        },
-        builder: (context, state) {
-          if (state is SettingsWaitState) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            LoomText(AppLocalizations.of(context)!.message5),
+            const SizedBox(height: 20),
+            LoomTextField(
+              initialValue: "",
+              onChanged: (newValue) => context
+                  .read<LoomBloc>()
+                  .add(LoomChangePasswordEvent(data: newValue)),
+              labelText: "",
+            ),
+            const SizedBox(height: 10),
+            LoomButton(
+              onPressed: () =>
+                  context.read<LoomBloc>().add(LoomSettingsSaveEvent()),
+              text: AppLocalizations.of(context)!.next,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Wi-Fi name for Loom",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromRGBO(130, 135, 158, 1),
+                ),
+              ),
+            ),
+            Row(
               children: [
-                const StepsWidget(),
-                const Spacer(),
-                Text(AppLocalizations.of(context)!.message7),
-                const CircularProgressIndicator(),
-                Text(AppLocalizations.of(context)!.message8),
-                const Spacer(),
-              ],
-            );
-          }
-          if (state is SettingsEditState) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const StepsWidget(),
-                const Spacer(),
                 Text(
-                    "${AppLocalizations.of(context)!.message5} ${state.networkName}"),
-                TextFormField(
-                  initialValue: "",
-                  onChanged: (newValue) => context
-                      .read<SettingsBloc>()
-                      .add(SettingsPasswordChangeEvent(data: newValue)),
-                  textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
+                  "$networkName-plus",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                const SizedBox(height: 40),
-                Text(AppLocalizations.of(context)!.message6),
-                TextFormField(
-                  initialValue: state.networkName + "-plus",
-                  onChanged: (newValue) => context
-                      .read<SettingsBloc>()
-                      .add(SettingsLoomNameChangeEvent(data: newValue)),
-                  textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
+                IconButton(
+                  icon: Image.asset(
+                    "assets/images/edit.png",
+                    height: 20,
                   ),
+                  iconSize: 20,
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: 200,
+                          padding: MediaQuery.of(context).viewInsets,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                LoomText(
+                                    AppLocalizations.of(context)!.message6),
+                                const SizedBox(height: 10),
+                                LoomTextField(
+                                  initialValue: networkName + "-plus",
+                                  onChanged: (newValue) => context
+                                      .read<LoomBloc>()
+                                      .add(LoomChangeLoomEvent(data: newValue)),
+                                  labelText: "",
+                                ),
+                                const SizedBox(height: 20),
+                                LoomButton(
+                                  onPressed: () => context
+                                      .read<LoomBloc>()
+                                      .add(LoomSettingsSaveEvent()),
+                                  text: AppLocalizations.of(context)!.save,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
-                const SizedBox(height: 20),
-                LoomButton(
-                  onPressed: () =>
-                      context.read<SettingsBloc>().add(SettingsSaveEvent()),
-                  text: AppLocalizations.of(context)!.save,
-                ),
-                const Spacer(),
               ],
-            );
-          }
-          //if (state is SettingsInitState) {
-          return const Center(child: CircularProgressIndicator());
-          //}
-        },
+            ),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }

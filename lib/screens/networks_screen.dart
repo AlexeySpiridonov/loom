@@ -1,76 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loom/bloc/nav/nav_bloc.dart';
-import 'package:loom/bloc/networks/networks_bloc.dart';
+import 'package:loom/bloc/loom/loom_bloc.dart';
+import 'package:loom/models/network_model.dart';
 import 'package:loom/widget/loom_app_bar.dart';
-import 'package:loom/widget/steps_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:loom/widget/loom_text.dart';
 
 class NetworksScreen extends StatelessWidget {
-  const NetworksScreen({Key? key}) : super(key: key);
+  const NetworksScreen({Key? key, required this.sec, required this.netList})
+      : super(key: key);
+
+  final int sec;
+  final List<NetworkModel> netList;
 
   @override
   Widget build(BuildContext context) {
-    context.read<NetworksBloc>().add(NetworksGetEvent());
     return Scaffold(
-      appBar: const LoomAppBar(
-        questionMark: true,
-      ),
-      body: BlocBuilder<NetworksBloc, NetworksState>(
-        builder: (context, state) {
-          return SizedBox(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const StepsWidget(),
-                  Text(
+                  const SizedBox(height: 20),
+                  LoomText(
                     AppLocalizations.of(context)!.message4,
-                    style: const TextStyle(fontSize: 20),
                   ),
                   const SizedBox(height: 20),
-                  if (state is NetworksListState)
-                    for (int i = 0; i < state.netList.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<NetworksBloc>().add(
-                                  NetworksChooseEvent(
-                                    networkModel: state.netList[i],
-                                  ),
-                                );
-                            context.read<NavBloc>().add(NavNextPageEvent());
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            decoration: BoxDecoration(border: Border.all()),
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "${state.netList[i].wl_ss_ssid} - ${state.netList[i].wl_ss_sin}",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 20),
-                            ),
+                  for (int i = 0; i < netList.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          context.read<LoomBloc>().add(
+                                LoomNetworksChooseEvent(
+                                  networkModel: netList[i],
+                                ),
+                              );
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(26, 47, 79, 1),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(6.0)),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                netList[i].wl_ss_ssid,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const Spacer(),
+                              if (netList[i].wl_ss_sin >= 50)
+                                Image.asset("assets/images/wifi3.png",
+                                    height: 16)
+                              else if (netList[i].wl_ss_sin >= 30)
+                                Image.asset("assets/images/wifi2.png",
+                                    height: 16)
+                              else
+                                Image.asset("assets/images/wifi1.png",
+                                    height: 16),
+                            ],
                           ),
                         ),
-                      )
-                  else
+                      ),
+                    ),
+                  if (netList.isEmpty)
                     const Center(child: CircularProgressIndicator()),
                   const SizedBox(height: 10),
-                  (state is NetworksWaitState)
-                      ? Text("Wait ${state.sec} seconds")
-                      : TextButton(
-                          onPressed: () => context
-                              .read<NetworksBloc>()
-                              .add(NetworksGetEvent()),
-                          child: Text(AppLocalizations.of(context)!.rescan),
+                  (sec > 0)
+                      ? Text("Wait $sec seconds")
+                      : Align(
+                          alignment: Alignment.topRight,
+                          child: TextButton(
+                            onPressed: () => context
+                                .read<LoomBloc>()
+                                .add(LoomNetworksGetEvent()),
+                            child: Text(AppLocalizations.of(context)!.rescan),
+                          ),
                         ),
                 ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

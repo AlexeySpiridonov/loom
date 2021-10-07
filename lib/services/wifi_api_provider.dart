@@ -1,21 +1,15 @@
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class WifiApiProvider {
   WifiApiProvider();
 
-  static const platform = MethodChannel('samples.flutter.dev/battery');
+  static const platform = MethodChannel('loom/wifi');
 
   Future<String> connectWifi(String login, String password) async {
     try {
       final String result = await platform.invokeMethod(
-          'getBatteryLevel', {"login": login, "password": password});
-
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('login', login);
-      prefs.setString('password', password);
-
-      return 'Connect with result: $result.';
+          'tryConnectToWifi', {"login": login, "password": password});
+      return result;
     } on PlatformException catch (e) {
       return "Failed to connect. Error: $e";
     }

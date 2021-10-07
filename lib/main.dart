@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/buttons_connect/buttons_connect_bloc.dart';
+import 'package:loom/screens/wait_screen.dart';
 import 'bloc/loom/loom_bloc.dart';
-import 'bloc/loom_connect/loom_connect_bloc.dart';
-import 'bloc/nav/nav_bloc.dart';
-import 'bloc/networks/networks_bloc.dart';
-import 'bloc/settings/settings_bloc.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'models/info_screen_model.dart';
+import 'screens/info_screen.dart';
 import 'screens/buttons_connect_screen.dart';
 import 'screens/faq_screen.dart';
-import 'screens/info_screen.dart';
 import 'screens/loom_connect_screen.dart';
 import 'screens/networks_screen.dart';
 import 'screens/settings_network_screen.dart';
+import 'screens/successful_screen.dart';
 import 'services/http_api_provider.dart';
 import 'services/wifi_api_provider.dart';
 
@@ -22,7 +20,8 @@ void main() {
   runApp(const MyApp());
 }
 
-late List<Widget> screens;
+late List<String> infoPagesTexts;
+late List<InfoScreenModel> infoScreenModels;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -34,62 +33,79 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LoomConnectBloc>(
-          create: (BuildContext context) => LoomConnectBloc(
+        BlocProvider<LoomBloc>(
+          create: (BuildContext context) => LoomBloc(
             wifiApiProvider: wifiApiProvider,
-          ),
-        ),
-        BlocProvider<NavBloc>(
-          create: (BuildContext context) => NavBloc(),
-        ),
-        BlocProvider<NetworksBloc>(
-          create: (BuildContext context) => NetworksBloc(
             httpApiProvider: httpApiProvider,
-          ),
-        ),
-        BlocProvider<SettingsBloc>(
-          create: (BuildContext context) => SettingsBloc(
-            httpApiProvider: httpApiProvider,
-          ),
-        ),
-        BlocProvider<ButtonsConnectBloc>(
-          create: (BuildContext context) => ButtonsConnectBloc(
-            httpApiProvider: httpApiProvider,
-            wifiApiProvider: wifiApiProvider,
           ),
         ),
       ],
       child: MaterialApp(
-        themeMode: ThemeMode.light,
-        darkTheme: ThemeData.light(),
         title: 'Aj',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: L10n.all,
         theme: ThemeData(
           brightness: Brightness.dark,
-          //scaffoldBackgroundColor: const Color.fromRGBO(229, 239, 240, 1),
+          scaffoldBackgroundColor: const Color.fromRGBO(10, 22, 52, 1),
           appBarTheme: const AppBarTheme(
-              //color: Colors.white,
-              ),
-          primaryColor: Colors.cyan,
-          primarySwatch: Colors.cyan,
+            color: Colors.transparent,
+          ),
         ),
-        home: BlocBuilder<NavBloc, NavState>(builder: (context, state) {
-          screens = [
-            InfoScreen(text: AppLocalizations.of(context)!.message1),
-            InfoScreen(text: AppLocalizations.of(context)!.message2),
-            InfoScreen(text: AppLocalizations.of(context)!.message3),
-            const LoomConnectScreen(),
-            const NetworksScreen(),
-            const SettingsNetworkScreen(),
-            InfoScreen(text: AppLocalizations.of(context)!.message9),
-            const ButtonsConnectScreen(),
-            const FAQScreen(),
-            InfoScreen(text: AppLocalizations.of(context)!.message13),
+        home: BlocBuilder<LoomBloc, LoomState>(builder: (context, state) {
+          infoPagesTexts = [
+            AppLocalizations.of(context)!.message1,
+            AppLocalizations.of(context)!.message2,
+            AppLocalizations.of(context)!.message3,
+            //const LoomConnectScreen(),
+            //const NetworksScreen(),
+            //const SettingsNetworkScreen(),
+            //AppLocalizations.of(context)!.message9,
+            //const ButtonsConnectScreen(),
+            //const FAQScreen(),
+            AppLocalizations.of(context)!.message13,
           ];
 
-          if (state is NavScreenState) {
-            return screens[state.screenNumber];
+          if (state is LoomInfoState) {
+            return InfoScreen(
+              text: infoPagesTexts[state.index],
+              nextEvent: state.nextEvent,
+            );
+          }
+
+          if (state is LoomConnectState) {
+            return const LoomConnectScreen();
+          }
+
+          if (state is LoomNetworksState) {
+            return NetworksScreen(
+              sec: state.sec,
+              netList: state.netList,
+            );
+          }
+
+          if (state is LoomSettingsNetworkState) {
+            return SettingsNetworkScreen(
+              networkName: state.networkName,
+            );
+          }
+
+          if (state is LoomWaitState) {
+            return const WaitScreen();
+          }
+
+          if (state is LoomSuccessfulState) {
+            return const SuccessfulScreen();
+          }
+
+          if (state is LoomButtonsConnectState) {
+            return ButtonsConnectScreen(
+              loomName: state.loomName,
+              networkName: state.networkName,
+            );
+          }
+
+          if (state is LoomFAQState) {
+            return const FAQScreen();
           }
 
           // if (state is LoomInitState) {
