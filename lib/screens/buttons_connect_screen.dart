@@ -32,6 +32,7 @@ class ButtonsConnectScreen extends StatelessWidget {
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomConnectNetworkEvent()),
               text: "${AppLocalizations.of(context)!.message10} $networkName",
+              loomEvent: LoomOpenButtonsEvent(),
             ),
           ),
           Padding(
@@ -40,6 +41,7 @@ class ButtonsConnectScreen extends StatelessWidget {
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomConnectLoomEvent()),
               text: "${AppLocalizations.of(context)!.message11} $loomName",
+              loomEvent: LoomOpenButtonsEvent(),
             ),
           ),
           Padding(
@@ -47,6 +49,7 @@ class ButtonsConnectScreen extends StatelessWidget {
             child: LoomButton(
               onPressed: () => context.read<LoomBloc>().add(LoomClearEvent()),
               text: AppLocalizations.of(context)!.message12,
+              loomEvent: LoomOpenButtonsEvent(),
             ),
           ),
           const Spacer(),

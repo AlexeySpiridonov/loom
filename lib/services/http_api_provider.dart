@@ -35,8 +35,6 @@ class HttpApiProvider {
     var url = Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
     var response = await http.get(url);
 
-    print(response.body);
-
     List<NetworkModel> neworksList = (json.decode(response.body) as List)
         .map((i) => NetworkModel.fromJson(i))
         .toList();

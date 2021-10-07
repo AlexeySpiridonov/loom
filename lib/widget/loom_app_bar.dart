@@ -22,22 +22,6 @@ class LoomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text("Loom", style: TextStyle(color: Colors.white)),
         ],
       ),
-      actions: [
-        questionMark
-            ? TextButton(
-                onPressed: () =>
-                    context.read<LoomBloc>().add(LoomOpenFAQEvent()),
-                child: const Text(
-                  "?",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-              )
-            : Container(),
-      ],
     );
   }
 

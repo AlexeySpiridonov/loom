@@ -48,7 +48,8 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: const Color.fromRGBO(10, 22, 52, 1),
           appBarTheme: const AppBarTheme(
-            color: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
           ),
         ),
         home: BlocBuilder<LoomBloc, LoomState>(builder: (context, state) {
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
           if (state is LoomSettingsNetworkState) {
             return SettingsNetworkScreen(
               networkName: state.networkName,
+              loomName: state.loomName,
             );
           }
 
@@ -94,7 +96,10 @@ class MyApp extends StatelessWidget {
           }
 
           if (state is LoomSuccessfulState) {
-            return const SuccessfulScreen();
+            return SuccessfulScreen(
+              networkName: state.networkName,
+              loomName: state.loomName,
+            );
           }
 
           if (state is LoomButtonsConnectState) {
@@ -105,7 +110,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (state is LoomFAQState) {
-            return const FAQScreen();
+            return FAQScreen(loomEvent: state.loomEvent);
           }
 
           // if (state is LoomInitState) {

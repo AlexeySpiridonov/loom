@@ -8,10 +8,12 @@ class LoomButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
+    required this.loomEvent,
   }) : super(key: key);
 
   final String text;
   final Function()? onPressed;
+  final LoomEvent loomEvent;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,9 @@ class LoomButton extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () => context.read<LoomBloc>().add(LoomOpenFAQEvent()),
+                onTap: () => context
+                    .read<LoomBloc>()
+                    .add(LoomOpenFAQEvent(loomEvent: loomEvent)),
                 child: const CircleAvatar(
                   radius: 12,
                   backgroundColor: Color.fromRGBO(47, 55, 94, 0.3),

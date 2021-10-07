@@ -40,6 +40,7 @@ class LoomConnectScreen extends StatelessWidget {
               context.read<LoomBloc>().add(LoomTryConnectEvent());
             },
             text: AppLocalizations.of(context)!.connect,
+            loomEvent: LoomOpenConnectEvent(),
           ),
           const Spacer(),
         ],

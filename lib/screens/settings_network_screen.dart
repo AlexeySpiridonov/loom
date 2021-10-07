@@ -11,10 +11,14 @@ import 'package:provider/src/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsNetworkScreen extends StatelessWidget {
-  const SettingsNetworkScreen({Key? key, required this.networkName})
-      : super(key: key);
+  const SettingsNetworkScreen({
+    Key? key,
+    required this.networkName,
+    required this.loomName,
+  }) : super(key: key);
 
   final String networkName;
+  final String loomName;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +28,9 @@ class SettingsNetworkScreen extends StatelessWidget {
         questionMark: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
             LoomText(AppLocalizations.of(context)!.message5),
             const SizedBox(height: 20),
             LoomTextField(
@@ -41,8 +43,9 @@ class SettingsNetworkScreen extends StatelessWidget {
             const SizedBox(height: 10),
             LoomButton(
               onPressed: () =>
-                  context.read<LoomBloc>().add(LoomSettingsSaveEvent()),
+                  context.read<LoomBloc>().add(LoomSettingsNextEvent()),
               text: AppLocalizations.of(context)!.next,
+              loomEvent: LoomOpenSettingsNetworkEvent(),
             ),
             const SizedBox(
               height: 24,
@@ -62,7 +65,7 @@ class SettingsNetworkScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "$networkName-plus",
+                  loomName,
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -76,36 +79,48 @@ class SettingsNetworkScreen extends StatelessWidget {
                   iconSize: 20,
                   onPressed: () {
                     showModalBottomSheet<void>(
+                      backgroundColor: const Color.fromRGBO(10, 22, 52, 1),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
+                        ),
+                      ),
                       context: context,
                       isScrollControlled: true,
                       builder: (BuildContext context) {
                         return Container(
-                          height: 200,
-                          padding: MediaQuery.of(context).viewInsets,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                LoomText(
-                                    AppLocalizations.of(context)!.message6),
-                                const SizedBox(height: 10),
-                                LoomTextField(
-                                  initialValue: networkName + "-plus",
-                                  onChanged: (newValue) => context
+                          padding: EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const SizedBox(height: 10),
+                              LoomText(AppLocalizations.of(context)!.message6),
+                              const SizedBox(height: 15),
+                              LoomTextField(
+                                initialValue: loomName,
+                                onChanged: (newValue) => context
+                                    .read<LoomBloc>()
+                                    .add(LoomChangeLoomEvent(data: newValue)),
+                                autofocus: true,
+                                labelText: "",
+                              ),
+                              const SizedBox(height: 20),
+                              LoomButton(
+                                onPressed: () {
+                                  context
                                       .read<LoomBloc>()
-                                      .add(LoomChangeLoomEvent(data: newValue)),
-                                  labelText: "",
-                                ),
-                                const SizedBox(height: 20),
-                                LoomButton(
-                                  onPressed: () => context
-                                      .read<LoomBloc>()
-                                      .add(LoomSettingsSaveEvent()),
-                                  text: AppLocalizations.of(context)!.save,
-                                ),
-                              ],
-                            ),
+                                      .add(LoomSettingsSaveEvent());
+                                  Navigator.pop(context);
+                                },
+                                text: AppLocalizations.of(context)!.save,
+                                loomEvent: LoomOpenSettingsNetworkEvent(),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
                           ),
                         );
                       },
@@ -114,7 +129,6 @@ class SettingsNetworkScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
           ],
         ),
       ),

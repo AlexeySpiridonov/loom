@@ -10,12 +10,16 @@ class LoomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w600,
-        height: 2,
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        textAlign: TextAlign.start,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          height: 2,
+        ),
       ),
     );
   }

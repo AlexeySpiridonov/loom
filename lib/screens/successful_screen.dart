@@ -8,7 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SuccessfulScreen extends StatelessWidget {
   const SuccessfulScreen({
     Key? key,
+    required this.networkName,
+    required this.loomName,
   }) : super(key: key);
+
+  final String networkName;
+  final String loomName;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +32,14 @@ class SuccessfulScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.message9,
+                    """${AppLocalizations.of(context)!.message9_1} $networkName
+                    ${AppLocalizations.of(context)!.message9_2} $loomName
+                    ${AppLocalizations.of(context)!.message9_3}""",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 24,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Image.asset("assets/images/loom.jpg"),
                 ],
               ),
             ),
@@ -45,6 +50,7 @@ class SuccessfulScreen extends StatelessWidget {
                   onPressed: () =>
                       context.read<LoomBloc>().add(LoomOpenButtonsEvent()),
                   text: AppLocalizations.of(context)!.next,
+                  loomEvent: LoomOpenSuccessfulEvent(),
                 ),
               ),
             ),

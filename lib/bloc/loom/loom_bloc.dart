@@ -12,13 +12,13 @@ part 'loom_state.dart';
 class LoomBloc extends Bloc<LoomEvent, LoomState> {
   final WifiApiProvider wifiApiProvider;
   final HttpApiProvider httpApiProvider;
+  late SharedPreferences prefs;
   String networkName = "WiFi Extender";
   String loomName = "";
   String password = "";
   String ssid = "";
   String channal = "";
-  int status = 0;
-  late SharedPreferences prefs;
+  bool isScannings = false;
 
   LoomBloc({
     required this.httpApiProvider,
@@ -26,6 +26,11 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   }) : super(LoomInitState()) {
     on<LoomEvent>((event, emit) async {
       prefs = await SharedPreferences.getInstance();
+
+      //FAQ SCREEN
+      if (event is LoomOpenFAQEvent) {
+        emit(LoomFAQState(loomEvent: event.loomEvent));
+      }
 
       //INFO SCREEN
       if (event is LoomOpenInfoEvent) {
@@ -55,7 +60,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         emit(LoomNetworksState(sec: 0, netList: const []));
         add(LoomNetworksGetEvent());
       }
-      if (event is LoomNetworksGetEvent) {
+      if (event is LoomNetworksGetEvent && !isScannings) {
+        isScannings = true;
         String? formScanningAp = await httpApiProvider.formScanningAp();
 
         for (int i = 10; i > 0; i--) {
@@ -74,6 +80,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         } else {
           emit(LoomNetworksState(sec: 0, netList: const []));
         }
+        isScannings = false;
       }
       if (event is LoomNetworksChooseEvent) {
         networkName = event.networkModel.wl_ss_ssid;
@@ -83,10 +90,19 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         // prefs.setString('bssid', event.networkModel.wl_ss_bssid);
         // prefs.setString('channel', event.networkModel.wl_ss_channel);
         // prefs.setString('network_name', event.networkModel.wl_ss_ssid);
-        emit(LoomSettingsNetworkState(networkName: networkName));
+        emit(LoomSettingsNetworkState(
+          networkName: networkName,
+          loomName: loomName,
+        ));
       }
 
       //SETTINGS SCREEN
+      if (event is LoomOpenSettingsNetworkEvent) {
+        emit(LoomSettingsNetworkState(
+          networkName: networkName,
+          loomName: loomName,
+        ));
+      }
       if (event is LoomChangeLoomEvent) {
         loomName = event.data;
       }
@@ -94,10 +110,15 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         password = event.data;
       }
       if (event is LoomSettingsSaveEvent) {
-        emit(LoomWaitState());
         prefs.setString('loom_name', loomName);
+        emit(LoomSettingsNetworkState(
+          networkName: networkName,
+          loomName: loomName,
+        ));
+      }
+      if (event is LoomSettingsNextEvent) {
+        emit(LoomWaitState());
         prefs.setString('password', password);
-
         ErrorAnswerModel formScanningAp = await httpApiProvider.formSetRepeater(
           ssid: ssid,
           channal: channal,
@@ -105,10 +126,20 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           password: password,
         );
         if (formScanningAp.errCode == "0") {
-          emit(LoomSuccessfulState());
+          emit(LoomSuccessfulState(
+            networkName: networkName,
+            loomName: loomName,
+          ));
         } else {
           //emit(SettingsUnsuccessSaveState());
         }
+      }
+
+      if (event is LoomOpenSuccessfulEvent) {
+        emit(LoomSuccessfulState(
+          networkName: networkName,
+          loomName: loomName,
+        ));
       }
 
       //BUTTONS CONNECT SCREEN
@@ -128,6 +159,26 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         String _result = await wifiApiProvider.connectWifi(
           loomName,
           password,
+        );
+      }
+      if (event is LoomClearEvent) {
+        networkName = "WiFi Extender";
+        loomName = "";
+        password = "";
+        ssid = "";
+        channal = "";
+        isScannings = false;
+        add(
+          LoomOpenInfoEvent(
+            index: 0,
+            nextEvent: LoomOpenInfoEvent(
+              index: 1,
+              nextEvent: LoomOpenInfoEvent(
+                index: 2,
+                nextEvent: LoomOpenConnectEvent(),
+              ),
+            ),
+          ),
         );
       }
     });

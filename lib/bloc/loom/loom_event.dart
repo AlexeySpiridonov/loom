@@ -3,7 +3,10 @@ part of 'loom_bloc.dart';
 @immutable
 abstract class LoomEvent {}
 
-class LoomOpenFAQEvent extends LoomEvent {}
+class LoomOpenFAQEvent extends LoomEvent {
+  LoomEvent loomEvent;
+  LoomOpenFAQEvent({required this.loomEvent});
+}
 
 class LoomOpenInfoEvent extends LoomEvent {
   final int index;
@@ -29,6 +32,8 @@ class LoomNetworksChooseEvent extends LoomEvent {
   LoomNetworksChooseEvent({required this.networkModel});
 }
 
+class LoomOpenSettingsNetworkEvent extends LoomEvent {}
+
 class LoomChangeLoomEvent extends LoomEvent {
   final String data;
   LoomChangeLoomEvent({required this.data});
@@ -40,6 +45,10 @@ class LoomChangePasswordEvent extends LoomEvent {
 }
 
 class LoomSettingsSaveEvent extends LoomEvent {}
+
+class LoomSettingsNextEvent extends LoomEvent {}
+
+class LoomOpenSuccessfulEvent extends LoomEvent {}
 
 class LoomOpenButtonsEvent extends LoomEvent {}
 

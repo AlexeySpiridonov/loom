@@ -50,6 +50,7 @@ class InfoScreen extends StatelessWidget {
                   child: LoomButton(
                     onPressed: () => context.read<LoomBloc>().add(nextEvent),
                     text: AppLocalizations.of(context)!.next,
+                    loomEvent: LoomClearEvent(),
                   ),
                 ),
               ),

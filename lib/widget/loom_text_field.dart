@@ -6,17 +6,20 @@ class LoomTextField extends StatelessWidget {
     required this.initialValue,
     required this.onChanged,
     required this.labelText,
+    this.autofocus,
   }) : super(key: key);
 
   final String initialValue;
   final Function(String)? onChanged;
   final String labelText;
+  final bool? autofocus;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       initialValue: initialValue,
       onChanged: onChanged,
+      autofocus: autofocus ?? false,
       decoration: InputDecoration(
         labelText: labelText,
         contentPadding:
