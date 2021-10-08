@@ -9,11 +9,13 @@ class LoomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     required this.loomEvent,
+    this.isModalBottomSheet,
   }) : super(key: key);
 
   final String text;
   final Function()? onPressed;
   final LoomEvent loomEvent;
+  final bool? isModalBottomSheet;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +54,12 @@ class LoomButton extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () => context
-                    .read<LoomBloc>()
-                    .add(LoomOpenFAQEvent(loomEvent: loomEvent)),
+                onTap: () {
+                  context
+                      .read<LoomBloc>()
+                      .add(LoomOpenFAQEvent(loomEvent: loomEvent));
+                  if (isModalBottomSheet ?? false) Navigator.pop(context);
+                },
                 child: const CircleAvatar(
                   radius: 12,
                   backgroundColor: Color.fromRGBO(47, 55, 94, 0.3),

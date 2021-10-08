@@ -78,9 +78,9 @@ public class MainActivity extends FlutterActivity {
             }
         } else {
 
-//
-//            Intent panelIntent = new Intent("android.settings.panel.action.ACTION_WIFI");
-//            startActivity(panelIntent, result);
+
+           Intent panelIntent = new Intent("android.settings.panel.action.ACTION_WIFI");
+           startActivity(panelIntent, result);
 
 //            WifiNetworkSuggestion suggestion = (password == "") ?
 //                new WifiNetworkSuggestion.Builder()
@@ -121,39 +121,39 @@ public class MainActivity extends FlutterActivity {
 
 
 
-            WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
-                    .setSsid( ssid )
-                    .setWpa2Passphrase(password)
-                    .build();
+            // WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
+            //         .setSsid( ssid )
+            //         .setWpa2Passphrase(password)
+            //         .build();
 
-            NetworkRequest networkRequest = new NetworkRequest.Builder()
-                    .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                    .setNetworkSpecifier(wifiNetworkSpecifier)
-                    .build();
+            // NetworkRequest networkRequest = new NetworkRequest.Builder()
+            //         .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            //         .setNetworkSpecifier(wifiNetworkSpecifier)
+            //         .build();
 
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            // ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-                @Override
-                public void onAvailable(Network network) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        connectivityManager.bindProcessToNetwork(network);
-                    } else {
-                        ConnectivityManager.setProcessDefaultNetwork(network);
-                    }
+            // ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+            //     @Override
+            //     public void onAvailable(Network network) {
+            //         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //             connectivityManager.bindProcessToNetwork(network);
+            //         } else {
+            //             ConnectivityManager.setProcessDefaultNetwork(network);
+            //         }
 
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Wifi successful connect on Android > 10 version",
-                            Toast.LENGTH_LONG
-                    ).show();
-                    //result.success("Wifi successful connect on Android > 10 version");
-                    super.onAvailable(network);
-                }
-            };
+            //         Toast.makeText(
+            //                 getApplicationContext(),
+            //                 "Wifi successful connect on Android > 10 version",
+            //                 Toast.LENGTH_LONG
+            //         ).show();
+            //         //result.success("Wifi successful connect on Android > 10 version");
+            //         super.onAvailable(network);
+            //     }
+            // };
 
-            connectivityManager.requestNetwork(networkRequest,networkCallback);
-            result.success("successful");
+            // connectivityManager.requestNetwork(networkRequest,networkCallback);
+            // result.success("successful");
         }
     }
 }
