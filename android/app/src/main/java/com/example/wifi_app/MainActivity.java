@@ -153,7 +153,7 @@ public class MainActivity extends FlutterActivity {
             // };
 
             // connectivityManager.requestNetwork(networkRequest,networkCallback);
-            // result.success("successful");
+            result.success("successful");
         }
     }
 }
