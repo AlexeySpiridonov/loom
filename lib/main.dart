@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (state is LoomConnectState) {
-            return const LoomConnectScreen();
+            return LoomConnectScreen(error: state.error);
           }
 
           if (state is LoomNetworksState) {

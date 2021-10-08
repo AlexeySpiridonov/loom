@@ -87,9 +87,9 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         ssid = event.networkModel.wl_ss_bssid;
         channal = event.networkModel.wl_ss_channel;
         loomName = networkName + "-plus";
-        // prefs.setString('bssid', event.networkModel.wl_ss_bssid);
-        // prefs.setString('channel', event.networkModel.wl_ss_channel);
-        // prefs.setString('network_name', event.networkModel.wl_ss_ssid);
+        prefs.setString('network_name', networkName);
+        prefs.setString('bssid', ssid);
+        prefs.setString('channel', channal);
         emit(LoomSettingsNetworkState(
           networkName: networkName,
           loomName: loomName,
