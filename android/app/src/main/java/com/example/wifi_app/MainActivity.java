@@ -80,7 +80,7 @@ public class MainActivity extends FlutterActivity {
 
 
            Intent panelIntent = new Intent("android.settings.panel.action.ACTION_WIFI");
-           startActivity(panelIntent, result);
+           startActivity(panelIntent);
 
 //            WifiNetworkSuggestion suggestion = (password == "") ?
 //                new WifiNetworkSuggestion.Builder()
