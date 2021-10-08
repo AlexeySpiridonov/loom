@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_app_bar.dart';
+import 'package:loom/widget/loom_body.dart';
 import 'package:loom/widget/loom_button.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
@@ -22,10 +23,9 @@ class ButtonsConnectScreen extends StatelessWidget {
       // appBar: const LoomAppBar(
       //   questionMark: true,
       // ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: LoomBody(
         children: [
-          const Spacer(),
+          const SizedBox(height: 60),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: LoomButton(
@@ -52,7 +52,6 @@ class ButtonsConnectScreen extends StatelessWidget {
               loomEvent: LoomOpenButtonsEvent(),
             ),
           ),
-          const Spacer(),
         ],
       ),
     );

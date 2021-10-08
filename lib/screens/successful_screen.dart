@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_app_bar.dart';
+import 'package:loom/widget/loom_body.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,41 +22,27 @@ class SuccessfulScreen extends StatelessWidget {
       // appBar: const LoomAppBar(
       //   questionMark: true,
       // ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    """${AppLocalizations.of(context)!.message9_1} $networkName
-                    ${AppLocalizations.of(context)!.message9_2} $loomName
-                    ${AppLocalizations.of(context)!.message9_3}""",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ],
-              ),
+      body: LoomBody(
+        children: [
+          const SizedBox(height: 80),
+          Text(
+            """${AppLocalizations.of(context)!.message9_1} $networkName
+${AppLocalizations.of(context)!.message9_2} $loomName
+${AppLocalizations.of(context)!.message9_3}""",
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 20,
+              height: 2,
             ),
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: LoomButton(
-                  onPressed: () =>
-                      context.read<LoomBloc>().add(LoomOpenButtonsEvent()),
-                  text: AppLocalizations.of(context)!.next,
-                  loomEvent: LoomOpenSuccessfulEvent(),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          LoomButton(
+            onPressed: () =>
+                context.read<LoomBloc>().add(LoomOpenButtonsEvent()),
+            text: AppLocalizations.of(context)!.next,
+            loomEvent: LoomOpenSuccessfulEvent(),
+          ),
+        ],
       ),
     );
   }

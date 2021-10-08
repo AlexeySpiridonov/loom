@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:loom/widget/loom_body.dart';
 import 'package:provider/src/provider.dart';
 
 class FAQScreen extends StatelessWidget {
@@ -23,28 +24,24 @@ class FAQScreen extends StatelessWidget {
         loomEvent: loomEvent,
         questionMark: false,
       ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              "Решение проблем:",
-              style: TextStyle(
+      body: LoomBody(
+        children: [
+          const Text(
+            "Решение проблем:",
+            style: TextStyle(
+              fontSize: 24,
+              height: 2,
+            ),
+          ),
+          for (int i = 0; i < results.length; i++)
+            Text(
+              results[i],
+              style: const TextStyle(
                 fontSize: 24,
                 height: 2,
               ),
             ),
-            for (int i = 0; i < results.length; i++)
-              Text(
-                results[i],
-                style: const TextStyle(
-                  fontSize: 24,
-                  height: 2,
-                ),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

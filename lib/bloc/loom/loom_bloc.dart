@@ -48,6 +48,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       if (event is LoomTryConnectEvent) {
         String _result = await wifiApiProvider.connectWifi(networkName, "");
         if (_result == "successful") {
+          //TODO WAIT 2 SECONDS!
           emit(LoomNetworksState(sec: 0, netList: const []));
           add(LoomNetworksGetEvent());
         } else {
@@ -134,7 +135,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           //emit(SettingsUnsuccessSaveState());
         }
       }
-
       if (event is LoomOpenSuccessfulEvent) {
         emit(LoomSuccessfulState(
           networkName: networkName,

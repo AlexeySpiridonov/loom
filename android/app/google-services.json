@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:810925929680:android:5a9571b934cc4f0e8b1ad5",
+        "mobilesdk_app_id": "1:810925929680:android:12c62f8c12a948548b1ad5",
         "android_client_info": {
-          "package_name": "com.example.wifi_app"
+          "package_name": "com.loom.repeater"
         }
       },
       "oauth_client": [
