@@ -6,7 +6,7 @@ abstract class LoomState {}
 class LoomInitState extends LoomState {}
 
 class LoomFAQState extends LoomState {
-  LoomEvent loomEvent;
+  final LoomEvent loomEvent;
   LoomFAQState({required this.loomEvent});
 }
 
@@ -33,7 +33,11 @@ class LoomSettingsNetworkState extends LoomState {
   LoomSettingsNetworkState({required this.networkName, required this.loomName});
 }
 
-class LoomWaitState extends LoomState {}
+class LoomWaitState extends LoomState {
+  final int sec;
+  final int messageId;
+  LoomWaitState({required this.sec, required this.messageId});
+}
 
 class LoomSuccessfulState extends LoomState {
   final String networkName;

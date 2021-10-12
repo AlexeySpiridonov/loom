@@ -92,7 +92,10 @@ class MyApp extends StatelessWidget {
           }
 
           if (state is LoomWaitState) {
-            return const WaitScreen();
+            return WaitScreen(
+              sec: state.sec,
+              messageId: state.messageId,
+            );
           }
 
           if (state is LoomSuccessfulState) {

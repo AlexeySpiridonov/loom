@@ -1,47 +1,42 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_app_bar.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:loom/widget/loom_body.dart';
-import 'package:provider/src/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class FAQScreen extends StatelessWidget {
   const FAQScreen({Key? key, required this.loomEvent}) : super(key: key);
 
   final LoomEvent loomEvent;
+  final String htmlText = """<html>
+          <head></head>
+          <body>
+            <b>
+              <div>1. *************</div>
+              <div>2. *************</div>
+              <div>3. *************</div>
+              <div>4. *************</div>
+            </b>
+          </body>
+          </html>""";
 
   @override
   Widget build(BuildContext context) {
-    final List<String> results = [
-      AppLocalizations.of(context)!.faq1,
-      AppLocalizations.of(context)!.faq2,
-      AppLocalizations.of(context)!.faq3,
-      AppLocalizations.of(context)!.faq4,
-    ];
-
     return Scaffold(
       appBar: LoomAppBar(
         loomEvent: loomEvent,
         questionMark: false,
       ),
-      body: LoomBody(
-        children: [
-          const Text(
-            "Решение проблем:",
-            style: TextStyle(
-              fontSize: 24,
-              height: 2,
-            ),
-          ),
-          for (int i = 0; i < results.length; i++)
-            Text(
-              results[i],
-              style: const TextStyle(
-                fontSize: 24,
-                height: 2,
-              ),
-            ),
-        ],
+      body: WebView(
+        initialUrl: 'about:blank',
+        onWebViewCreated: (WebViewController webViewController) {
+          if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+          webViewController.loadUrl(Uri.dataFromString(htmlText,
+                  mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+              .toString());
+        },
       ),
     );
   }

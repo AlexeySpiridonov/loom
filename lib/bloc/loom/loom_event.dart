@@ -4,7 +4,7 @@ part of 'loom_bloc.dart';
 abstract class LoomEvent {}
 
 class LoomOpenFAQEvent extends LoomEvent {
-  LoomEvent loomEvent;
+  final LoomEvent loomEvent;
   LoomOpenFAQEvent({required this.loomEvent});
 }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/models/network_model.dart';
-import 'package:loom/widget/loom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:loom/widget/loom_body.dart';
 import 'package:loom/widget/loom_text.dart';
@@ -61,18 +60,16 @@ class NetworksScreen extends StatelessWidget {
                 ),
               ),
             ),
-          if (netList.isEmpty) const Center(child: CircularProgressIndicator()),
+          //if (netList.isEmpty) const Center(child: Text("empty list")),
           const SizedBox(height: 10),
-          (sec > 0)
-              ? Text("Wait $sec seconds")
-              : Align(
-                  alignment: Alignment.topRight,
-                  child: TextButton(
-                    onPressed: () =>
-                        context.read<LoomBloc>().add(LoomNetworksGetEvent()),
-                    child: Text(AppLocalizations.of(context)!.rescan),
-                  ),
-                ),
+          Align(
+            alignment: Alignment.topRight,
+            child: TextButton(
+              onPressed: () =>
+                  context.read<LoomBloc>().add(LoomNetworksGetEvent()),
+              child: Text(AppLocalizations.of(context)!.rescan),
+            ),
+          ),
         ],
       ),
     );
