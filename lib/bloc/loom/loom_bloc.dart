@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:loom/models/network_model.dart';
@@ -34,10 +36,18 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         FirebaseAnalytics().setCurrentScreen(screenName: 'FAQ');
       }
 
-      //INFO SCREEN
-      if (event is LoomOpenInfoEvent) {
-        emit(LoomInfoState(index: event.index, nextEvent: event.nextEvent));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'info');
+      //INFO SCREENS
+      if (event is LoomOpenInfo1Event) {
+        emit(LoomInfo1State());
+        FirebaseAnalytics().setCurrentScreen(screenName: 'info 1 screen');
+      }
+      if (event is LoomOpenInfo2Event) {
+        emit(LoomInfo2State());
+        FirebaseAnalytics().setCurrentScreen(screenName: 'info 2 screen');
+      }
+      if (event is LoomOpenInfo3Event) {
+        emit(LoomInfo3State());
+        FirebaseAnalytics().setCurrentScreen(screenName: 'info 3 screen');
       }
 
       //LOOM CONNECT SCREEN
@@ -182,7 +192,12 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       }
       if (event is LoomClearEvent) {
         initValues();
-        openFirstScreen();
+        add(LoomOpenInfo1Event());
+      }
+
+      if (event is LoomOpenResetEvent) {
+        emit(LoomResetState());
+        FirebaseAnalytics().setCurrentScreen(screenName: 'Reset');
       }
     });
     loading();
@@ -194,23 +209,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     if (status == 1) {
       add(LoomOpenButtonsEvent());
     } else {
-      openFirstScreen();
+      add(LoomOpenInfo1Event());
     }
-  }
-
-  void openFirstScreen() {
-    add(
-      LoomOpenInfoEvent(
-        index: 0,
-        nextEvent: LoomOpenInfoEvent(
-          index: 1,
-          nextEvent: LoomOpenInfoEvent(
-            index: 2,
-            nextEvent: LoomOpenConnectEvent(),
-          ),
-        ),
-      ),
-    );
   }
 
   void saveValues() {

@@ -10,11 +10,11 @@ class LoomFAQState extends LoomState {
   LoomFAQState({required this.loomEvent});
 }
 
-class LoomInfoState extends LoomState {
-  final int index;
-  final LoomEvent nextEvent;
-  LoomInfoState({required this.index, required this.nextEvent});
-}
+class LoomInfo1State extends LoomState {}
+
+class LoomInfo2State extends LoomState {}
+
+class LoomInfo3State extends LoomState {}
 
 class LoomConnectState extends LoomState {
   final String error;
@@ -50,3 +50,5 @@ class LoomButtonsConnectState extends LoomState {
   final String networkName;
   LoomButtonsConnectState({required this.loomName, required this.networkName});
 }
+
+class LoomResetState extends LoomState {}

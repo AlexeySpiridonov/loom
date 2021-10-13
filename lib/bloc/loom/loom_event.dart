@@ -8,11 +8,11 @@ class LoomOpenFAQEvent extends LoomEvent {
   LoomOpenFAQEvent({required this.loomEvent});
 }
 
-class LoomOpenInfoEvent extends LoomEvent {
-  final int index;
-  final LoomEvent nextEvent;
-  LoomOpenInfoEvent({required this.index, required this.nextEvent});
-}
+class LoomOpenInfo1Event extends LoomEvent {}
+
+class LoomOpenInfo2Event extends LoomEvent {}
+
+class LoomOpenInfo3Event extends LoomEvent {}
 
 class LoomOpenConnectEvent extends LoomEvent {}
 
@@ -57,3 +57,5 @@ class LoomClearEvent extends LoomEvent {}
 class LoomConnectNetworkEvent extends LoomEvent {}
 
 class LoomConnectLoomEvent extends LoomEvent {}
+
+class LoomOpenResetEvent extends LoomEvent {}

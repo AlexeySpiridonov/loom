@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loom/screens/info2_screen.dart';
 import 'package:loom/screens/wait_screen.dart';
 import 'bloc/loom/loom_bloc.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'models/info_screen_model.dart';
-import 'screens/info_screen.dart';
+import 'screens/info1_screen.dart';
 import 'screens/buttons_connect_screen.dart';
 import 'screens/faq_screen.dart';
+import 'screens/info3_screen.dart';
 import 'screens/loom_connect_screen.dart';
 import 'screens/networks_screen.dart';
 import 'screens/settings_network_screen.dart';
@@ -66,11 +68,14 @@ class MyApp extends StatelessWidget {
             AppLocalizations.of(context)!.message13,
           ];
 
-          if (state is LoomInfoState) {
-            return InfoScreen(
-              text: infoPagesTexts[state.index],
-              nextEvent: state.nextEvent,
-            );
+          if (state is LoomInfo1State) {
+            return const Info1Screen();
+          }
+          if (state is LoomInfo2State) {
+            return const Info2Screen();
+          }
+          if (state is LoomInfo3State) {
+            return const Info3Screen();
           }
 
           if (state is LoomConnectState) {
@@ -117,7 +122,7 @@ class MyApp extends StatelessWidget {
           }
 
           // if (state is LoomInitState) {
-          return const Center(child: CircularProgressIndicator());
+          return const WaitScreen(sec: 0, messageId: 0);
           // }
         }),
       ),

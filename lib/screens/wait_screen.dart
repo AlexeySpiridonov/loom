@@ -14,7 +14,7 @@ class WaitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> messages = [
+    final List<String> messages = [
       "",
       AppLocalizations.of(context)!.message17,
       AppLocalizations.of(context)!.message18,
@@ -28,13 +28,35 @@ class WaitScreen extends StatelessWidget {
       body: LoomBody(
         children: [
           const SizedBox(height: 80),
-          Text(AppLocalizations.of(context)!.message7),
+          Text(
+            AppLocalizations.of(context)!.message7,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 30),
-          const CircularProgressIndicator(),
+          const CircularProgressIndicator(
+            strokeWidth: 8.0,
+          ),
           const SizedBox(height: 10),
-          (sec > 0) ? Text("Wait $sec seconds") : Container(),
+          (sec > 0)
+              ? Text(
+                  "Wait $sec seconds",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              : Container(),
           const SizedBox(height: 30),
-          Text(messages[messageId]),
+          Text(
+            messages[messageId],
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
           const SizedBox(height: 80),
         ],
       ),

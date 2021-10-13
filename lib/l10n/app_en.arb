@@ -1,13 +1,13 @@
 {
   "language": "English",
-  "message1": "Включите в розетку Loom около основного роутера.",
-  "message2": "Убедитесь что между loom и основным роутером нет стен и бытовой техники.",
-  "message3": "Дождитесь что загорится лампочка.",
+  "message1": "Plug extender next to the router",
+  "message2": "Make sure there are no walls or appliances between the Loom and the main router",
+  "message3": "Switch it ON from the side. Wait until the light comes on",
   "message4": "Select the axisting Wi-Fi network you want to extend",
   "message5": "Enter your existing network password",
   "message6": "Wi-Fi name for Loom",
-  "message7": "Ожидайте",
-  "message8": "Приложение запросит подключение к домашней сети и сети репитера, разрешите это действие",
+  "message7": "Await",
+  "message8": "The application will ask for a connection to the home network and the repeater network, allow this action",
   "message9_1": "Ура! Все настроено!\nВаша домашняя сеть:",
   "message9_2": "Сеть Loom:",
   "message9_3": "Теперь можно унести Loom туда, где вам нужно улучшить Wi-Fi и включить в розетку.",
@@ -24,6 +24,8 @@
   "next": "Next",
   "save": "Save",
   "connect": "Connect",
+  "light_on": "The light is on",
+  "no": "No",
 
 
   "simple": "Simple"
