@@ -13,6 +13,7 @@ import 'screens/faq_screen.dart';
 import 'screens/info3_screen.dart';
 import 'screens/loom_connect_screen.dart';
 import 'screens/networks_screen.dart';
+import 'screens/reset_screen.dart';
 import 'screens/settings_network_screen.dart';
 import 'screens/successful_screen.dart';
 import 'services/http_api_provider.dart';
@@ -119,6 +120,10 @@ class MyApp extends StatelessWidget {
 
           if (state is LoomFAQState) {
             return FAQScreen(loomEvent: state.loomEvent);
+          }
+
+          if (state is LoomResetState) {
+            return const ResetScreen();
           }
 
           // if (state is LoomInitState) {
