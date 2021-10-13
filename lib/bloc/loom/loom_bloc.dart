@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:loom/models/network_model.dart';
