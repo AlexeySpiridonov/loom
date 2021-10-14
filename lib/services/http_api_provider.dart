@@ -88,4 +88,18 @@ class HttpApiProvider {
 
     return response.body;
   }
+
+  Future<String?> getGoogle() async {
+    try {
+      var url = Uri.parse('https://www.google.com');
+      var response = await http.get(url);
+
+      if (response.statusCode != 200) return null;
+
+      return response.body;
+    } catch (e) {
+      return null;
+      //print(e);
+    }
+  }
 }

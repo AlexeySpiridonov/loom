@@ -69,6 +69,8 @@ public class MainActivity extends FlutterActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 545) {
             flutterResult.success("successful");
+        } else {
+            flutterResult.success("unsuccessful");
         }
 
     }
@@ -127,6 +129,8 @@ public class MainActivity extends FlutterActivity {
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+            final boolean[] isSuccessful = {false};
+
             ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
                 @Override
                 public void onAvailable(Network network) {
@@ -141,13 +145,30 @@ public class MainActivity extends FlutterActivity {
                             "Wifi successful connect",
                             Toast.LENGTH_LONG
                     ).show();
+
+                    isSuccessful[0] = true;
+                    //flutterResult.success("successful");
+
                     //result.success("successful");
                     super.onAvailable(network);
                 }
             };
 
             connectivityManager.requestNetwork(networkRequest,networkCallback);
-            result.success("successful");
+
+            try {
+                for (int i = 0; i < 20; i++) {
+                    Thread.sleep(1000);
+                    if (isSuccessful[0]) {
+                        result.success("successful");
+                        return;
+                    }
+                }
+                result.success("unsuccessful");
+            } catch(InterruptedException e) {
+                result.success("unsuccessful");
+                //System.out.println("got interrupted!");
+            }
         }
     }
 }

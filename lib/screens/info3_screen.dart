@@ -28,40 +28,11 @@ class Info3Screen extends StatelessWidget {
             loomEvent: LoomOpenInfo3Event(),
           ),
           SizedBox(height: 12 * devicePixelRatio),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color.fromRGBO(26, 47, 79, 1),
-              borderRadius: BorderRadius.circular(6 * devicePixelRatio),
-            ),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6 * devicePixelRatio),
-                  ),
-                ),
-                minimumSize:
-                    MaterialStateProperty.all(const Size(double.infinity, 20)),
-                backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                // elevation: MaterialStateProperty.all(3),
-                shadowColor: MaterialStateProperty.all(Colors.transparent),
-              ),
-              onPressed: () =>
-                  context.read<LoomBloc>().add(LoomOpenResetEvent()),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10 * devicePixelRatio,
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.no,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18 * devicePixelRatio,
-                  ),
-                ),
-              ),
-            ),
+          LoomButton(
+            onPressed: () => context.read<LoomBloc>().add(LoomOpenResetEvent()),
+            text: AppLocalizations.of(context)!.no,
+            loomEvent: LoomOpenInfo3Event(),
+            disabled: true,
           ),
         ],
       ),

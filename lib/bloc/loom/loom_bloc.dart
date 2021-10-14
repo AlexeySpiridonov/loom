@@ -147,7 +147,18 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           emit(LoomWaitState(sec: i, messageId: 3));
           await Future.delayed(const Duration(seconds: 1), () {});
         }
-        add(LoomConnectLoomEvent());
+
+        await wifiApiProvider.connectWifi(
+          networkName,
+          password,
+        );
+        String? resp = await httpApiProvider.getGoogle();
+        if (resp == null) emit(LoomResetState());
+        await wifiApiProvider.connectWifi(
+          loomName,
+          password,
+        );
+
         for (int i = 10; i > 0; i--) {
           emit(LoomWaitState(sec: i, messageId: 3));
           await Future.delayed(const Duration(seconds: 1), () {});
