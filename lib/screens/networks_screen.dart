@@ -15,17 +15,19 @@ class NetworksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
       body: LoomBody(
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: 20 * devicePixelRatio),
           LoomText(
             AppLocalizations.of(context)!.message4,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20 * devicePixelRatio),
           for (int i = 0; i < netList.length; i++)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 8.0 * devicePixelRatio),
               child: GestureDetector(
                 onTap: () {
                   context.read<LoomBloc>().add(
@@ -35,33 +37,38 @@ class NetworksScreen extends StatelessWidget {
                       );
                 },
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(26, 47, 79, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(26, 47, 79, 1),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(6.0 * devicePixelRatio)),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16.0 * devicePixelRatio,
+                      vertical: 8.0 * devicePixelRatio),
                   child: Row(
                     children: [
                       Text(
                         netList[i].wl_ss_ssid,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16 * devicePixelRatio),
                       ),
                       const Spacer(),
                       if (netList[i].wl_ss_sin >= 50)
-                        Image.asset("assets/images/wifi3.png", height: 16)
+                        Image.asset("assets/images/wifi3.png",
+                            height: 16 * devicePixelRatio)
                       else if (netList[i].wl_ss_sin >= 30)
-                        Image.asset("assets/images/wifi2.png", height: 16)
+                        Image.asset("assets/images/wifi2.png",
+                            height: 16 * devicePixelRatio)
                       else
-                        Image.asset("assets/images/wifi1.png", height: 16),
+                        Image.asset("assets/images/wifi1.png",
+                            height: 16 * devicePixelRatio),
                     ],
                   ),
                 ),
               ),
             ),
           //if (netList.isEmpty) const Center(child: Text("empty list")),
-          const SizedBox(height: 10),
+          SizedBox(height: 10 * devicePixelRatio),
           Align(
             alignment: Alignment.topRight,
             child: TextButton(

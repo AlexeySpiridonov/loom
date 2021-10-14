@@ -25,20 +25,25 @@ class HttpApiProvider {
 
       return response.body;
     } catch (e) {
-      return "";
+      return null;
       //print(e);
     }
   }
 
   Future<List<NetworkModel>> apList() async {
-    var url = Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
-    var response = await http.get(url);
+    try {
+      var url =
+          Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
+      var response = await http.get(url);
 
-    List<NetworkModel> neworksList = (json.decode(response.body) as List)
-        .map((i) => NetworkModel.fromJson(i))
-        .toList();
+      List<NetworkModel> neworksList = (json.decode(response.body) as List)
+          .map((i) => NetworkModel.fromJson(i))
+          .toList();
 
-    return neworksList;
+      return neworksList;
+    } catch (e) {
+      return [];
+    }
   }
 
   Future<String> formSetRepeater({

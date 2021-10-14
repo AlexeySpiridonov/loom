@@ -15,18 +15,17 @@ class LoomConnectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
-      // appBar: const LoomAppBar(
-      //   questionMark: true,
-      // ),
       body: LoomBody(
         children: [
           LoomText(
             AppLocalizations.of(context)!.message16,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10 * devicePixelRatio),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0 * devicePixelRatio),
             child: LoomTextField(
               initialValue: "",
               onChanged: (newValue) => context
@@ -35,7 +34,7 @@ class LoomConnectScreen extends StatelessWidget {
               labelText: "Wi-Fi address",
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20 * devicePixelRatio),
           LoomButton(
             onPressed: () {
               context.read<LoomBloc>().add(LoomTryConnectEvent());
@@ -43,7 +42,7 @@ class LoomConnectScreen extends StatelessWidget {
             text: AppLocalizations.of(context)!.connect,
             loomEvent: LoomOpenConnectEvent(),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20 * devicePixelRatio),
           (error != "" && error != "successful") ? Text(error) : Container(),
         ],
       ),

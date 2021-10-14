@@ -18,15 +18,14 @@ class ButtonsConnectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
-      // appBar: const LoomAppBar(
-      //   questionMark: true,
-      // ),
       body: LoomBody(
         children: [
-          const SizedBox(height: 60),
+          SizedBox(height: 60 * devicePixelRatio),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0 * devicePixelRatio),
             child: LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomConnectNetworkEvent()),
@@ -35,7 +34,7 @@ class ButtonsConnectScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0 * devicePixelRatio),
             child: LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomConnectLoomEvent()),
@@ -44,7 +43,7 @@ class ButtonsConnectScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0 * devicePixelRatio),
             child: LoomButton(
               onPressed: () => context.read<LoomBloc>().add(LoomClearEvent()),
               text: AppLocalizations.of(context)!.message12,

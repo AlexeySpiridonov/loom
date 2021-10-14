@@ -23,15 +23,17 @@ class SettingsNetworkScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
       appBar: LoomAppBar(
         loomEvent: LoomOpenNetworksEvent(),
         questionMark: true,
+        text: networkName,
       ),
       body: LoomBody(
         children: [
           LoomText(AppLocalizations.of(context)!.message5),
-          const SizedBox(height: 20),
           LoomTextField(
             initialValue: "",
             onChanged: (newValue) => context
@@ -39,25 +41,23 @@ class SettingsNetworkScreen extends StatelessWidget {
                 .add(LoomChangePasswordEvent(data: newValue)),
             labelText: "",
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10 * devicePixelRatio),
           LoomButton(
             onPressed: () =>
                 context.read<LoomBloc>().add(LoomSettingsNextEvent()),
             text: AppLocalizations.of(context)!.next,
             loomEvent: LoomOpenSettingsNetworkEvent(),
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          const Align(
+          SizedBox(height: 30 * devicePixelRatio),
+          Align(
             alignment: Alignment.topLeft,
             child: Text(
               "Wi-Fi name for Loom",
               textAlign: TextAlign.start,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 14 * devicePixelRatio,
                 fontWeight: FontWeight.w400,
-                color: Color.fromRGBO(130, 135, 158, 1),
+                color: const Color.fromRGBO(130, 135, 158, 1),
               ),
             ),
           ),
@@ -65,23 +65,23 @@ class SettingsNetworkScreen extends StatelessWidget {
             children: [
               Text(
                 loomName,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: 14 * devicePixelRatio,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               IconButton(
                 icon: Image.asset(
                   "assets/images/edit.png",
-                  height: 20,
+                  height: 20 * devicePixelRatio,
                 ),
-                iconSize: 20,
+                iconSize: 20 * devicePixelRatio,
                 onPressed: () {
                   showModalBottomSheet<void>(
                     backgroundColor: const Color.fromRGBO(10, 22, 52, 1),
-                    shape: const RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(25.0),
+                        top: Radius.circular(25.0 * devicePixelRatio),
                       ),
                     ),
                     context: context,
@@ -89,16 +89,16 @@ class SettingsNetworkScreen extends StatelessWidget {
                     builder: (BuildContext context) {
                       return Container(
                         padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
+                          left: 20 * devicePixelRatio,
+                          right: 20 * devicePixelRatio,
                           bottom: MediaQuery.of(context).viewInsets.bottom,
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10 * devicePixelRatio),
                             LoomText(AppLocalizations.of(context)!.message6),
-                            const SizedBox(height: 15),
+                            SizedBox(height: 15 * devicePixelRatio),
                             LoomTextField(
                               initialValue: loomName,
                               onChanged: (newValue) => context
@@ -107,7 +107,7 @@ class SettingsNetworkScreen extends StatelessWidget {
                               autofocus: true,
                               labelText: "",
                             ),
-                            const SizedBox(height: 20),
+                            SizedBox(height: 20 * devicePixelRatio),
                             LoomButton(
                               onPressed: () {
                                 context
@@ -119,7 +119,7 @@ class SettingsNetworkScreen extends StatelessWidget {
                               loomEvent: LoomOpenSettingsNetworkEvent(),
                               isModalBottomSheet: true,
                             ),
-                            const SizedBox(height: 20),
+                            SizedBox(height: 20 * devicePixelRatio),
                           ],
                         ),
                       );

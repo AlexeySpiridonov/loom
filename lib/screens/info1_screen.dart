@@ -13,19 +13,18 @@ class Info1Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
-      // appBar: const LoomAppBar(
-      //   questionMark: true,
-      // ),
       body: LoomBody(
         children: [
           LoomText(AppLocalizations.of(context)!.message1),
           Image.asset("assets/images/loom.jpg"),
-          const SizedBox(height: 80),
+          SizedBox(height: 20 * devicePixelRatio),
           LoomButton(
             onPressed: () => context.read<LoomBloc>().add(LoomOpenInfo2Event()),
             text: AppLocalizations.of(context)!.next,
-            loomEvent: LoomClearEvent(),
+            loomEvent: LoomOpenInfo1Event(),
           ),
         ],
       ),

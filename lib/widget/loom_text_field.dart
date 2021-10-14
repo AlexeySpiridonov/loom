@@ -16,10 +16,13 @@ class LoomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return TextFormField(
       initialValue: initialValue,
       onChanged: onChanged,
       autofocus: autofocus ?? false,
+      style: TextStyle(fontSize: 18 * devicePixelRatio),
       decoration: InputDecoration(
         labelText: labelText,
         contentPadding:

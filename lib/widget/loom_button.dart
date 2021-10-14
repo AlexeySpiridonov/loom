@@ -20,6 +20,8 @@ class LoomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
@@ -32,13 +34,13 @@ class LoomButton extends StatelessWidget {
           ],
         ),
         color: Colors.deepPurple.shade300,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(6 * devicePixelRatio),
       ),
       child: ElevatedButton(
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.0),
+              borderRadius: BorderRadius.circular(6 * devicePixelRatio),
             ),
           ),
           minimumSize:
@@ -49,8 +51,8 @@ class LoomButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
+          padding: EdgeInsets.symmetric(
+            vertical: 10 * devicePixelRatio,
           ),
           child: Row(
             children: [
@@ -61,15 +63,15 @@ class LoomButton extends StatelessWidget {
                       .add(LoomOpenFAQEvent(loomEvent: loomEvent));
                   if (isModalBottomSheet ?? false) Navigator.pop(context);
                 },
-                child: const CircleAvatar(
-                  radius: 12,
-                  backgroundColor: Color.fromRGBO(47, 55, 94, 0.3),
+                child: CircleAvatar(
+                  radius: 12 * devicePixelRatio,
+                  backgroundColor: const Color.fromRGBO(47, 55, 94, 0.3),
                   child: Text(
                     "?",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
-                      fontSize: 14,
+                      fontSize: 14 * devicePixelRatio,
                     ),
                   ),
                 ),
@@ -78,13 +80,13 @@ class LoomButton extends StatelessWidget {
                 child: Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 18 * devicePixelRatio,
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
+              SizedBox(width: 22 * devicePixelRatio),
             ],
           ),
         ),

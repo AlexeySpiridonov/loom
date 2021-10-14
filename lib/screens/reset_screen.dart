@@ -13,17 +13,20 @@ class ResetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
       body: LoomBody(
         children: [
           LoomText(AppLocalizations.of(context)!.message13),
           Image.asset("assets/images/loom.jpg"),
-          const SizedBox(height: 80),
+          SizedBox(height: 20 * devicePixelRatio),
           LoomButton(
             onPressed: () => context.read<LoomBloc>().add(LoomOpenInfo1Event()),
             text: AppLocalizations.of(context)!.next,
             loomEvent: LoomClearEvent(),
           ),
+          SizedBox(height: 20 * devicePixelRatio),
         ],
       ),
     );

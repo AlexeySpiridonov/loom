@@ -94,8 +94,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           emit(LoomNetworksState(sec: 0, netList: netList));
           FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
         } else {
-          emit(LoomNetworksState(sec: 0, netList: const []));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
+          emit(LoomResetState());
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Reset');
         }
         isScannings = false;
       }
@@ -143,7 +143,12 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           password: password,
         );
 
-        for (int i = 30; i > 0; i--) {
+        for (int i = 30; i > 10; i--) {
+          emit(LoomWaitState(sec: i, messageId: 3));
+          await Future.delayed(const Duration(seconds: 1), () {});
+        }
+        add(LoomConnectLoomEvent());
+        for (int i = 10; i > 0; i--) {
           emit(LoomWaitState(sec: i, messageId: 3));
           await Future.delayed(const Duration(seconds: 1), () {});
         }

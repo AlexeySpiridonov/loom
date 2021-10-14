@@ -24,10 +24,13 @@ class FAQScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
       appBar: LoomAppBar(
         loomEvent: loomEvent,
         questionMark: false,
+        text: "FAQ",
       ),
       body: WebView(
         initialUrl: 'about:blank',

@@ -4,6 +4,7 @@ import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_body.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:loom/widget/loom_text.dart';
 
 class SuccessfulScreen extends StatelessWidget {
   const SuccessfulScreen({
@@ -17,24 +18,16 @@ class SuccessfulScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
-      // appBar: const LoomAppBar(
-      //   questionMark: true,
-      // ),
       body: LoomBody(
         children: [
-          const SizedBox(height: 80),
-          Text(
+          LoomText(
             """${AppLocalizations.of(context)!.message9_1} $networkName
 ${AppLocalizations.of(context)!.message9_2} $loomName
 ${AppLocalizations.of(context)!.message9_3}""",
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20,
-              height: 2,
-            ),
           ),
-          const SizedBox(height: 20),
           LoomButton(
             onPressed: () =>
                 context.read<LoomBloc>().add(LoomOpenButtonsEvent()),

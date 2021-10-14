@@ -13,32 +13,31 @@ class Info3Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
     return Scaffold(
-      // appBar: const LoomAppBar(
-      //   questionMark: true,
-      // ),
       body: LoomBody(
         children: [
           LoomText(AppLocalizations.of(context)!.message3),
           Image.asset("assets/images/loom.jpg"),
-          const SizedBox(height: 80),
+          SizedBox(height: 20 * devicePixelRatio),
           LoomButton(
             onPressed: () =>
                 context.read<LoomBloc>().add(LoomOpenConnectEvent()),
             text: AppLocalizations.of(context)!.light_on,
-            loomEvent: LoomClearEvent(),
+            loomEvent: LoomOpenInfo3Event(),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12 * devicePixelRatio),
           Container(
             decoration: BoxDecoration(
               color: const Color.fromRGBO(26, 47, 79, 1),
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(6 * devicePixelRatio),
             ),
             child: ElevatedButton(
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0),
+                    borderRadius: BorderRadius.circular(6 * devicePixelRatio),
                   ),
                 ),
                 minimumSize:
@@ -50,15 +49,15 @@ class Info3Screen extends StatelessWidget {
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomOpenResetEvent()),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
+                padding: EdgeInsets.symmetric(
+                  vertical: 10 * devicePixelRatio,
                 ),
                 child: Text(
                   AppLocalizations.of(context)!.no,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 18 * devicePixelRatio,
                   ),
                 ),
               ),

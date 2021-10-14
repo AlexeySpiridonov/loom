@@ -14,6 +14,7 @@ class WaitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
     final List<String> messages = [
       "",
       AppLocalizations.of(context)!.message17,
@@ -22,42 +23,39 @@ class WaitScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      // appBar: const LoomAppBar(
-      //   questionMark: true,
-      // ),
       body: LoomBody(
         children: [
-          const SizedBox(height: 80),
+          SizedBox(height: 80 * devicePixelRatio),
           Text(
             AppLocalizations.of(context)!.message7,
-            style: const TextStyle(
-              fontSize: 20,
+            style: TextStyle(
+              fontSize: 20 * devicePixelRatio,
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 30),
-          const CircularProgressIndicator(
-            strokeWidth: 8.0,
+          SizedBox(height: 30 * devicePixelRatio),
+          CircularProgressIndicator(
+            strokeWidth: 8.0 * devicePixelRatio,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10 * devicePixelRatio),
           (sec > 0)
               ? Text(
                   "Wait $sec seconds",
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16 * devicePixelRatio,
                     fontWeight: FontWeight.w400,
                   ),
                 )
               : Container(),
-          const SizedBox(height: 30),
+          SizedBox(height: 30 * devicePixelRatio),
           Text(
             messages[messageId],
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: 16 * devicePixelRatio,
               fontWeight: FontWeight.w400,
             ),
           ),
-          const SizedBox(height: 80),
+          SizedBox(height: 80 * devicePixelRatio),
         ],
       ),
     );

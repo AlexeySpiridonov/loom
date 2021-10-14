@@ -5,10 +5,14 @@ import 'package:loom/bloc/loom/loom_bloc.dart';
 class LoomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final LoomEvent loomEvent;
   final bool questionMark;
+  final String text;
 
-  const LoomAppBar(
-      {Key? key, required this.questionMark, required this.loomEvent})
-      : super(key: key);
+  const LoomAppBar({
+    Key? key,
+    required this.questionMark,
+    required this.loomEvent,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +21,9 @@ class LoomAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () => context.read<LoomBloc>().add(loomEvent),
         icon: const Icon(Icons.arrow_back),
       ),
-      title: Row(
-        children: const [
-          Text("Loom", style: TextStyle(color: Colors.white)),
-        ],
+      title: Text(
+        text,
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }
