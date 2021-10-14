@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import NetworkExtension
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -11,22 +12,25 @@ import Flutter
     let wifiChannel = FlutterMethodChannel(name: "loom/wifi", binaryMessenger: controller.binaryMessenger)
 
     wifiChannel.setMethodCallHandler({
-      [weak self] (call: FlutterMethodCall, result: FlutterResult, login: String, password String) -> Void in
-      guard call.method == "tryConnectToWifi" else {
-        result(FlutterMethodNotImplemented)
-        return
-      }
-      self?.connectWifi(result: result, login: login, password: password)
+        [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+        guard call.method == "tryConnectToWifi" else {
+            result(FlutterMethodNotImplemented)
+            return
+        }
+        if let args = call.arguments as? Dictionary<String, Any>,
+            let login = args["login"] as? String,
+            let pass = args["password"] as? String {
+                self?.connectWifi(result: result, login: login, password: pass)
+            }
     })
 
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  private func connectWifi(result: FlutterResult, login: String, password: String) {
-    let wiFiConfig = NEHotspotConfiguration(ssid: login, passphrase: password, isWEP: false)
-
-    NEHotspotConfigurationManager.shared.apply(wiFiConfig) { error in
+  private func connectWifi(result: @escaping FlutterResult, login: String, password: String) {
+    let c = NEHotspotConfiguration(ssid: login, passphrase: password, isWEP: false)
+    NEHotspotConfigurationManager.shared.apply(c) { error in
       if let error = error {
         result(error.localizedDescription)
       }
