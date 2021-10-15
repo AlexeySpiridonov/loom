@@ -24,15 +24,12 @@ class LoomConnectScreen extends StatelessWidget {
             AppLocalizations.of(context)!.message16,
           ),
           SizedBox(height: 10 * devicePixelRatio),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0 * devicePixelRatio),
-            child: LoomTextField(
-              initialValue: "",
-              onChanged: (newValue) => context
-                  .read<LoomBloc>()
-                  .add(LoomChangeNetworkEvent(data: newValue)),
-              labelText: "Wi-Fi address",
-            ),
+          LoomTextField(
+            initialValue: "",
+            onChanged: (newValue) => context
+                .read<LoomBloc>()
+                .add(LoomChangeNetworkEvent(data: newValue)),
+            labelText: "Wi-Fi address",
           ),
           SizedBox(height: 20 * devicePixelRatio),
           LoomButton(

@@ -8,13 +8,17 @@ import 'package:loom/models/network_model.dart';
 class HttpApiProvider {
   HttpApiProvider();
 
-  Future<InfoStatusModel> sysStatus() async {
-    var url =
-        Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
-    var response = await http.get(url);
+  Future<String?> sysStatus() async {
+    try {
+      var url =
+          Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
+      var response = await http.get(url);
 
-    Map<String, dynamic> body = jsonDecode(response.body);
-    return InfoStatusModel.fromJson(body);
+      return response.body;
+    } catch (e) {
+      return null;
+      //print(e);
+    }
   }
 
   Future<String?> formScanningAp() async {

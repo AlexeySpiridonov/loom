@@ -27,19 +27,37 @@ class FAQScreen extends StatelessWidget {
     final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
 
     return Scaffold(
-      appBar: LoomAppBar(
-        loomEvent: loomEvent,
-        questionMark: false,
-        text: "FAQ",
-      ),
-      body: WebView(
-        initialUrl: 'about:blank',
-        onWebViewCreated: (WebViewController webViewController) {
-          if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-          webViewController.loadUrl(Uri.dataFromString(htmlText,
-                  mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
-              .toString());
-        },
+      body: SafeArea(
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
+                child: LoomAppBar(
+                  loomEvent: loomEvent,
+                  text: "FAQ",
+                ),
+              ),
+              Expanded(
+                child: WebView(
+                  initialUrl: 'about:blank',
+                  onWebViewCreated: (WebViewController webViewController) {
+                    if (Platform.isAndroid) {
+                      WebView.platform = SurfaceAndroidWebView();
+                    }
+                    webViewController.loadUrl(Uri.dataFromString(htmlText,
+                            mimeType: 'text/html',
+                            encoding: Encoding.getByName('utf-8'))
+                        .toString());
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

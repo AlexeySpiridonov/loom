@@ -26,14 +26,13 @@ class SettingsNetworkScreen extends StatelessWidget {
     final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
 
     return Scaffold(
-      appBar: LoomAppBar(
-        loomEvent: LoomOpenNetworksEvent(),
-        questionMark: true,
-        text: networkName,
-      ),
       body: LoomBody(
         children: [
-          LoomText(AppLocalizations.of(context)!.message5),
+          LoomAppBar(
+            loomEvent: LoomOpenNetworksEvent(),
+            text: networkName,
+          ),
+          LoomText(AppLocalizations.of(context)!.message5, top: 9),
           LoomTextField(
             initialValue: "",
             onChanged: (newValue) => context

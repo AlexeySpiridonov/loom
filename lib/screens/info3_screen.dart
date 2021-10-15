@@ -16,25 +16,34 @@ class Info3Screen extends StatelessWidget {
     final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
 
     return Scaffold(
-      body: LoomBody(
-        children: [
-          LoomText(AppLocalizations.of(context)!.message3),
-          Image.asset("assets/images/loom.jpg"),
-          SizedBox(height: 20 * devicePixelRatio),
-          LoomButton(
-            onPressed: () =>
-                context.read<LoomBloc>().add(LoomOpenConnectEvent()),
-            text: AppLocalizations.of(context)!.light_on,
-            loomEvent: LoomOpenInfo3Event(),
-          ),
-          SizedBox(height: 12 * devicePixelRatio),
-          LoomButton(
-            onPressed: () => context.read<LoomBloc>().add(LoomOpenResetEvent()),
-            text: AppLocalizations.of(context)!.no,
-            loomEvent: LoomOpenInfo3Event(),
-            disabled: true,
-          ),
-        ],
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
+        child: Column(
+          children: [
+            LoomText(AppLocalizations.of(context)!.message3),
+            Expanded(
+              child: Center(
+                child: Image.asset("assets/images/loom.jpg"),
+              ),
+            ),
+            LoomButton(
+              onPressed: () =>
+                  context.read<LoomBloc>().add(LoomOpenConnectEvent()),
+              text: AppLocalizations.of(context)!.light_on,
+              loomEvent: LoomOpenInfo3Event(),
+            ),
+            SizedBox(height: 12 * devicePixelRatio),
+            LoomButton(
+              onPressed: () =>
+                  context.read<LoomBloc>().add(LoomOpenResetEvent()),
+              text: AppLocalizations.of(context)!.no,
+              loomEvent: LoomOpenInfo3Event(),
+              disabled: true,
+            ),
+            SizedBox(height: 20 * devicePixelRatio),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:loom/models/info_status_model.dart';
 import 'package:loom/models/network_model.dart';
 import 'package:loom/services/http_api_provider.dart';
 import 'package:loom/services/wifi_api_provider.dart';
@@ -59,7 +60,9 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         emit(LoomWaitState(sec: 0, messageId: 1));
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
         String _result = await wifiApiProvider.connectWifi(networkName, "");
-        if (_result == "successful") {
+        String? sysStatus = await httpApiProvider.sysStatus();
+        if ((_result == "successful" || _result == "already associated.") &&
+            sysStatus != null) {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
         } else {

@@ -4,9 +4,11 @@ class LoomText extends StatelessWidget {
   const LoomText(
     this.text, {
     Key? key,
+    this.top,
   }) : super(key: key);
 
   final String text;
+  final int? top;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,9 @@ class LoomText extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-          top: 52.0 * devicePixelRatio, bottom: 37.0 * devicePixelRatio),
+        top: top != null ? (top! * devicePixelRatio) : 52.0 * devicePixelRatio,
+        bottom: 37.0 * devicePixelRatio,
+      ),
       child: Align(
         alignment: Alignment.topLeft,
         child: Text(
