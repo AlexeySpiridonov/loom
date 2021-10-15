@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import NetworkExtension
+import Foundation
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -18,9 +19,9 @@ import NetworkExtension
             return
         }
         if let args = call.arguments as? Dictionary<String, Any>,
-            let login = args["login"] as? String,
+            let ssid = args["login"] as? String,
             let pass = args["password"] as? String {
-                self?.connectWifi(result: result, login: login, password: pass)
+                self?.connectWifi(result: result, ssid: ssid, pass: pass)
             }
     })
 
@@ -28,8 +29,12 @@ import NetworkExtension
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  private func connectWifi(result: @escaping FlutterResult, login: String, password: String) {
-    let c = NEHotspotConfiguration(ssid: login, passphrase: password, isWEP: false)
+  private func connectWifi(result: @escaping FlutterResult, ssid: String, pass: String) {
+      NSLog(ssid, pass)
+      var c = NEHotspotConfiguration(ssid: ssid)
+      if pass.count > 0 {
+          c = NEHotspotConfiguration(ssid: ssid, passphrase: pass, isWEP: false)
+      }
     NEHotspotConfigurationManager.shared.apply(c) { error in
       if let error = error {
         result(error.localizedDescription)
