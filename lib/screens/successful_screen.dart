@@ -25,9 +25,10 @@ class SuccessfulScreen extends StatelessWidget {
         children: [
           LoomText(
             """
-            ${AppLocalizations.of(context)!.message9_1} $networkName
-            ${AppLocalizations.of(context)!.message9_2} $loomName
-            ${AppLocalizations.of(context)!.message9_3}
+            ${AppLocalizations.of(context)!.message9_1}
+            ${AppLocalizations.of(context)!.message9_2} $networkName
+            ${AppLocalizations.of(context)!.message9_3} $loomName
+            ${AppLocalizations.of(context)!.message9_4}
             """,
           ),
           LoomButton(
