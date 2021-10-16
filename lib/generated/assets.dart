@@ -4,11 +4,17 @@ class Assets {
 
   static const String imagesBack = 'assets/images/back.png';
   static const String imagesEdit = 'assets/images/edit.png';
-  static const String imagesLoom = 'assets/images/loom.jpg';
+  static const String imagesInfo1 = 'assets/images/info1.jpg';
+  static const String imagesInfo2 = 'assets/images/info2.jpg';
+  static const String imagesInfo3 = 'assets/images/info3.jpg';
   static const String imagesLoomLogo = 'assets/images/loom_logo.png';
+  static const String imagesReset = 'assets/images/reset.jpg';
   static const String imagesWifi1 = 'assets/images/wifi1.png';
   static const String imagesWifi2 = 'assets/images/wifi2.png';
   static const String imagesWifi3 = 'assets/images/wifi3.png';
-  static const String launcherIcon = 'assets/launcher/icon.png';
+  static const String launcherLoom = 'assets/launcher/loom.png';
+  static const String launcherLoom копия = 'assets/launcher/loom копия.png';
+  static const String launcherLoomBack = 'assets/launcher/loom_back.png';
+  static const String launcherLoomLogo = 'assets/launcher/loom_logo.png';
 
 }

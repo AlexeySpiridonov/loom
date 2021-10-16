@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
-        android:label="Loom"
+        android:label="LOOM"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
