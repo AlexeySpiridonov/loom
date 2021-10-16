@@ -18,7 +18,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   String loomName = "";
   String password = "";
   String ssid = "";
-  String channal = "";
+  String channel = "";
   bool isScannings = false;
   int status = 0;
 
@@ -105,7 +105,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       if (event is LoomNetworksChooseEvent) {
         networkName = event.networkModel.wl_ss_ssid;
         ssid = event.networkModel.wl_ss_bssid;
-        channal = event.networkModel.wl_ss_channel;
+        channel = event.networkModel.wl_ss_channel;
         loomName = networkName + "-plus";
         emit(LoomSettingsNetworkState(
           networkName: networkName,
@@ -141,7 +141,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
         String formScanningAp = await httpApiProvider.formSetRepeater(
           ssid: ssid,
-          channal: channal,
+          channel: channel,
           networkName: loomName,
           password: password,
         );
@@ -235,7 +235,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     prefs.setString('loomName', loomName);
     prefs.setString('password', password);
     prefs.setString('ssid', ssid);
-    prefs.setString('channel', channal);
+    prefs.setString('channel', channel);
     prefs.setInt('status', status);
   }
 
@@ -244,7 +244,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     loomName = prefs.getString('loomName') ?? loomName;
     password = prefs.getString('password') ?? password;
     ssid = prefs.getString('ssid') ?? ssid;
-    channal = prefs.getString('channal') ?? channal;
+    channel = prefs.getString('channel') ?? channel;
     status = prefs.getInt('status') ?? status;
   }
 
@@ -253,7 +253,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     loomName = "";
     password = "";
     ssid = "";
-    channal = "";
+    channel = "";
     isScannings = false;
     status = 0;
     saveValues();

@@ -52,7 +52,7 @@ class HttpApiProvider {
 
   Future<String> formSetRepeater({
     required String ssid,
-    required String channal,
+    required String channel,
     required String networkName,
     required String password,
   }) async {
@@ -62,7 +62,7 @@ class HttpApiProvider {
       "pocket_wpa2_tkip_aes": "aes",
       "wpa2ciphersuite0": "aes",
       "ciphersuite0": "",
-      "pocket_channel": channal,
+      "pocket_channel": channel,
       "pocketAP_ssid": ssid,
       "pocket_encrypt": "wpa2-psk",
       "select": "sel0",
@@ -73,7 +73,7 @@ class HttpApiProvider {
       "pskValue0": password,
       "wlanif": "wlan0",
       "wlan_idx": "0",
-      "band0": channal,
+      "band0": channel,
       "mode0": "3",
       "wps_clear_configure_by_reg0": "0",
       "wpaAuth0": "psk",
