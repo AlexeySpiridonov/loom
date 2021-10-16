@@ -36,6 +36,7 @@ class FAQScreen extends StatelessWidget {
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
+                //TODO change to standart app bar
                 child: LoomAppBar(
                   loomEvent: loomEvent,
                   text: "FAQ",

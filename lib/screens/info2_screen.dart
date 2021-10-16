@@ -33,7 +33,7 @@ class Info2Screen extends StatelessWidget {
               text: AppLocalizations.of(context)!.next,
               loomEvent: LoomOpenInfo2Event(),
             ),
-            SizedBox(height: 20 * devicePixelRatio),
+            SizedBox(height: 40 * devicePixelRatio),
           ],
         ),
       ),

@@ -92,7 +92,7 @@ class LoomButton extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14 * devicePixelRatio,
+                    fontSize: 13 * devicePixelRatio,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

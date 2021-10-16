@@ -34,10 +34,14 @@ class WaitScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30 * devicePixelRatio),
-          CircularProgressIndicator(
-            strokeWidth: 8.0 * devicePixelRatio,
+          SizedBox(
+            child: CircularProgressIndicator(
+              strokeWidth: 3.0 * devicePixelRatio,
+            ),
+            height: 80 * devicePixelRatio,
+            width:  80 * devicePixelRatio,
           ),
-          SizedBox(height: 10 * devicePixelRatio),
+          SizedBox(height: 40 * devicePixelRatio),
           (sec > 0)
               ? Text(
                   "$sec",

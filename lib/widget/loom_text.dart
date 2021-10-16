@@ -27,7 +27,7 @@ class LoomText extends StatelessWidget {
           style: TextStyle(
             fontSize: 18 * devicePixelRatio,
             fontWeight: FontWeight.w600,
-            height: 2,
+            height: 1.4,
           ),
         ),
       ),
