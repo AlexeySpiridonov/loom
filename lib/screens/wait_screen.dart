@@ -38,8 +38,8 @@ class WaitScreen extends StatelessWidget {
             child: CircularProgressIndicator(
               strokeWidth: 3.0 * devicePixelRatio,
             ),
-            height: 80 * devicePixelRatio,
-            width:  80 * devicePixelRatio,
+            height: 70 * devicePixelRatio,
+            width:  70 * devicePixelRatio,
           ),
           SizedBox(height: 40 * devicePixelRatio),
           (sec > 0)
