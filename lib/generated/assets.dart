@@ -13,7 +13,6 @@ class Assets {
   static const String imagesWifi2 = 'assets/images/wifi2.png';
   static const String imagesWifi3 = 'assets/images/wifi3.png';
   static const String launcherLoom = 'assets/launcher/loom.png';
-  static const String launcherLoom копия = 'assets/launcher/loom копия.png';
   static const String launcherLoomBack = 'assets/launcher/loom_back.png';
   static const String launcherLoomLogo = 'assets/launcher/loom_logo.png';
 
