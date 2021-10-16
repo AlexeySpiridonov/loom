@@ -24,7 +24,7 @@ class Info2Screen extends StatelessWidget {
             LoomText(AppLocalizations.of(context)!.message2),
             Expanded(
               child: Center(
-                child: Image.asset("assets/images/loom.jpg"),
+                child: Image.asset("assets/images/info2.jpg"),
               ),
             ),
             LoomButton(

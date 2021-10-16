@@ -24,7 +24,7 @@ class ResetScreen extends StatelessWidget {
             LoomText(AppLocalizations.of(context)!.message13),
             Expanded(
               child: Center(
-                child: Image.asset("assets/images/loom.jpg"),
+                child: Image.asset("assets/images/reset.jpg"),
               ),
             ),
             LoomButton(
@@ -33,7 +33,7 @@ class ResetScreen extends StatelessWidget {
               text: AppLocalizations.of(context)!.next,
               loomEvent: LoomClearEvent(),
             ),
-            SizedBox(height: 20 * devicePixelRatio),
+            SizedBox(height: 40 * devicePixelRatio),
           ],
         ),
       ),
