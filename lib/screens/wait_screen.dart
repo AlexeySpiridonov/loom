@@ -27,10 +27,10 @@ class WaitScreen extends StatelessWidget {
         children: [
           SizedBox(height: 80 * devicePixelRatio),
           Text(
-            AppLocalizations.of(context)!.message7,
+            messages[messageId],
             style: TextStyle(
-              fontSize: 20 * devicePixelRatio,
-              fontWeight: FontWeight.w600,
+              fontSize: 16 * devicePixelRatio,
+              fontWeight: FontWeight.w400,
             ),
           ),
           SizedBox(height: 30 * devicePixelRatio),
@@ -47,14 +47,6 @@ class WaitScreen extends StatelessWidget {
                   ),
                 )
               : Container(),
-          SizedBox(height: 30 * devicePixelRatio),
-          Text(
-            messages[messageId],
-            style: TextStyle(
-              fontSize: 16 * devicePixelRatio,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
           SizedBox(height: 80 * devicePixelRatio),
         ],
       ),
