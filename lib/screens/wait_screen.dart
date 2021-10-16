@@ -40,7 +40,7 @@ class WaitScreen extends StatelessWidget {
           SizedBox(height: 10 * devicePixelRatio),
           (sec > 0)
               ? Text(
-                  "Wait $sec seconds",
+                  "$sec",
                   style: TextStyle(
                     fontSize: 16 * devicePixelRatio,
                     fontWeight: FontWeight.w400,

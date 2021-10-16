@@ -51,7 +51,7 @@ class SettingsNetworkScreen extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "Wi-Fi name for Loom",
+              AppLocalizations.of(context)!.message6,
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontSize: 14 * devicePixelRatio,
@@ -96,7 +96,7 @@ class SettingsNetworkScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             SizedBox(height: 10 * devicePixelRatio),
-                            LoomText(AppLocalizations.of(context)!.message6),
+                            LoomText(AppLocalizations.of(context)!.message6_1),
                             SizedBox(height: 15 * devicePixelRatio),
                             LoomTextField(
                               initialValue: loomName,

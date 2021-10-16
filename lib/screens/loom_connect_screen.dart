@@ -29,7 +29,7 @@ class LoomConnectScreen extends StatelessWidget {
             onChanged: (newValue) => context
                 .read<LoomBloc>()
                 .add(LoomChangeNetworkEvent(data: newValue)),
-            labelText: "Wi-Fi address",
+            labelText: "",
           ),
           SizedBox(height: 20 * devicePixelRatio),
           LoomButton(
