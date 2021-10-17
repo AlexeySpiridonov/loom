@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
-import 'package:loom/widget/loom_body.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:loom/widget/loom_text.dart';
