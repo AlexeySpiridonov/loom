@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
-import 'package:loom/widget/loom_body.dart';
 import 'package:loom/widget/loom_button.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
