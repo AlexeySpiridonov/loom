@@ -24,5 +24,6 @@
   "save": "Save",
   "connect": "Connect",
   "light_on": "The light is ON",
-  "no": "No"
+  "no": "No",
+  "faq": "FAQ"
 }

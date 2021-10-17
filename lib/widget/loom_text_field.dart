@@ -22,7 +22,10 @@ class LoomTextField extends StatelessWidget {
       initialValue: initialValue,
       onChanged: onChanged,
       autofocus: autofocus ?? false,
-      style: TextStyle(fontSize: 18 * devicePixelRatio),
+      style: TextStyle(
+        fontSize: 18 * devicePixelRatio,
+        decoration: TextDecoration.none,
+      ),
       decoration: InputDecoration(
         labelText: labelText,
         contentPadding:

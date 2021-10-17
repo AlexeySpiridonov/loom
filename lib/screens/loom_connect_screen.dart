@@ -25,7 +25,7 @@ class LoomConnectScreen extends StatelessWidget {
           ),
           SizedBox(height: 10 * devicePixelRatio),
           LoomTextField(
-            initialValue: "",
+            initialValue: "WiFi Extender",
             onChanged: (newValue) => context
                 .read<LoomBloc>()
                 .add(LoomChangeNetworkEvent(data: newValue)),

@@ -56,19 +56,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: BlocBuilder<LoomBloc, LoomState>(builder: (context, state) {
-          infoPagesTexts = [
-            AppLocalizations.of(context)!.message1,
-            AppLocalizations.of(context)!.message2,
-            AppLocalizations.of(context)!.message3,
-            //const LoomConnectScreen(),
-            //const NetworksScreen(),
-            //const SettingsNetworkScreen(),
-            //AppLocalizations.of(context)!.message9,
-            //const ButtonsConnectScreen(),
-            //const FAQScreen(),
-            AppLocalizations.of(context)!.message13,
-          ];
-
           if (state is LoomInfo1State) {
             return const Info1Screen();
           }

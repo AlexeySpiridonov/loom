@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:loom/models/info_status_model.dart';
 import 'package:loom/models/network_model.dart';
 import 'package:loom/services/http_api_provider.dart';
 import 'package:loom/services/wifi_api_provider.dart';
@@ -27,8 +26,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     required this.wifiApiProvider,
   }) : super(LoomInitState()) {
     on<LoomEvent>((event, emit) async {
-      status = prefs.getInt('status') ?? 0;
-
       //FAQ SCREEN
       if (event is LoomOpenFAQEvent) {
         emit(LoomFAQState(loomEvent: event.loomEvent));
@@ -66,9 +63,14 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
         } else {
-          emit(LoomConnectState(error: _result));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Connect');
+          if (status == 1) {
+            emit(LoomResetState());
+          } else {
+            emit(LoomConnectState(error: _result));
+            FirebaseAnalytics().setCurrentScreen(screenName: 'Connect');
+          }
         }
+        status = 1;
       }
 
       //NETWORK SCREEN
@@ -139,7 +141,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       if (event is LoomSettingsNextEvent) {
         emit(LoomWaitState(sec: 30, messageId: 3));
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
-        String formScanningAp = await httpApiProvider.formSetRepeater(
+        String? formScanningAp = await httpApiProvider.formSetRepeater(
           ssid: ssid,
           channel: channel,
           networkName: loomName,
@@ -167,13 +169,13 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           await Future.delayed(const Duration(seconds: 1), () {});
         }
 
-        if (formScanningAp.isNotEmpty) {
+        if (formScanningAp != null) {
           emit(LoomSuccessfulState(
             networkName: networkName,
             loomName: loomName,
           ));
           FirebaseAnalytics().setCurrentScreen(screenName: 'Successful');
-          status = 1;
+          status = 2;
           saveValues();
         } else {
           //emit(SettingsUnsuccessSaveState());
@@ -223,7 +225,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   void loading() async {
     prefs = await SharedPreferences.getInstance();
     loadValues();
-    if (status == 1) {
+    if (status == 2) {
       add(LoomOpenButtonsEvent());
     } else {
       add(LoomOpenInfo1Event());
@@ -235,7 +237,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     prefs.setString('loomName', loomName);
     prefs.setString('password', password);
     prefs.setString('ssid', ssid);
-    prefs.setString('channel', channel);
     prefs.setInt('status', status);
   }
 
@@ -244,7 +245,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     loomName = prefs.getString('loomName') ?? loomName;
     password = prefs.getString('password') ?? password;
     ssid = prefs.getString('ssid') ?? ssid;
-    channel = prefs.getString('channel') ?? channel;
     status = prefs.getInt('status') ?? status;
   }
 
