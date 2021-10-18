@@ -1,0 +1,8 @@
+app_identifier("com.loom.repeater") # The bundle identifier of your app
+apple_id("forspall@gmail.com") # Your Apple email address
+
+itc_team_id("120161475") # App Store Connect Team ID
+team_id("U63C9J59KB") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
