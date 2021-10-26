@@ -56,28 +56,9 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         networkName = event.data;
       }
       if (event is LoomTryConnectEvent) {
-        Fluttertoast.showToast(
-            msg: "Try connect, wait",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-
         emit(LoomWaitState(sec: 0, messageId: 1));
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
         String _result = await wifiApiProvider.connectWifi(networkName, "");
-
-        Fluttertoast.showToast(
-            msg: "Connect result: $_result",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-
         if (_result == "successful" || _result == "already associated.") {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
