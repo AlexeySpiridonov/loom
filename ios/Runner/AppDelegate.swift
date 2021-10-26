@@ -16,6 +16,7 @@ import Foundation
         [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
         guard call.method == "tryConnectToWifi" else {
             result(FlutterMethodNotImplemented)
+            NSLog("wifiChannel","FlutterMethodNotImplemented")
             return
         }
         if let args = call.arguments as? Dictionary<String, Any>,
@@ -30,16 +31,18 @@ import Foundation
   }
 
   private func connectWifi(result: @escaping FlutterResult, ssid: String, pass: String) {
-      NSLog(ssid, pass)
+      NSLog("connectWifi 34 ",ssid, pass)
       var c = NEHotspotConfiguration(ssid: ssid)
       if pass.count > 0 {
           c = NEHotspotConfiguration(ssid: ssid, passphrase: pass, isWEP: false)
       }
     NEHotspotConfigurationManager.shared.apply(c) { error in
       if let error = error {
+        NSLog("connectWifi 41 error")
         result(error.localizedDescription)
       }
       else {
+        NSLog("connectWifi 45 sucess")
         result("successful");
       }
 
