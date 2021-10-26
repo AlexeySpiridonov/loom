@@ -2,6 +2,7 @@ import UIKit
 import Flutter
 import NetworkExtension
 import Foundation
+import os
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -31,18 +32,19 @@ import Foundation
   }
 
   private func connectWifi(result: @escaping FlutterResult, ssid: String, pass: String) {
-      NSLog("connectWifi 34 ",ssid, pass)
+      NSLog("35: %@, %@",ssid, pass)
       var c = NEHotspotConfiguration(ssid: ssid)
       if pass.count > 0 {
           c = NEHotspotConfiguration(ssid: ssid, passphrase: pass, isWEP: false)
       }
     NEHotspotConfigurationManager.shared.apply(c) { error in
-      if let error = error {
-        NSLog("connectWifi 41 error")
+      if let error = error as NSError?{
+          NSLog("42: %@, %i, %@", error.localizedDescription, error.code , error.description)
         result(error.localizedDescription)
       }
       else {
-        NSLog("connectWifi 45 sucess")
+        //NSLog("46: %s", error?.localizedDescription)
+        NSLog("47: successful")
         result("successful");
       }
 
