@@ -77,20 +77,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             textColor: Colors.white,
             fontSize: 16.0);
 
-        await Future.delayed(const Duration(seconds: 2), () {});
-        String? sysStatus = await httpApiProvider.sysStatus();
-
-        Fluttertoast.showToast(
-            msg: "Test connect result: $sysStatus",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-
-        if ((_result == "successful" || _result == "already associated.") &&
-            sysStatus != null) {
+        if (_result == "successful" || _result == "already associated.") {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
         } else {
@@ -179,25 +166,23 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           password: password,
         );
 
-        for (int i = 30; i > 10; i--) {
+        for (int i = 30; i > 0; i--) {
           emit(LoomWaitState(sec: i, messageId: 3));
           await Future.delayed(const Duration(seconds: 1), () {});
-        }
+          if (i == 10) {
+            await wifiApiProvider.connectWifi(
+              networkName,
+              password,
+            );
+          } else if (i == 7) {
+            String? resp = await httpApiProvider.getGoogle();
+            if (resp == null) emit(LoomResetState());
 
-        await wifiApiProvider.connectWifi(
-          networkName,
-          password,
-        );
-        String? resp = await httpApiProvider.getGoogle();
-        if (resp == null) emit(LoomResetState());
-        await wifiApiProvider.connectWifi(
-          loomName,
-          password,
-        );
-
-        for (int i = 10; i > 0; i--) {
-          emit(LoomWaitState(sec: i, messageId: 3));
-          await Future.delayed(const Duration(seconds: 1), () {});
+            await wifiApiProvider.connectWifi(
+              loomName,
+              password,
+            );
+          }
         }
 
         if (formScanningAp != null) {
