@@ -64,6 +64,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
+
         emit(LoomWaitState(sec: 0, messageId: 1));
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
         String _result = await wifiApiProvider.connectWifi(networkName, "");

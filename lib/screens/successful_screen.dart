@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:loom/widget/loom_text.dart';
 
 class SuccessfulScreen extends StatelessWidget {
   const SuccessfulScreen({
@@ -18,70 +19,16 @@ class SuccessfulScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
 
-    final textStyle1 = TextStyle(
-      fontSize: 18 * devicePixelRatio,
-      fontWeight: FontWeight.w600,
-      height: 1.4,
-    );
-    final textStyle2 = TextStyle(
-      fontSize: 14 * devicePixelRatio,
-      fontWeight: FontWeight.w400,
-      color: const Color.fromRGBO(255, 255, 255, 0.4),
-      height: 1.4,
-    );
-    final textStyle3 = TextStyle(
-      fontSize: 16 * devicePixelRatio,
-      fontWeight: FontWeight.w400,
-      height: 1.4,
-    );
-
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
         child: Column(
           children: [
+            LoomText(AppLocalizations.of(context)!.message9_4),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: 52.0 * devicePixelRatio,
-                  bottom: 37.0 * devicePixelRatio,
-                ),
-                child: Column(children: [
-                  Text(
-                    AppLocalizations.of(context)!.message9_1,
-                    textAlign: TextAlign.start,
-                    style: textStyle1,
-                  ),
-                  SizedBox(height: 25.0 * devicePixelRatio),
-                  Text(
-                    AppLocalizations.of(context)!.message9_2,
-                    textAlign: TextAlign.start,
-                    style: textStyle2,
-                  ),
-                  SizedBox(height: 2.0 * devicePixelRatio),
-                  Text(
-                    networkName,
-                    textAlign: TextAlign.start,
-                    style: textStyle3,
-                  ),
-                  SizedBox(height: 25.0 * devicePixelRatio),
-                  Text(
-                    AppLocalizations.of(context)!.message9_3,
-                    textAlign: TextAlign.start,
-                    style: textStyle2,
-                  ),
-                  SizedBox(height: 2.0 * devicePixelRatio),
-                  Text(
-                    loomName,
-                    textAlign: TextAlign.start,
-                    style: textStyle3,
-                  ),
-                  SizedBox(height: 25.0 * devicePixelRatio),
-                  Text(
-                    AppLocalizations.of(context)!.message9_4,
-                    textAlign: TextAlign.start,
-                    style: textStyle3,
-                  ),
-                ]),
+              child: Center(
+                child: Image.asset("assets/images/info1.jpg"),
               ),
             ),
             LoomButton(
@@ -89,8 +36,9 @@ class SuccessfulScreen extends StatelessWidget {
                   context.read<LoomBloc>().add(LoomOpenButtonsEvent()),
               text: AppLocalizations.of(context)!.perfectly,
               loomEvent: LoomOpenSuccessfulEvent(),
+              nofaq: true,
             ),
-            SizedBox(height: 20.0 * devicePixelRatio),
+            SizedBox(height: 40 * devicePixelRatio),
           ],
         ),
       ),

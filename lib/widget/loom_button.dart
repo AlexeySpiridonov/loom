@@ -12,6 +12,7 @@ class LoomButton extends StatelessWidget {
     required this.loomEvent,
     this.isModalBottomSheet,
     this.disabled,
+    this.nofaq,
   }) : super(key: key);
 
   final String text;
@@ -20,6 +21,7 @@ class LoomButton extends StatelessWidget {
   final bool? isModalBottomSheet;
 
   final bool? disabled;
+  final bool? nofaq;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class LoomButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              (disabled != true)
+              (disabled != true && nofaq != true)
                   ? GestureDetector(
                       onTap: () {
                         context
