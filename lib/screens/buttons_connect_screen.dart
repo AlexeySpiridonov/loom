@@ -76,7 +76,7 @@ class ButtonsConnectScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 14 * devicePixelRatio,
+                  fontSize: 10 * devicePixelRatio,
                   fontWeight: FontWeight.w600,
                 ),
               ),

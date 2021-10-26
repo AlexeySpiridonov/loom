@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.os.PatternMatcher;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -139,12 +138,6 @@ public class MainActivity extends FlutterActivity {
                     } else {
                         ConnectivityManager.setProcessDefaultNetwork(network);
                     }
-
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Wifi successful connect",
-                            Toast.LENGTH_LONG
-                    ).show();
 
                     isSuccessful[0] = true;
                     //flutterResult.success("successful");
