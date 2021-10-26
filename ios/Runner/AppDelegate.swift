@@ -2,7 +2,7 @@ import UIKit
 import Flutter
 import NetworkExtension
 import Foundation
-import os
+//import os
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -17,7 +17,7 @@ import os
         [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
         guard call.method == "tryConnectToWifi" else {
             result(FlutterMethodNotImplemented)
-            NSLog("wifiChannel","FlutterMethodNotImplemented")
+            //NSLog("wifiChannel","FlutterMethodNotImplemented")
             return
         }
         if let args = call.arguments as? Dictionary<String, Any>,
@@ -32,19 +32,19 @@ import os
   }
 
   private func connectWifi(result: @escaping FlutterResult, ssid: String, pass: String) {
-      NSLog("35: %@, %@",ssid, pass)
+      //NSLog("35: %@, %@",ssid, pass)
       var c = NEHotspotConfiguration(ssid: ssid)
       if pass.count > 0 {
           c = NEHotspotConfiguration(ssid: ssid, passphrase: pass, isWEP: false)
       }
     NEHotspotConfigurationManager.shared.apply(c) { error in
       if let error = error as NSError?{
-          NSLog("42: %@, %i, %@", error.localizedDescription, error.code , error.description)
+        //NSLog("42: %@, %i, %@", error.localizedDescription, error.code)
         result(error.localizedDescription)
       }
       else {
         //NSLog("46: %s", error?.localizedDescription)
-        NSLog("47: successful")
+        //NSLog("47: successful")
         result("successful");
       }
 
