@@ -22,6 +22,13 @@
   "message17": "Connect to 'WiFi Extender'",
   "message18": "Get a list of Wi-Fi networks",
   "message19": "Home Wi-Fi extender, your",
+  
+  "error": "Неизвестная ошибка",
+  "error101": "Подключено, но не к сети loom",
+  "error102": "Не получен список wifi сетей",
+  "error103": "Не удалось записать настройки в репитер",
+  "error104": "Не удалось получить доступ в интернет",
+
   "rescan": "Rescan",
   "next": "Next",
   "save": "Save",

@@ -7,6 +7,7 @@ import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'models/info_screen_model.dart';
+import 'screens/error_screen.dart';
 import 'screens/info1_screen.dart';
 import 'screens/buttons_connect_screen.dart';
 import 'screens/faq_screen.dart';
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (state is LoomConnectState) {
-            return LoomConnectScreen(error: state.error);
+            return const LoomConnectScreen();
           }
 
           if (state is LoomNetworksState) {
@@ -111,6 +112,10 @@ class MyApp extends StatelessWidget {
 
           if (state is LoomResetState) {
             return const ResetScreen();
+          }
+
+          if (state is LoomErrorState) {
+            return ErrorScreen(error: state.error);
           }
 
           // if (state is LoomInitState) {

@@ -9,9 +9,7 @@ import 'package:loom/widget/loom_text.dart';
 import 'package:loom/widget/loom_text_field.dart';
 
 class LoomConnectScreen extends StatelessWidget {
-  const LoomConnectScreen({Key? key, required this.error}) : super(key: key);
-
-  final String error;
+  const LoomConnectScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,6 @@ class LoomConnectScreen extends StatelessWidget {
             loomEvent: LoomOpenConnectEvent(),
           ),
           SizedBox(height: 20 * devicePixelRatio),
-          (error != "" && error != "successful") ? Text(error) : Container(),
         ],
       ),
     );

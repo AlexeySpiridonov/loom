@@ -5,14 +5,24 @@ import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:loom/widget/loom_text.dart';
 
-class Info1Screen extends StatelessWidget {
-  const Info1Screen({
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({
     Key? key,
+    required this.error,
   }) : super(key: key);
+
+  final int error;
 
   @override
   Widget build(BuildContext context) {
     final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio / 2;
+
+    Map<int, String> errors = {
+      101: AppLocalizations.of(context)!.error101,
+      102: AppLocalizations.of(context)!.error102,
+      103: AppLocalizations.of(context)!.error103,
+      104: AppLocalizations.of(context)!.error104,
+    };
 
     return Scaffold(
       body: Container(
@@ -20,13 +30,15 @@ class Info1Screen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
         child: Column(
           children: [
-            LoomText(AppLocalizations.of(context)!.message1),
+            (errors[error] != null)
+                ? LoomText("$error ${errors[error]}")
+                : LoomText(AppLocalizations.of(context)!.error),
             Expanded(
               child: Center(
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
-                  child: Image.asset("assets/images/info1.png"),
+                  child: Image.asset("assets/images/info3.jpg"),
                 ),
               ),
             ),

@@ -60,21 +60,23 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
         String _result = await wifiApiProvider.connectWifi(networkName, "");
 
-        await Future.delayed(const Duration(seconds: 3), () {});
+        await Future.delayed(const Duration(seconds: 5), () {});
 
         String? sysStatus = await httpApiProvider.sysStatus();
 
-        if ((_result == "successful" || _result == "already associated.") &&
-            sysStatus != null) {
-          await Future.delayed(const Duration(seconds: 2), () {});
-          add(LoomNetworksGetEvent());
-        } else {
+        if (_result != "successful" && _result != "already associated.") {
           if (status == 1) {
             emit(LoomResetState());
           } else {
-            emit(LoomConnectState(error: _result));
+            emit(LoomConnectState());
             FirebaseAnalytics().setCurrentScreen(screenName: 'Connect');
           }
+        } else if (sysStatus == null) {
+          emit(LoomErrorState(error: 101));
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 101');
+        } else {
+          await Future.delayed(const Duration(seconds: 2), () {});
+          add(LoomNetworksGetEvent());
         }
         status = 1;
       }
@@ -105,8 +107,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           emit(LoomNetworksState(sec: 0, netList: netList));
           FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
         } else {
-          emit(LoomResetState());
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Reset');
+          emit(LoomErrorState(error: 102));
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 102');
         }
         isScannings = false;
       }
@@ -147,33 +149,37 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       if (event is LoomSettingsNextEvent) {
         emit(LoomWaitState(sec: 30, messageId: 3));
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
-        String? formScanningAp = await httpApiProvider.formSetRepeater(
+        String? formSetRepeater = await httpApiProvider.formSetRepeater(
           ssid: ssid,
           channel: channel,
           networkName: loomName,
           password: password,
         );
 
-        for (int i = 30; i > 0; i--) {
-          emit(LoomWaitState(sec: i, messageId: 3));
-          await Future.delayed(const Duration(seconds: 1), () {});
-          if (i == 10) {
-            await wifiApiProvider.connectWifi(
-              networkName,
-              password,
-            );
-          } else if (i == 7) {
-            String? resp = await httpApiProvider.getGoogle();
-            if (resp == null) emit(LoomResetState());
+        if (formSetRepeater != null) {
+          for (int i = 30; i > 0; i--) {
+            emit(LoomWaitState(sec: i, messageId: 3));
+            await Future.delayed(const Duration(seconds: 1), () {});
+            if (i == 10) {
+              await wifiApiProvider.connectWifi(
+                networkName,
+                password,
+              );
+            } else if (i == 7) {
+              String? resp = await httpApiProvider.getGoogle();
+              if (resp == null) {
+                emit(LoomErrorState(error: 104));
+                FirebaseAnalytics().setCurrentScreen(screenName: 'Error 104');
+                return;
+              }
 
-            await wifiApiProvider.connectWifi(
-              loomName,
-              password,
-            );
+              await wifiApiProvider.connectWifi(
+                loomName,
+                password,
+              );
+            }
           }
-        }
 
-        if (formScanningAp != null) {
           emit(LoomSuccessfulState(
             networkName: networkName,
             loomName: loomName,
@@ -182,7 +188,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           status = 2;
           saveValues();
         } else {
-          //emit(SettingsUnsuccessSaveState());
+          emit(LoomErrorState(error: 103));
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 103');
         }
       }
       if (event is LoomOpenSuccessfulEvent) {

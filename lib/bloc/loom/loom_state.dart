@@ -16,10 +16,7 @@ class LoomInfo2State extends LoomState {}
 
 class LoomInfo3State extends LoomState {}
 
-class LoomConnectState extends LoomState {
-  final String error;
-  LoomConnectState({required this.error});
-}
+class LoomConnectState extends LoomState {}
 
 class LoomNetworksState extends LoomState {
   final int sec;
@@ -52,3 +49,8 @@ class LoomButtonsConnectState extends LoomState {
 }
 
 class LoomResetState extends LoomState {}
+
+class LoomErrorState extends LoomState {
+  int error;
+  LoomErrorState({required this.error});
+}
