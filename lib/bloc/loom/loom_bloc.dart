@@ -59,7 +59,13 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         emit(LoomWaitState(sec: 0, messageId: 1));
         FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
         String _result = await wifiApiProvider.connectWifi(networkName, "");
-        if (_result == "successful" || _result == "already associated.") {
+
+        await Future.delayed(const Duration(seconds: 3), () {});
+
+        String? sysStatus = await httpApiProvider.sysStatus();
+
+        if ((_result == "successful" || _result == "already associated.") &&
+            sysStatus != null) {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
         } else {
@@ -84,12 +90,12 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         isScannings = true;
         String? formScanningAp = await httpApiProvider.formScanningAp();
 
-        for (int i = 10; i > 0; i--) {
-          emit(LoomWaitState(sec: i, messageId: 2));
-          await Future.delayed(const Duration(seconds: 1), () {});
-        }
-
         if (formScanningAp != null) {
+          for (int i = 10; i > 0; i--) {
+            emit(LoomWaitState(sec: i, messageId: 2));
+            await Future.delayed(const Duration(seconds: 1), () {});
+          }
+
           List<NetworkModel> netList = await httpApiProvider.apList();
 
           netList.removeWhere((item) =>
@@ -99,8 +105,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           emit(LoomNetworksState(sec: 0, netList: netList));
           FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
         } else {
-          emit(LoomNetworksState(sec: 0, netList: const []));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
+          emit(LoomResetState());
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Reset');
         }
         isScannings = false;
       }
