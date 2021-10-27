@@ -35,7 +35,7 @@ class HttpApiProvider {
     }
   }
 
-  Future<List<NetworkModel>> apList() async {
+  Future<List<NetworkModel>?> apList() async {
     try {
       var url =
           Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
@@ -45,10 +45,10 @@ class HttpApiProvider {
           .map((i) => NetworkModel.fromJson(i))
           .toList();
 
-      if (response.statusCode != 200) return [];
+      if (response.statusCode != 200) return null;
       return neworksList;
     } catch (e) {
-      return [];
+      return null;
     }
   }
 

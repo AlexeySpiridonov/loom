@@ -97,7 +97,13 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             await Future.delayed(const Duration(seconds: 1), () {});
           }
 
-          List<NetworkModel> netList = await httpApiProvider.apList();
+          List<NetworkModel>? netList = await httpApiProvider.apList();
+
+          if (netList == null) {
+            emit(LoomErrorState(error: 105));
+            FirebaseAnalytics().setCurrentScreen(screenName: 'Error 105');
+            return;
+          }
 
           netList.removeWhere((item) =>
               item.wl_ss_secmo != "WPA2-PSK" &&
