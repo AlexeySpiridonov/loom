@@ -29,6 +29,7 @@
   "error103": "Не удалось записать настройки в репитер",
   "error104": "Не удалось получить доступ в интернет",
 
+  "startAnew": "Start anew",
   "rescan": "Rescan",
   "next": "Next",
   "save": "Save",

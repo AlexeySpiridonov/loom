@@ -46,8 +46,9 @@ class ErrorScreen extends StatelessWidget {
             LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomOpenInfo2Event()),
-              text: AppLocalizations.of(context)!.next,
+              text: AppLocalizations.of(context)!.startAnew,
               loomEvent: LoomOpenInfo1Event(),
+              nofaq: true,
             ),
             SizedBox(height: 40 * devicePixelRatio),
           ],

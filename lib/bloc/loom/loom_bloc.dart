@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loom/models/network_model.dart';
 import 'package:loom/services/http_api_provider.dart';
 import 'package:loom/services/wifi_api_provider.dart';

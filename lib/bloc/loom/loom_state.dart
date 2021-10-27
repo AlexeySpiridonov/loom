@@ -51,6 +51,6 @@ class LoomButtonsConnectState extends LoomState {
 class LoomResetState extends LoomState {}
 
 class LoomErrorState extends LoomState {
-  int error;
+  final int error;
   LoomErrorState({required this.error});
 }
