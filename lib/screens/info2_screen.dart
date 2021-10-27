@@ -26,6 +26,7 @@ class Info2Screen extends StatelessWidget {
                 child: Image.asset("assets/images/info2.png"),
               ),
             ),
+            SizedBox(height: 20 * devicePixelRatio),
             LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomOpenInfo3Event()),
