@@ -23,10 +23,14 @@ class Info1Screen extends StatelessWidget {
             LoomText(AppLocalizations.of(context)!.message1),
             Expanded(
               child: Center(
-                child: Image.asset("assets/images/info1.png"),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
+                  child: Image.asset("assets/images/info1.png"),
+                ),
               ),
             ),
-            SizedBox(height: 20 * devicePixelRatio),
+            SizedBox(height: 60 * devicePixelRatio),
             LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomOpenInfo2Event()),

@@ -23,7 +23,11 @@ class Info3Screen extends StatelessWidget {
             LoomText(AppLocalizations.of(context)!.message3),
             Expanded(
               child: Center(
-                child: Image.asset("assets/images/info3.jpg"),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
+                  child: Image.asset("assets/images/info3.jpg"),
+                ),
               ),
             ),
             SizedBox(height: 20 * devicePixelRatio),

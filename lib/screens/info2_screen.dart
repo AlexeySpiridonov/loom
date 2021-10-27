@@ -23,7 +23,11 @@ class Info2Screen extends StatelessWidget {
             LoomText(AppLocalizations.of(context)!.message2),
             Expanded(
               child: Center(
-                child: Image.asset("assets/images/info2.png"),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
+                  child: Image.asset("assets/images/info2.png"),
+                ),
               ),
             ),
             SizedBox(height: 20 * devicePixelRatio),

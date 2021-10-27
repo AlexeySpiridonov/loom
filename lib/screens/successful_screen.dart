@@ -28,9 +28,14 @@ class SuccessfulScreen extends StatelessWidget {
             LoomText(AppLocalizations.of(context)!.message9_4),
             Expanded(
               child: Center(
-                child: Image.asset("assets/images/info1.jpg"),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
+                  child: Image.asset("assets/images/info1.jpg"),
+                ),
               ),
             ),
+            SizedBox(height: 20 * devicePixelRatio),
             LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomOpenButtonsEvent()),
