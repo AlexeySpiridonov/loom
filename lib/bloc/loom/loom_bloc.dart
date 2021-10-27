@@ -99,8 +99,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           emit(LoomNetworksState(sec: 0, netList: netList));
           FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
         } else {
-          emit(LoomResetState());
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Reset');
+          emit(LoomNetworksState(sec: 0, netList: const []));
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
         }
         isScannings = false;
       }
