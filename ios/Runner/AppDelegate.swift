@@ -39,7 +39,7 @@ import Foundation
       }
     NEHotspotConfigurationManager.shared.apply(c) { error in
       if let error = error as NSError?{
-        //NSLog("42: %@, %i, %@", error.localizedDescription, error.code)
+        //N§SLog("42: %@, %i, %@", error.localizedDescription, error.code)
         result(error.localizedDescription)
       }
       else {

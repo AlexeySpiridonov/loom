@@ -31,18 +31,10 @@ class ErrorScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
         child: Column(
           children: [
+            SizedBox(height: 60 * devicePixelRatio),
             (errors[error] != null)
                 ? LoomText("$error ${errors[error]}")
                 : LoomText(AppLocalizations.of(context)!.error),
-            Expanded(
-              child: Center(
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
-                  child: Image.asset("assets/images/info3.jpg"),
-                ),
-              ),
-            ),
             SizedBox(height: 60 * devicePixelRatio),
             LoomButton(
               onPressed: () =>
