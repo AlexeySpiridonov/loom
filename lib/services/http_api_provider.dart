@@ -9,10 +9,7 @@ class HttpApiProvider {
     try {
       var url =
           Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
-      var response = await http.get(url).timeout(const Duration(seconds: 5),
-          onTimeout: () {
-        return http.Response('Error', 500);
-      });
+      var response = await http.get(url);
 
       if (response.statusCode != 200) return null;
       return response.body;
@@ -25,13 +22,8 @@ class HttpApiProvider {
   Future<String?> formScanningAp() async {
     try {
       var url = Uri.parse('http://192.168.10.1/mobile/form_scanning_ap.htm');
-      var response = await http.post(url, body: {
-        'refresh': 'Site Survey',
-        'ifname': "wlan0",
-        'opmode': "2"
-      }).timeout(const Duration(seconds: 5), onTimeout: () {
-        return http.Response('Error', 500);
-      });
+      var response = await http.post(url,
+          body: {'refresh': 'Site Survey', 'ifname': "wlan0", 'opmode': "2"});
 
       if (response.statusCode != 200) return null;
       return response.body;
@@ -45,10 +37,7 @@ class HttpApiProvider {
     try {
       var url =
           Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
-      var response = await http.get(url).timeout(const Duration(seconds: 5),
-          onTimeout: () {
-        return http.Response('Error', 500);
-      });
+      var response = await http.get(url);
 
       List<NetworkModel> neworksList = (json.decode(response.body) as List)
           .map((i) => NetworkModel.fromJson(i))
@@ -100,8 +89,6 @@ class HttpApiProvider {
         "wapiPskValue0": "",
         "wapiASIP0": "0.0.0.0",
         "connect": "connect",
-      }).timeout(const Duration(seconds: 15), onTimeout: () {
-        return http.Response('Error', 500);
       });
 
       if (response.statusCode != 200) return null;
