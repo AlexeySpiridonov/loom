@@ -61,8 +61,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
         await Future.delayed(const Duration(seconds: 5), () {});
 
-        String? sysStatus = await httpApiProvider.sysStatus();
-
         if (_result != "successful" && _result != "already associated.") {
           if (status == 1) {
             emit(LoomResetState());
@@ -70,9 +68,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             emit(LoomConnectState());
             FirebaseAnalytics().setCurrentScreen(screenName: 'Connect');
           }
-        } else if (sysStatus == null) {
-          emit(LoomErrorState(error: 101));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 101');
         } else {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
