@@ -22,6 +22,7 @@ class ErrorScreen extends StatelessWidget {
       102: AppLocalizations.of(context)!.error102,
       103: AppLocalizations.of(context)!.error103,
       104: AppLocalizations.of(context)!.error104,
+      105: AppLocalizations.of(context)!.error105,
     };
 
     return Scaffold(
@@ -45,7 +46,7 @@ class ErrorScreen extends StatelessWidget {
             SizedBox(height: 60 * devicePixelRatio),
             LoomButton(
               onPressed: () =>
-                  context.read<LoomBloc>().add(LoomOpenInfo2Event()),
+                  context.read<LoomBloc>().add(LoomOpenInfo1Event()),
               text: AppLocalizations.of(context)!.startAnew,
               loomEvent: LoomOpenInfo1Event(),
               nofaq: true,

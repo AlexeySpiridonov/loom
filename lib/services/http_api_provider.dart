@@ -100,7 +100,7 @@ class HttpApiProvider {
         "wapiPskValue0": "",
         "wapiASIP0": "0.0.0.0",
         "connect": "connect",
-      }).timeout(const Duration(seconds: 5), onTimeout: () {
+      }).timeout(const Duration(seconds: 15), onTimeout: () {
         return http.Response('Error', 500);
       });
 

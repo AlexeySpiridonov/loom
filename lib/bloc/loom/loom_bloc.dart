@@ -61,8 +61,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
         await Future.delayed(const Duration(seconds: 5), () {});
 
-        String? formScanningAp = await httpApiProvider.formScanningAp();
-
         if (_result != "successful" && _result != "already associated.") {
           if (status == 1) {
             emit(LoomResetState());
@@ -70,9 +68,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             emit(LoomConnectState());
             FirebaseAnalytics().setCurrentScreen(screenName: 'Connect');
           }
-        } else if (formScanningAp == null) {
-          emit(LoomErrorState(error: 101));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 101');
         } else {
           await Future.delayed(const Duration(seconds: 2), () {});
           add(LoomNetworksGetEvent());
@@ -85,13 +80,13 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         add(LoomNetworksGetEvent());
       }
       if (event is LoomNetworksGetEvent && !isScannings) {
-        emit(LoomWaitState(sec: 0, messageId: 2));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
-
         isScannings = true;
         String? formScanningAp = await httpApiProvider.formScanningAp();
 
         if (formScanningAp != null) {
+          emit(LoomWaitState(sec: 0, messageId: 2));
+          FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
+
           for (int i = 10; i > 0; i--) {
             emit(LoomWaitState(sec: i, messageId: 2));
             await Future.delayed(const Duration(seconds: 1), () {});
@@ -170,7 +165,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
                 networkName,
                 password,
               );
-            } else if (i == 7) {
+            } else if (i == 5) {
               String? resp = await httpApiProvider.getGoogle();
               if (resp == null) {
                 emit(LoomErrorState(error: 104));
