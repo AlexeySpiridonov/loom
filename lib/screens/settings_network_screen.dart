@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_app_bar.dart';
 import 'package:loom/widget/loom_body.dart';
@@ -73,9 +72,9 @@ class SettingsNetworkScreen extends StatelessWidget {
               IconButton(
                 icon: Image.asset(
                   "assets/images/edit.png",
-                  height: 20 * devicePixelRatio,
+                  height: 13 * devicePixelRatio,
                 ),
-                iconSize: 20 * devicePixelRatio,
+                iconSize: 13 * devicePixelRatio,
                 onPressed: () {
                   showModalBottomSheet<void>(
                     backgroundColor: const Color.fromRGBO(10, 22, 52, 1),
