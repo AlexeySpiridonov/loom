@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,7 +27,10 @@ class Info1Screen extends StatelessWidget {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
-                  child: Image.asset("assets/images/info1.png"),
+                  child: SvgPicture.asset(
+                    "assets/images/info1.svg",
+                    width: double.infinity,
+                  ),
                 ),
               ),
             ),
