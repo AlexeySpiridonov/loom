@@ -26,7 +26,7 @@ class Info3Screen extends StatelessWidget {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
-                  child: Image.asset("assets/images/info3.jpg"),
+                  child: Image.asset("assets/images/info3.png"),
                 ),
               ),
             ),
