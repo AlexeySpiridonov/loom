@@ -18,6 +18,7 @@ class HttpApiProvider {
         return null;
       }
 
+      logger.i(response.body);
       return response.body;
     } catch (e) {
       logger.w(e.toString());
@@ -36,6 +37,7 @@ class HttpApiProvider {
         return null;
       }
 
+      logger.i(response.body);
       return response.body;
     } catch (e) {
       logger.w(e.toString());
@@ -58,6 +60,7 @@ class HttpApiProvider {
         return null;
       }
 
+      logger.i(response.body);
       return neworksList;
     } catch (e) {
       logger.w(e.toString());
@@ -111,6 +114,7 @@ class HttpApiProvider {
         return null;
       }
 
+      logger.i(response.body);
       return response.body;
     } catch (e) {
       logger.w(e.toString());
@@ -128,6 +132,7 @@ class HttpApiProvider {
         return null;
       }
 
+      logger.i(response.body);
       return response.body;
     } catch (e) {
       logger.w(e.toString());
