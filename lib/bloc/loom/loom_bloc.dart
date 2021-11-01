@@ -185,8 +185,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
     await Future.delayed(const Duration(seconds: 5), () {});
 
-    logger.i(_result);
-
     if (_result != "successful" && _result != "already associated.") {
       if (status == 1) {
         openScreen(
