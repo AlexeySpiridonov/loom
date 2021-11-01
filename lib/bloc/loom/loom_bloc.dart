@@ -29,207 +29,65 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     required this.wifiApiProvider,
   }) : super(LoomInitState()) {
     on<LoomEvent>((event, emit) async {
-      //FAQ SCREEN
-      if (event is LoomOpenFAQEvent) {
-        emit(LoomFAQState(loomEvent: event.loomEvent));
-        openScreen(screenName: 'FAQ');
-      }
-
-      //INFO SCREENS
-      if (event is LoomOpenInfo1Event) {
-        emit(LoomInfo1State());
-        openScreen(screenName: 'info 1 screen');
-      }
-      if (event is LoomOpenInfo2Event) {
-        emit(LoomInfo2State());
-        openScreen(screenName: 'info 2 screen');
-      }
-      if (event is LoomOpenInfo3Event) {
-        emit(LoomInfo3State());
-        openScreen(screenName: 'info 3 screen');
-      }
-
-      //LOOM CONNECT SCREEN
-      if (event is LoomOpenConnectEvent) {
-        add(LoomTryConnectEvent());
-      }
-      if (event is LoomChangeNetworkEvent) {
-        networkName = event.data;
-      }
-      if (event is LoomTryConnectEvent) {
-        emit(LoomWaitState(sec: 0, messageId: 1));
-        openScreen(screenName: 'Wait');
-        String _result = await wifiApiProvider.connectWifi(networkName, "");
-
-        await Future.delayed(const Duration(seconds: 5), () {});
-
-        if (_result != "successful" && _result != "already associated.") {
-          if (status == 1) {
-            emit(LoomResetState());
-          } else {
-            emit(LoomConnectState());
-            openScreen(screenName: 'Connect');
-          }
-        } else {
-          await Future.delayed(const Duration(seconds: 2), () {});
-          add(LoomNetworksGetEvent());
-        }
-        status = 1;
-      }
-
-      //NETWORK SCREEN
-      if (event is LoomOpenNetworksEvent) {
-        add(LoomNetworksGetEvent());
-      }
-      if (event is LoomNetworksGetEvent && !isScannings) {
-        isScannings = true;
-        String? formScanningAp = await httpApiProvider.formScanningAp();
-
-        if (formScanningAp != null) {
-          emit(LoomWaitState(sec: 0, messageId: 2));
-          openScreen(screenName: 'Wait');
-
-          for (int i = 10; i > 0; i--) {
-            emit(LoomWaitState(sec: i, messageId: 2));
-            await Future.delayed(const Duration(seconds: 1), () {});
-          }
-
-          List<NetworkModel>? netList = await httpApiProvider.apList();
-
-          if (netList == null) {
-            emit(LoomErrorState(error: 105));
-            openScreen(screenName: 'Error 105');
-            return;
-          }
-
-          netList.removeWhere((item) =>
-              item.wl_ss_secmo != "WPA2-PSK" &&
-              item.wl_ss_secmo != "WPA-PSK/WPA2-PSK");
-
-          emit(LoomNetworksState(sec: 0, netList: netList));
-          openScreen(screenName: 'Networks');
-        } else {
-          emit(LoomErrorState(error: 102));
-          openScreen(screenName: 'Error 102');
-        }
-        isScannings = false;
-      }
-      if (event is LoomNetworksChooseEvent) {
-        networkName = event.networkModel.wl_ss_ssid;
-        ssid = event.networkModel.wl_ss_bssid;
-        channel = event.networkModel.wl_ss_channel;
-        loomName = networkName + "-plus";
-        emit(LoomSettingsNetworkState(
-          networkName: networkName,
-          loomName: loomName,
-        ));
-        openScreen(screenName: 'Settings network');
-      }
-
-      //SETTINGS SCREEN
-      if (event is LoomOpenSettingsNetworkEvent) {
-        emit(LoomSettingsNetworkState(
-          networkName: networkName,
-          loomName: loomName,
-        ));
-        openScreen(screenName: 'Settings network');
-      }
-      if (event is LoomChangeLoomEvent) {
-        loomName = event.data;
-      }
-      if (event is LoomChangePasswordEvent) {
-        password = event.data;
-      }
-      if (event is LoomSettingsSaveEvent) {
-        prefs.setString('loom_name', loomName);
-        emit(LoomSettingsNetworkState(
-          networkName: networkName,
-          loomName: loomName,
-        ));
-        openScreen(screenName: 'Settings network');
-      }
-      if (event is LoomSettingsNextEvent) {
-        emit(LoomWaitState(sec: 30, messageId: 3));
-        openScreen(screenName: 'Wait');
-        String? formSetRepeater = await httpApiProvider.formSetRepeater(
-          ssid: ssid,
-          channel: channel,
-          networkName: loomName,
-          password: password,
-        );
-
-        if (formSetRepeater != null) {
-          for (int i = 30; i > 0; i--) {
-            emit(LoomWaitState(sec: i, messageId: 3));
-            await Future.delayed(const Duration(seconds: 1), () {});
-            if (i == 10) {
-              await wifiApiProvider.connectWifi(
-                networkName,
-                password,
-              );
-            } else if (i == 5) {
-              String? resp = await httpApiProvider.getGoogle();
-              if (resp == null) {
-                emit(LoomErrorState(error: 104));
-                openScreen(screenName: 'Error 104');
-                return;
-              }
-
-              await wifiApiProvider.connectWifi(
-                loomName,
-                password,
-              );
-            }
-          }
-
-          emit(LoomSuccessfulState(
-            networkName: networkName,
-            loomName: loomName,
-          ));
-          openScreen(screenName: 'Successful');
-          status = 2;
-          saveValues();
-        } else {
-          emit(LoomErrorState(error: 103));
-          openScreen(screenName: 'Error 103');
-        }
-      }
-      if (event is LoomOpenSuccessfulEvent) {
-        openScreen(screenName: 'Successful');
-        emit(LoomSuccessfulState(
-          networkName: networkName,
-          loomName: loomName,
-        ));
-      }
-
-      //BUTTONS CONNECT SCREEN
-      if (event is LoomOpenButtonsEvent) {
-        openScreen(screenName: 'Buttons');
-        emit(LoomButtonsConnectState(
-          networkName: networkName,
-          loomName: loomName,
-        ));
-      }
-      if (event is LoomConnectNetworkEvent) {
-        String _ = await wifiApiProvider.connectWifi(
-          networkName,
-          password,
-        );
-      }
-      if (event is LoomConnectLoomEvent) {
-        String _ = await wifiApiProvider.connectWifi(
-          loomName,
-          password,
-        );
-      }
-      if (event is LoomClearEvent) {
-        initValues();
-        add(LoomOpenInfo1Event());
-      }
-
-      if (event is LoomOpenResetEvent) {
-        emit(LoomResetState());
-        openScreen(screenName: 'Reset');
+      switch (event.runtimeType) {
+        case LoomOpenFAQEvent: // Открыть скрин с FAQ
+          await openFAQScreen(emit, event);
+          break;
+        case LoomOpenInfo1Event: //Открыть скрин info 1
+          await openInfo1Screen(emit, event);
+          break;
+        case LoomOpenInfo2Event: //Открыть скрин info 2
+          await openInfo2Screen(emit, event);
+          break;
+        case LoomOpenInfo3Event: //Открыть скрин info 3
+          await openInfo3Screen(emit, event);
+          break;
+        case LoomOpenConnectEvent: //Открыть скрин с подкючением к loom
+          await openConnectScreen(emit, event);
+          break;
+        case LoomChangeNetworkEvent: //Смена имени лум на странице подключения к loom
+          await changeNetworkName(event);
+          break;
+        case LoomOpenNetworksEvent: //Открыть скрин со списком сетей
+          await openNetworksScreen(emit, event);
+          break;
+        case LoomNetworksChooseEvent: //Выбрать сеть в списке сетей
+          await networksChoose(emit, event);
+          break;
+        case LoomOpenSettingsNetworkEvent: //Открыть скрин с настройкой сети
+          await openSettingsNetworkScreen(emit, event);
+          break;
+        case LoomChangeLoomEvent: //Смена имени лум
+          await changeLoomName(event);
+          break;
+        case LoomChangePasswordEvent: //Смена пароля
+          await changePassword(event);
+          break;
+        case LoomSettingsSaveEvent: //Сохранить имя сети лум
+          await saveSettings(emit, event);
+          break;
+        case LoomSettingsNextEvent: //Отправить на репитер настройки
+          await settingsNext(emit, event);
+          break;
+        case LoomOpenSuccessfulEvent: //Открыть скрин успеха
+          await openSuccessfulScreen(emit, event);
+          break;
+        case LoomOpenButtonsEvent: //Открыть скрин с кнопками
+          await saveSettings(emit, event);
+          break;
+        case LoomConnectNetworkEvent: //Подключиться к сети wifi (Со страницы с кнопками)
+          await connectToNetwork(emit, event);
+          break;
+        case LoomConnectLoomEvent: //Подключиться к лум (Со страницы с кнопками)
+          await connectToLoom(emit, event);
+          break;
+        case LoomClearEvent: //Начать всё сначала
+          await clearAll(emit, event);
+          break;
+        case LoomOpenResetEvent: //Открыть скрин с ресетом
+          await openReset(emit, event);
+          break;
+        default:
       }
     });
     loading();
@@ -272,8 +130,281 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     saveValues();
   }
 
-  void openScreen({required String screenName}) {
+  Future<void> openScreen({
+    required String screenName,
+    required emit,
+    required state,
+  }) async {
+    emit(state);
     logger.i("Open screen $screenName");
     FirebaseAnalytics().setCurrentScreen(screenName: screenName);
+  }
+
+  //screens
+  Future<void> openFAQScreen(emit, event) async {
+    openScreen(
+      screenName: 'FAQ',
+      emit: emit,
+      state: LoomFAQState(loomEvent: event.loomEvent),
+    );
+  }
+
+  Future<void> openInfo1Screen(emit, event) async {
+    openScreen(
+      screenName: 'info 1',
+      emit: emit,
+      state: LoomInfo1State(),
+    );
+  }
+
+  Future<void> openInfo2Screen(emit, event) async {
+    openScreen(
+      screenName: 'info 2',
+      emit: emit,
+      state: LoomInfo2State(),
+    );
+  }
+
+  Future<void> openInfo3Screen(emit, event) async {
+    openScreen(
+      screenName: 'info 3',
+      emit: emit,
+      state: LoomInfo3State(),
+    );
+  }
+
+  Future<void> openConnectScreen(emit, event) async {
+    openScreen(
+      screenName: 'Wait',
+      emit: emit,
+      state: LoomWaitState(sec: 0, messageId: 1),
+    );
+    String _result = await wifiApiProvider.connectWifi(networkName, "");
+
+    await Future.delayed(const Duration(seconds: 5), () {});
+
+    logger.i(_result);
+
+    if (_result != "successful" && _result != "already associated.") {
+      if (status == 1) {
+        openScreen(
+          screenName: 'Reset',
+          emit: emit,
+          state: LoomResetState(),
+        );
+      } else {
+        openScreen(
+          screenName: 'Connect',
+          emit: emit,
+          state: LoomConnectState(),
+        );
+      }
+    } else {
+      await Future.delayed(const Duration(seconds: 2), () {});
+      await openNetworksScreen(emit, event);
+    }
+    status = 1;
+  }
+
+  Future<void> changeNetworkName(event) async {
+    networkName = event.data;
+  }
+
+  Future<void> openNetworksScreen(emit, event) async {
+    if (isScannings) {
+      logger.i("already scanning...");
+      return;
+    }
+    isScannings = true;
+    String? formScanningAp = await httpApiProvider.formScanningAp();
+
+    if (formScanningAp != null) {
+      openScreen(
+        screenName: 'Wait',
+        emit: emit,
+        state: LoomWaitState(sec: 0, messageId: 2),
+      );
+
+      for (int i = 10; i > 0; i--) {
+        emit(LoomWaitState(sec: i, messageId: 2));
+        await Future.delayed(const Duration(seconds: 1), () {});
+      }
+
+      List<NetworkModel>? netList = await httpApiProvider.apList();
+
+      if (netList == null) {
+        openScreen(
+          screenName: 'Error 105',
+          emit: emit,
+          state: LoomErrorState(error: 105),
+        );
+        return;
+      }
+
+      netList.removeWhere((item) =>
+          item.wl_ss_secmo != "WPA2-PSK" &&
+          item.wl_ss_secmo != "WPA-PSK/WPA2-PSK");
+
+      openScreen(
+        screenName: 'Networks',
+        emit: emit,
+        state: LoomNetworksState(sec: 0, netList: netList),
+      );
+    } else {
+      openScreen(
+        screenName: 'Error 102',
+        emit: emit,
+        state: LoomErrorState(error: 102),
+      );
+    }
+    isScannings = false;
+  }
+
+  Future<void> networksChoose(emit, event) async {
+    networkName = event.networkModel.wl_ss_ssid;
+    ssid = event.networkModel.wl_ss_bssid;
+    channel = event.networkModel.wl_ss_channel;
+    loomName = networkName + "-plus";
+
+    openSettingsNetworkScreen(emit, event);
+  }
+
+  Future<void> openSettingsNetworkScreen(emit, event) async {
+    openScreen(
+      screenName: 'Settings network',
+      emit: emit,
+      state: LoomSettingsNetworkState(
+        networkName: networkName,
+        loomName: loomName,
+      ),
+    );
+  }
+
+  Future<void> changeLoomName(event) async {
+    loomName = event.data;
+  }
+
+  Future<void> changePassword(event) async {
+    password = event.data;
+  }
+
+  Future<void> saveSettings(emit, event) async {
+    prefs.setString('loom_name', loomName);
+    openScreen(
+      screenName: 'Settings network',
+      emit: emit,
+      state: LoomSettingsNetworkState(
+        networkName: networkName,
+        loomName: loomName,
+      ),
+    );
+  }
+
+  Future<void> settingsNext(emit, event) async {
+    openScreen(
+      screenName: 'Wait',
+      emit: emit,
+      state: LoomWaitState(sec: 30, messageId: 3),
+    );
+    String? formSetRepeater = await httpApiProvider.formSetRepeater(
+      ssid: ssid,
+      channel: channel,
+      networkName: loomName,
+      password: password,
+    );
+
+    if (formSetRepeater != null) {
+      for (int i = 30; i > 0; i--) {
+        emit(LoomWaitState(sec: i, messageId: 3));
+        await Future.delayed(const Duration(seconds: 1), () {});
+        if (i == 10) {
+          await wifiApiProvider.connectWifi(
+            networkName,
+            password,
+          );
+        } else if (i == 5) {
+          String? resp = await httpApiProvider.getGoogle();
+          if (resp == null) {
+            openScreen(
+              screenName: 'Error 104',
+              emit: emit,
+              state: LoomErrorState(error: 104),
+            );
+            return;
+          }
+
+          await wifiApiProvider.connectWifi(
+            loomName,
+            password,
+          );
+        }
+      }
+
+      openScreen(
+        screenName: 'Successful',
+        emit: emit,
+        state: LoomSuccessfulState(
+          networkName: networkName,
+          loomName: loomName,
+        ),
+      );
+      status = 2;
+      saveValues();
+    } else {
+      openScreen(
+        screenName: 'Error 103',
+        emit: emit,
+        state: LoomErrorState(error: 103),
+      );
+    }
+  }
+
+  Future<void> openSuccessfulScreen(emit, event) async {
+    openScreen(
+      screenName: 'Successful',
+      emit: emit,
+      state: LoomSuccessfulState(
+        networkName: networkName,
+        loomName: loomName,
+      ),
+    );
+  }
+
+  Future<void> openButtonsScreen(emit, event) async {
+    openScreen(
+      screenName: 'Buttons',
+      emit: emit,
+      state: LoomButtonsConnectState(
+        networkName: networkName,
+        loomName: loomName,
+      ),
+    );
+  }
+
+  Future<void> connectToNetwork(emit, event) async {
+    String _ = await wifiApiProvider.connectWifi(
+      networkName,
+      password,
+    );
+  }
+
+  Future<void> connectToLoom(emit, event) async {
+    String _ = await wifiApiProvider.connectWifi(
+      loomName,
+      password,
+    );
+  }
+
+  Future<void> clearAll(emit, event) async {
+    initValues();
+    add(LoomOpenInfo1Event());
+  }
+
+  Future<void> openReset(emit, event) async {
+    openScreen(
+      screenName: 'Reset',
+      emit: emit,
+      state: LoomResetState(),
+    );
   }
 }

@@ -34,7 +34,7 @@ class NetworksScreen extends StatelessWidget {
             alignment: Alignment.topRight,
             child: TextButton(
               onPressed: () =>
-                  context.read<LoomBloc>().add(LoomNetworksGetEvent()),
+                  context.read<LoomBloc>().add(LoomOpenNetworksEvent()),
               child: Text(AppLocalizations.of(context)!.rescan),
             ),
           ),

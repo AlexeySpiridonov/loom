@@ -32,7 +32,7 @@ class LoomConnectScreen extends StatelessWidget {
           SizedBox(height: 20 * devicePixelRatio),
           LoomButton(
             onPressed: () {
-              context.read<LoomBloc>().add(LoomTryConnectEvent());
+              context.read<LoomBloc>().add(LoomOpenConnectEvent());
             },
             text: AppLocalizations.of(context)!.connect,
             loomEvent: LoomOpenConnectEvent(),

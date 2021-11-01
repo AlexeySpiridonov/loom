@@ -21,11 +21,7 @@ class LoomChangeNetworkEvent extends LoomEvent {
   LoomChangeNetworkEvent({required this.data});
 }
 
-class LoomTryConnectEvent extends LoomEvent {}
-
 class LoomOpenNetworksEvent extends LoomEvent {}
-
-class LoomNetworksGetEvent extends LoomEvent {}
 
 class LoomNetworksChooseEvent extends LoomEvent {
   final NetworkModel networkModel;
