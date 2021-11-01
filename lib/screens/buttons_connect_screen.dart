@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_button.dart';
 // ignore: implementation_imports
@@ -66,8 +67,8 @@ class ButtonsConnectScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 14 * devicePixelRatio),
           child: Column(
             children: [
-              Image.asset(
-                "assets/images/wifi3.png",
+              SvgPicture.asset(
+                "assets/images/wifi3.svg",
                 height: 20 * devicePixelRatio,
               ),
               SizedBox(height: 10 * devicePixelRatio),
@@ -157,8 +158,8 @@ class ButtonsConnectScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 56 * devicePixelRatio),
-                    Image.asset(
-                      "assets/images/loom.png",
+                    SvgPicture.asset(
+                      "assets/images/loom.svg",
                       height: 18 * devicePixelRatio,
                     ),
                     SizedBox(height: 11 * devicePixelRatio),

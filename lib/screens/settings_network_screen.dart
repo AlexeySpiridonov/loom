@@ -72,9 +72,9 @@ class SettingsNetworkScreen extends StatelessWidget {
               IconButton(
                 icon: Image.asset(
                   "assets/images/edit.png",
-                  height: 20 * devicePixelRatio,
+                  height: 13 * devicePixelRatio,
                 ),
-                iconSize: 20 * devicePixelRatio,
+                iconSize: 13 * devicePixelRatio,
                 onPressed: () {
                   showModalBottomSheet<void>(
                     backgroundColor: const Color.fromRGBO(10, 22, 52, 1),

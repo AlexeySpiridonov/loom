@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/models/network_model.dart';
 // ignore: implementation_imports
@@ -44,14 +45,20 @@ class LoomWifiButton extends StatelessWidget {
               ),
               const Spacer(),
               if (networkModel.wl_ss_sin >= 50)
-                Image.asset("assets/images/wifi3.png",
-                    height: 16 * devicePixelRatio)
+                SvgPicture.asset(
+                  "assets/images/wifi3.svg",
+                  height: 16 * devicePixelRatio,
+                )
               else if (networkModel.wl_ss_sin >= 30)
-                Image.asset("assets/images/wifi2.png",
-                    height: 16 * devicePixelRatio)
+                SvgPicture.asset(
+                  "assets/images/wifi2.svg",
+                  height: 16 * devicePixelRatio,
+                )
               else
-                Image.asset("assets/images/wifi1.png",
-                    height: 16 * devicePixelRatio),
+                SvgPicture.asset(
+                  "assets/images/wifi1.svg",
+                  height: 16 * devicePixelRatio,
+                )
             ],
           ),
         ),

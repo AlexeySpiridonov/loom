@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/datas/html.dart';
 // ignore: implementation_imports
@@ -21,7 +22,7 @@ class FAQScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
-            icon: Image.asset('assets/images/back.png'),
+            icon: SvgPicture.asset("assets/images/back.svg"),
             onPressed: () => context.read<LoomBloc>().add(loomEvent),
           ),
         ),

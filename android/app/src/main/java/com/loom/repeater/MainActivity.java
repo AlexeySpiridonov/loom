@@ -13,6 +13,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
+import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiNetworkSpecifier;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.os.PatternMatcher;
+import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -92,6 +94,10 @@ public class MainActivity extends FlutterActivity {
                 //e.printStackTrace();
             }
         } else {
+            if (!Settings.System.canWrite(getApplicationContext())) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 200);
+            }
             Intent panelIntent = new Intent("android.settings.panel.action.WIFI");
             startActivityForResult(panelIntent, 545);
             //result.success("successful");
@@ -116,6 +122,7 @@ public class MainActivity extends FlutterActivity {
                 //e.printStackTrace();
             }
         } else {
+
             WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
                     .setSsid( ssid )
                     .setWpa2Passphrase(password)

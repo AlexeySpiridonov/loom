@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
@@ -28,8 +29,8 @@ class LoomAppBar extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(height: 21 * devicePixelRatio),
           GestureDetector(
             onTap: () => context.read<LoomBloc>().add(loomEvent),
-            child: Image.asset(
-              "assets/images/back.png",
+            child: SvgPicture.asset(
+              "assets/images/back.svg",
               height: 16 * devicePixelRatio,
             ),
           ),

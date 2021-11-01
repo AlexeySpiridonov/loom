@@ -1,43 +1,47 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:loom/models/network_model.dart';
 
 class HttpApiProvider {
   HttpApiProvider();
+  var logger = Logger();
 
   Future<String?> sysStatus() async {
     try {
       var url =
           Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
-      var response = await http.get(url).timeout(const Duration(seconds: 5),
-          onTimeout: () {
-        return http.Response('Error', 500);
-      });
+      var response = await http.get(url);
 
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
+
+      logger.i(response.body);
       return response.body;
     } catch (e) {
+      logger.w(e.toString());
       return null;
-      //print(e);
     }
   }
 
   Future<String?> formScanningAp() async {
     try {
       var url = Uri.parse('http://192.168.10.1/mobile/form_scanning_ap.htm');
-      var response = await http.post(url, body: {
-        'refresh': 'Site Survey',
-        'ifname': "wlan0",
-        'opmode': "2"
-      }).timeout(const Duration(seconds: 5), onTimeout: () {
-        return http.Response('Error', 500);
-      });
+      var response = await http.post(url,
+          body: {'refresh': 'Site Survey', 'ifname': "wlan0", 'opmode': "2"});
 
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
+
+      logger.i(response.body);
       return response.body;
     } catch (e) {
+      logger.w(e.toString());
       return null;
-      //print(e);
     }
   }
 
@@ -45,18 +49,21 @@ class HttpApiProvider {
     try {
       var url =
           Uri.parse('http://192.168.10.1/data/ap_list.htm?_=1632792847486');
-      var response = await http.get(url).timeout(const Duration(seconds: 5),
-          onTimeout: () {
-        return http.Response('Error', 500);
-      });
+      var response = await http.get(url);
 
       List<NetworkModel> neworksList = (json.decode(response.body) as List)
           .map((i) => NetworkModel.fromJson(i))
           .toList();
 
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
+
+      logger.i(response.body);
       return neworksList;
     } catch (e) {
+      logger.w(e.toString());
       return null;
     }
   }
@@ -100,15 +107,18 @@ class HttpApiProvider {
         "wapiPskValue0": "",
         "wapiASIP0": "0.0.0.0",
         "connect": "connect",
-      }).timeout(const Duration(seconds: 5), onTimeout: () {
-        return http.Response('Error', 500);
       });
 
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
+
+      logger.i(response.body);
       return response.body;
     } catch (e) {
+      logger.w(e.toString());
       return null;
-      //print(e);
     }
   }
 
@@ -117,12 +127,16 @@ class HttpApiProvider {
       var url = Uri.parse('https://www.google.com');
       var response = await http.get(url);
 
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
 
+      logger.i(response.body);
       return response.body;
     } catch (e) {
+      logger.w(e.toString());
       return null;
-      //print(e);
     }
   }
 }

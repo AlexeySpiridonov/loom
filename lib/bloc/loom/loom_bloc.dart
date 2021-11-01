@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:loom/models/network_model.dart';
 import 'package:loom/services/http_api_provider.dart';
 import 'package:loom/services/wifi_api_provider.dart';
@@ -21,6 +22,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   String channel = "";
   bool isScannings = false;
   int status = 0;
+  var logger = Logger();
 
   LoomBloc({
     required this.httpApiProvider,
@@ -30,21 +32,21 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       //FAQ SCREEN
       if (event is LoomOpenFAQEvent) {
         emit(LoomFAQState(loomEvent: event.loomEvent));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'FAQ');
+        openScreen(screenName: 'FAQ');
       }
 
       //INFO SCREENS
       if (event is LoomOpenInfo1Event) {
         emit(LoomInfo1State());
-        FirebaseAnalytics().setCurrentScreen(screenName: 'info 1 screen');
+        openScreen(screenName: 'info 1 screen');
       }
       if (event is LoomOpenInfo2Event) {
         emit(LoomInfo2State());
-        FirebaseAnalytics().setCurrentScreen(screenName: 'info 2 screen');
+        openScreen(screenName: 'info 2 screen');
       }
       if (event is LoomOpenInfo3Event) {
         emit(LoomInfo3State());
-        FirebaseAnalytics().setCurrentScreen(screenName: 'info 3 screen');
+        openScreen(screenName: 'info 3 screen');
       }
 
       //LOOM CONNECT SCREEN
@@ -56,7 +58,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       }
       if (event is LoomTryConnectEvent) {
         emit(LoomWaitState(sec: 0, messageId: 1));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
+        openScreen(screenName: 'Wait');
         String _result = await wifiApiProvider.connectWifi(networkName, "");
 
         await Future.delayed(const Duration(seconds: 5), () {});
@@ -66,7 +68,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             emit(LoomResetState());
           } else {
             emit(LoomConnectState());
-            FirebaseAnalytics().setCurrentScreen(screenName: 'Connect');
+            openScreen(screenName: 'Connect');
           }
         } else {
           await Future.delayed(const Duration(seconds: 2), () {});
@@ -85,7 +87,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
         if (formScanningAp != null) {
           emit(LoomWaitState(sec: 0, messageId: 2));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
+          openScreen(screenName: 'Wait');
 
           for (int i = 10; i > 0; i--) {
             emit(LoomWaitState(sec: i, messageId: 2));
@@ -96,7 +98,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
           if (netList == null) {
             emit(LoomErrorState(error: 105));
-            FirebaseAnalytics().setCurrentScreen(screenName: 'Error 105');
+            openScreen(screenName: 'Error 105');
             return;
           }
 
@@ -105,10 +107,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
               item.wl_ss_secmo != "WPA-PSK/WPA2-PSK");
 
           emit(LoomNetworksState(sec: 0, netList: netList));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Networks');
+          openScreen(screenName: 'Networks');
         } else {
           emit(LoomErrorState(error: 102));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 102');
+          openScreen(screenName: 'Error 102');
         }
         isScannings = false;
       }
@@ -121,7 +123,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           networkName: networkName,
           loomName: loomName,
         ));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Settings network');
+        openScreen(screenName: 'Settings network');
       }
 
       //SETTINGS SCREEN
@@ -130,7 +132,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           networkName: networkName,
           loomName: loomName,
         ));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Settings network');
+        openScreen(screenName: 'Settings network');
       }
       if (event is LoomChangeLoomEvent) {
         loomName = event.data;
@@ -144,11 +146,11 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           networkName: networkName,
           loomName: loomName,
         ));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Settings network');
+        openScreen(screenName: 'Settings network');
       }
       if (event is LoomSettingsNextEvent) {
         emit(LoomWaitState(sec: 30, messageId: 3));
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Wait');
+        openScreen(screenName: 'Wait');
         String? formSetRepeater = await httpApiProvider.formSetRepeater(
           ssid: ssid,
           channel: channel,
@@ -169,7 +171,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
               String? resp = await httpApiProvider.getGoogle();
               if (resp == null) {
                 emit(LoomErrorState(error: 104));
-                FirebaseAnalytics().setCurrentScreen(screenName: 'Error 104');
+                openScreen(screenName: 'Error 104');
                 return;
               }
 
@@ -184,16 +186,16 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             networkName: networkName,
             loomName: loomName,
           ));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Successful');
+          openScreen(screenName: 'Successful');
           status = 2;
           saveValues();
         } else {
           emit(LoomErrorState(error: 103));
-          FirebaseAnalytics().setCurrentScreen(screenName: 'Error 103');
+          openScreen(screenName: 'Error 103');
         }
       }
       if (event is LoomOpenSuccessfulEvent) {
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Successful');
+        openScreen(screenName: 'Successful');
         emit(LoomSuccessfulState(
           networkName: networkName,
           loomName: loomName,
@@ -202,7 +204,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
       //BUTTONS CONNECT SCREEN
       if (event is LoomOpenButtonsEvent) {
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Buttons');
+        openScreen(screenName: 'Buttons');
         emit(LoomButtonsConnectState(
           networkName: networkName,
           loomName: loomName,
@@ -227,7 +229,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
       if (event is LoomOpenResetEvent) {
         emit(LoomResetState());
-        FirebaseAnalytics().setCurrentScreen(screenName: 'Reset');
+        openScreen(screenName: 'Reset');
       }
     });
     loading();
@@ -268,5 +270,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     isScannings = false;
     status = 0;
     saveValues();
+  }
+
+  void openScreen({required String screenName}) {
+    logger.i("Open screen $screenName");
+    FirebaseAnalytics().setCurrentScreen(screenName: screenName);
   }
 }
