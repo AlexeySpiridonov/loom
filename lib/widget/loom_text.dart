@@ -5,10 +5,12 @@ class LoomText extends StatelessWidget {
     this.text, {
     Key? key,
     this.top,
+    this.textSize,
   }) : super(key: key);
 
   final String text;
   final int? top;
+  final int? textSize;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class LoomText extends StatelessWidget {
           text,
           textAlign: TextAlign.start,
           style: TextStyle(
-            fontSize: 18 * devicePixelRatio,
+            fontSize: textSize != null
+                ? (textSize! * devicePixelRatio)
+                : 18 * devicePixelRatio,
             fontWeight: FontWeight.w600,
             height: 1.4,
           ),

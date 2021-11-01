@@ -3,9 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:loom/models/network_model.dart';
 
+import 'logger.dart';
+
 class HttpApiProvider {
   HttpApiProvider();
-  var logger = Logger();
+  var logger = Logger(output: LoomConsoleOutput());
 
   Future<String?> sysStatus() async {
     try {

@@ -1,9 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 
+import 'logger.dart';
+
 class WifiApiProvider {
   WifiApiProvider();
-  var logger = Logger();
+  var logger = Logger(output: LoomConsoleOutput());
 
   static const platform = MethodChannel('loom/wifi');
 

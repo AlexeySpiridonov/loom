@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:loom/models/network_model.dart';
 import 'package:loom/services/http_api_provider.dart';
+import 'package:loom/services/logger.dart';
 import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +23,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   String channel = "";
   bool isScannings = false;
   int status = 0;
-  var logger = Logger();
+  String logs = "";
+  var logger = Logger(output: LoomConsoleOutput());
 
   LoomBloc({
     required this.httpApiProvider,
@@ -407,4 +409,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       state: LoomResetState(),
     );
   }
+
+  void writeLogs() {}
 }
