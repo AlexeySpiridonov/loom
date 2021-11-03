@@ -30,6 +30,13 @@ late List<InfoScreenModel> infoScreenModels;
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  final Duration duration = const Duration(milliseconds: 500);
+
+  Widget animBuilder(BuildContext c, Animation<double> anim,
+      Animation<double> a2, Widget child) {
+    return FadeTransition(opacity: anim, child: child);
+  }
+
   @override
   Widget build(BuildContext context) {
     HttpApiProvider httpApiProvider = HttpApiProvider();
@@ -56,72 +63,158 @@ class MyApp extends StatelessWidget {
             elevation: 0,
           ),
         ),
-        home: BlocBuilder<LoomBloc, LoomState>(builder: (context, state) {
-          if (state is LoomInfo1State) {
-            return const Info1Screen();
-          }
-          if (state is LoomInfo2State) {
-            return const Info2Screen();
-          }
-          if (state is LoomInfo3State) {
-            return const Info3Screen();
-          }
+        home: BlocConsumer<LoomBloc, LoomState>(
+          listener: (context, state) {
+            if (state is LoomInfo1State) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const Info1Screen(),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
+            if (state is LoomInfo2State) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const Info2Screen(),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
+            if (state is LoomInfo3State) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const Info3Screen(),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomConnectState) {
-            return const LoomConnectScreen();
-          }
+            if (state is LoomConnectState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const LoomConnectScreen(),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomNetworksState) {
-            return NetworksScreen(
-              sec: state.sec,
-              netList: state.netList,
-            );
-          }
+            if (state is LoomNetworksState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => NetworksScreen(
+                    sec: state.sec,
+                    netList: state.netList,
+                  ),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomSettingsNetworkState) {
-            return SettingsNetworkScreen(
-              networkName: state.networkName,
-              loomName: state.loomName,
-            );
-          }
+            if (state is LoomSettingsNetworkState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => SettingsNetworkScreen(
+                    networkName: state.networkName,
+                    loomName: state.loomName,
+                  ),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomWaitState) {
-            return WaitScreen(
-              sec: state.sec,
-              messageId: state.messageId,
-            );
-          }
+            if (state is LoomWaitState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => WaitScreen(
+                    sec: state.sec,
+                    messageId: state.messageId,
+                  ),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomSuccessfulState) {
-            return SuccessfulScreen(
-              networkName: state.networkName,
-              loomName: state.loomName,
-            );
-          }
+            if (state is LoomSuccessfulState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => SuccessfulScreen(
+                    networkName: state.networkName,
+                    loomName: state.loomName,
+                  ),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomButtonsConnectState) {
-            return ButtonsConnectScreen(
-              loomName: state.loomName,
-              networkName: state.networkName,
-            );
-          }
+            if (state is LoomButtonsConnectState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => ButtonsConnectScreen(
+                    loomName: state.loomName,
+                    networkName: state.networkName,
+                  ),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomFAQState) {
-            return FAQScreen(loomEvent: state.loomEvent);
-          }
+            if (state is LoomFAQState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) =>
+                      FAQScreen(loomEvent: state.loomEvent),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomResetState) {
-            return const ResetScreen();
-          }
+            if (state is LoomResetState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const ResetScreen(),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
 
-          if (state is LoomErrorState) {
-            return ErrorScreen(error: state.error);
-          }
-
-          // if (state is LoomInitState) {
-          return const WaitScreen(sec: 0, messageId: 0);
-          // }
-        }),
+            if (state is LoomErrorState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => ErrorScreen(error: state.error),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            return const WaitScreen(sec: 0, messageId: 0);
+          },
+        ),
       ),
     );
   }

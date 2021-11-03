@@ -7,6 +7,7 @@ import 'package:loom/services/http_api_provider.dart';
 import 'package:loom/services/logger.dart';
 import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'loom_event.dart';
@@ -25,6 +26,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   int status = 0;
   String logs = "";
   var logger = Logger(output: LoomConsoleOutput());
+  final info = NetworkInfo();
 
   LoomBloc({
     required this.httpApiProvider,
@@ -251,6 +253,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         state: LoomNetworksState(sec: 0, netList: netList),
       );
     } else {
+      logger.w(await info.getWifiName());
       openScreen(
         screenName: 'Error 102',
         emit: emit,

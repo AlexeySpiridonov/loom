@@ -2,31 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:loom/models/network_model.dart';
-
+import 'dart:async';
 import 'logger.dart';
 
 class HttpApiProvider {
   HttpApiProvider();
   var logger = Logger(output: LoomConsoleOutput());
-
-  Future<String?> sysStatus() async {
-    try {
-      var url =
-          Uri.parse('http://192.168.10.1/data/sys_status.htm?_=1632792633582');
-      var response = await http.get(url);
-
-      if (response.statusCode != 200) {
-        logger.w(response.statusCode);
-        return null;
-      }
-
-      logger.i(response.body);
-      return response.body;
-    } catch (e) {
-      logger.w(e.toString());
-      return null;
-    }
-  }
 
   Future<String?> formScanningAp() async {
     try {
