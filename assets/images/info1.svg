@@ -3,7 +3,7 @@
 <path opacity="0.12" fill-rule="evenodd" clip-rule="evenodd" d="M78 340H0V174C0 128.441 35.0197 91.0605 79.6094 87.3095C87.9246 42.1851 127.47 8 175 8C228.572 8 272 51.4284 272 105V340H174H78Z" fill="#00C4FF"/>
 <rect x="14" y="151" width="121" height="33" rx="2" fill="#70AFD0"/>
 <rect x="24" y="145" width="32" height="51" rx="10" fill="white"/>
-<circle cx="40.5" cy="181.5" r="2.5" fill="#00C3F3"/>
+<circle cx="40.5" cy="181.5" r="2.25" fill="white" stroke="#00C3F3" stroke-width="0.5"/>
 <circle cx="40.5" cy="175.5" r="0.5" fill="#00C3F3"/>
 <circle cx="40.5" cy="172.5" r="0.5" fill="#00C3F3"/>
 <circle cx="40.5" cy="169.5" r="0.5" fill="#00C3F3"/>
