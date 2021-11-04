@@ -33,7 +33,7 @@ class SuccessfulScreen extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
                   child: SvgPicture.asset(
-                    "assets/images/successful.svg",
+                    "assets/images/pic_done.svg",
                     width: double.infinity,
                   ),
                 ),

@@ -199,6 +199,7 @@ class ButtonsConnectScreen extends StatelessWidget {
                 text: AppLocalizations.of(context)!.message12,
                 loomEvent: LoomOpenButtonsEvent(),
                 disabled: true,
+                nofaq: true,
               ),
               SizedBox(height: 20 * devicePixelRatio),
             ],

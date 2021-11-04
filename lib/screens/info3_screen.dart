@@ -40,6 +40,7 @@ class Info3Screen extends StatelessWidget {
                   context.read<LoomBloc>().add(LoomOpenConnectEvent()),
               text: AppLocalizations.of(context)!.light_on,
               loomEvent: LoomOpenInfo3Event(),
+              nofaq: true,
             ),
             SizedBox(height: 12 * devicePixelRatio),
             LoomButton(

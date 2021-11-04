@@ -36,6 +36,7 @@ class LoomConnectScreen extends StatelessWidget {
             },
             text: AppLocalizations.of(context)!.connect,
             loomEvent: LoomOpenConnectEvent(),
+            nofaq: true,
           ),
           SizedBox(height: 20 * devicePixelRatio),
         ],

@@ -28,7 +28,7 @@ class ResetScreen extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
                   child: SvgPicture.asset(
-                    "assets/images/reset.svg",
+                    "assets/images/pic_reset.svg",
                     width: double.infinity,
                   ),
                 ),
@@ -40,6 +40,7 @@ class ResetScreen extends StatelessWidget {
                   context.read<LoomBloc>().add(LoomOpenInfo1Event()),
               text: AppLocalizations.of(context)!.next,
               loomEvent: LoomClearEvent(),
+              nofaq: true,
             ),
             SizedBox(height: 40 * devicePixelRatio),
           ],
