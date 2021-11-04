@@ -14,6 +14,7 @@ import 'screens/faq_screen.dart';
 import 'screens/info3_screen.dart';
 import 'screens/loom_connect_screen.dart';
 import 'screens/networks_screen.dart';
+import 'screens/reset106_screen.dart';
 import 'screens/reset_screen.dart';
 import 'screens/settings_network_screen.dart';
 import 'screens/successful_screen.dart';
@@ -205,6 +206,17 @@ class MyApp extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (c, a1, a2) => ErrorScreen(error: state.error),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
+
+            if (state is LoomReset106State) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const Reset106Screen(),
                   transitionsBuilder: animBuilder,
                   transitionDuration: duration,
                 ),

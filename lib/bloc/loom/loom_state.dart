@@ -54,3 +54,5 @@ class LoomErrorState extends LoomState {
   final int error;
   LoomErrorState({required this.error});
 }
+
+class LoomReset106State extends LoomState {}

@@ -157,8 +157,8 @@ public class MainActivity extends FlutterActivity {
             connectivityManager.requestNetwork(networkRequest,networkCallback);
 
             try {
-                for (int i = 0; i < 60; i++) {
-                    Thread.sleep(1000);
+                for (int i = 0; i < 200; i++) {
+                    Thread.sleep(100);
                     if (isSuccessful[0]) {
                         result.success("successful");
                         return;

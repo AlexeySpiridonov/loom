@@ -321,10 +321,17 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         emit(LoomWaitState(sec: i, messageId: 3));
         await Future.delayed(const Duration(seconds: 1), () {});
         if (i == 10) {
-          await wifiApiProvider.connectWifi(
+          var _result = await wifiApiProvider.connectWifi(
             networkName,
             password,
           );
+          if (_result != "successful" && _result != "already associated.") {
+            openScreen(
+              screenName: 'Reset 106',
+              emit: emit,
+              state: LoomReset106State(),
+            );
+          }
         } else if (i == 5) {
           String? resp = await httpApiProvider.getGoogle();
           if (resp == null) {
@@ -336,10 +343,17 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
             return;
           }
 
-          await wifiApiProvider.connectWifi(
+          var _result = await wifiApiProvider.connectWifi(
             loomName,
             password,
           );
+          if (_result != "successful" && _result != "already associated.") {
+            openScreen(
+              screenName: 'Reset 106',
+              emit: emit,
+              state: LoomReset106State(),
+            );
+          }
         }
       }
 

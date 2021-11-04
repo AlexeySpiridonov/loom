@@ -29,6 +29,7 @@
   "error103": "Failed to write settings to LOOM",
   "error104": "Failed to access the internet",
   "error105": "List of Wi-Fi networks not received",
+  "error106": "Пароль не подходит, сбросьте ротуер и повторите настройку, и картинку сброса.",
 
   "startAnew": "Start over",
   "rescan": "Rescan",
