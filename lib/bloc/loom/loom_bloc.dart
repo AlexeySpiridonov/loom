@@ -95,6 +95,11 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       }
     });
     loading();
+    openScreen(
+      screenName: 'Reset 106',
+      emit: emit,
+      state: LoomReset106State(),
+    );
   }
 
   void loading() async {
@@ -331,6 +336,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
               emit: emit,
               state: LoomReset106State(),
             );
+            return;
           }
         } else if (i == 5) {
           String? resp = await httpApiProvider.getGoogle();
@@ -353,6 +359,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
               emit: emit,
               state: LoomReset106State(),
             );
+            return;
           }
         }
       }

@@ -21,14 +21,14 @@ class Reset106Screen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
         child: Column(
           children: [
-            LoomText(AppLocalizations.of(context)!.message13),
+            LoomText(AppLocalizations.of(context)!.error106),
             Expanded(
               child: Center(
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
                   child: SvgPicture.asset(
-                    "assets/images/reset.svg",
+                    "assets/images/pic_reset.svg",
                     width: double.infinity,
                   ),
                 ),
@@ -40,6 +40,7 @@ class Reset106Screen extends StatelessWidget {
                   context.read<LoomBloc>().add(LoomOpenInfo1Event()),
               text: AppLocalizations.of(context)!.next,
               loomEvent: LoomClearEvent(),
+              nofaq: true,
             ),
             SizedBox(height: 40 * devicePixelRatio),
           ],
