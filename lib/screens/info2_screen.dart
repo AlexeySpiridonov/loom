@@ -40,6 +40,7 @@ class Info2Screen extends StatelessWidget {
                   context.read<LoomBloc>().add(LoomOpenInfo3Event()),
               text: AppLocalizations.of(context)!.next,
               loomEvent: LoomOpenInfo2Event(),
+              nofaq: true,
             ),
             SizedBox(height: 40 * devicePixelRatio),
           ],

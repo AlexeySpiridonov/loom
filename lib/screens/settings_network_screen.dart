@@ -117,6 +117,7 @@ class SettingsNetworkScreen extends StatelessWidget {
                               text: AppLocalizations.of(context)!.save,
                               loomEvent: LoomOpenSettingsNetworkEvent(),
                               isModalBottomSheet: true,
+                              nofaq: true,
                             ),
                             SizedBox(height: 20 * devicePixelRatio),
                           ],
