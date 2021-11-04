@@ -77,7 +77,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
           await openSuccessfulScreen(emit, event);
           break;
         case LoomOpenButtonsEvent: //Открыть скрин с кнопками
-          await saveSettings(emit, event);
+          await openButtonsScreen(emit, event);
           break;
         case LoomConnectNetworkEvent: //Подключиться к сети wifi (Со страницы с кнопками)
           await connectToNetwork(emit, event);

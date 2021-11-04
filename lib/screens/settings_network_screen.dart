@@ -46,6 +46,7 @@ class SettingsNetworkScreen extends StatelessWidget {
                 context.read<LoomBloc>().add(LoomSettingsNextEvent()),
             text: AppLocalizations.of(context)!.next,
             loomEvent: LoomOpenSettingsNetworkEvent(),
+            nofaq: true,
           ),
           SizedBox(height: 30 * devicePixelRatio),
           Align(
