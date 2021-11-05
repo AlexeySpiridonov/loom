@@ -27,9 +27,9 @@
   "error101": "You are not connected to LOOM Wi-Fi",
   "error102": "Failed to scan Wi-Fi network",
   "error103": "Failed to write settings to LOOM",
-  "error104": "Failed to access the internet",
+  "error104": "Failed to access the internet. Please сheck the home router settings.",
   "error105": "List of Wi-Fi networks not received",
-  "error106": "Пароль не подходит, сбросьте ротуер и повторите настройку, и картинку сброса.",
+  "error106": "The password for the home network does not fit. You need to reset LOOM. Hold the Reset button for 10 seconds. Wait until the LED blinks and then becomes steady.",
 
   "startAnew": "Start over",
   "rescan": "Rescan",

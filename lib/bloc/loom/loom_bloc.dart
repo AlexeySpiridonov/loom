@@ -309,78 +309,89 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   }
 
   Future<void> settingsNext(emit, event) async {
+    
+    //показываем экран ожидания
     openScreen(
       screenName: 'Wait',
       emit: emit,
       state: LoomWaitState(sec: 30, messageId: 3),
     );
+
+    //записываем настройки в лум
     String? formSetRepeater = await httpApiProvider.formSetRepeater(
       ssid: ssid,
       channel: channel,
       networkName: loomName,
       password: password,
     );
-
-    if (formSetRepeater != null) {
-      for (int i = 30; i > 0; i--) {
-        emit(LoomWaitState(sec: i, messageId: 3));
-        await Future.delayed(const Duration(seconds: 1), () {});
-        if (i == 10) {
-          var _result = await wifiApiProvider.connectWifi(
-            networkName,
-            password,
-          );
-          if (_result != "successful" && _result != "already associated.") {
-            openScreen(
-              screenName: 'Reset 106',
-              emit: emit,
-              state: LoomReset106State(),
-            );
-            return;
-          }
-        } else if (i == 5) {
-          String? resp = await httpApiProvider.getGoogle();
-          if (resp == null) {
-            openScreen(
-              screenName: 'Error 104',
-              emit: emit,
-              state: LoomErrorState(error: 104),
-            );
-            return;
-          }
-
-          var _result = await wifiApiProvider.connectWifi(
-            loomName,
-            password,
-          );
-          if (_result != "successful" && _result != "already associated.") {
-            openScreen(
-              screenName: 'Reset 106',
-              emit: emit,
-              state: LoomReset106State(),
-            );
-            return;
-          }
-        }
-      }
-
-      openScreen(
-        screenName: 'Successful',
-        emit: emit,
-        state: LoomSuccessfulState(
-          networkName: networkName,
-          loomName: loomName,
-        ),
-      );
-      status = 2;
-      saveValues();
-    } else {
+    if (formSetRepeater == null) {
       openScreen(
         screenName: 'Error 103',
         emit: emit,
         state: LoomErrorState(error: 103),
       );
+      return;
+    };
+
+    // ждем 20 сек
+    for (int i = 20; i > 0; i--) {
+      emit(LoomWaitState(sec: i, messageId: 3));
+      await Future.delayed(const Duration(seconds: 1), () {});
     }
+
+    //чекаем основную сеть
+    var _result = await wifiApiProvider.connectWifi(
+      networkName,
+      password,
+    );
+    if (_result != "successful" && _result != "already associated.") {
+        openScreen(
+          screenName: 'Reset 106',
+          emit: emit,
+          state: LoomReset106State(),
+        );
+        return;
+    }
+
+    //чекаем лум
+    var _result = await wifiApiProvider.connectWifi(
+      loomName,
+      password,
+    );
+    if (_result != "successful" && _result != "already associated.") {
+      openScreen(
+        screenName: 'Reset 106',
+        emit: emit,
+        state: LoomReset106State(),
+      );
+      return;
+    }
+
+    //все подключения прошли, запоминаем стейт
+    status = 2;
+    saveValues();
+
+    //проверяем инет на всякий случай 
+    String? resp = await httpApiProvider.getGoogle();
+    if (resp == null) {
+      openScreen(
+        screenName: 'Error 104',
+        emit: emit,
+        state: LoomErrorState(error: 104),
+      );
+      return;
+    }
+  
+    //все успешно
+    openScreen(
+      screenName: 'Successful',
+      emit: emit,
+      state: LoomSuccessfulState(
+        networkName: networkName,
+        loomName: loomName,
+      ),
+    );
+
   }
 
   Future<void> openSuccessfulScreen(emit, event) async {
