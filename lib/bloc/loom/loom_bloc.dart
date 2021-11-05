@@ -309,7 +309,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   }
 
   Future<void> settingsNext(emit, event) async {
-    
     //показываем экран ожидания
     openScreen(
       screenName: 'Wait',
@@ -331,7 +330,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         state: LoomErrorState(error: 103),
       );
       return;
-    };
+    }
+    ;
 
     // ждем 20 сек
     for (int i = 20; i > 0; i--) {
@@ -345,12 +345,12 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       password,
     );
     if (_result != "successful" && _result != "already associated.") {
-        openScreen(
-          screenName: 'Reset 106',
-          emit: emit,
-          state: LoomReset106State(),
-        );
-        return;
+      openScreen(
+        screenName: 'Reset 106',
+        emit: emit,
+        state: LoomReset106State(),
+      );
+      return;
     }
 
     //чекаем лум
@@ -371,7 +371,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     status = 2;
     saveValues();
 
-    //проверяем инет на всякий случай 
+    //проверяем инет на всякий случай
     String? resp = await httpApiProvider.getGoogle();
     if (resp == null) {
       openScreen(
@@ -381,7 +381,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       );
       return;
     }
-  
+
     //все успешно
     openScreen(
       screenName: 'Successful',
@@ -391,7 +391,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         loomName: loomName,
       ),
     );
-
   }
 
   Future<void> openSuccessfulScreen(emit, event) async {
