@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:810925929680:android:12c62f8c12a948548b1ad5",
+        "mobilesdk_app_id": "1:810925929680:android:aee37ca808403e0e8b1ad5",
         "android_client_info": {
-          "package_name": "com.loom.repeater"
+          "package_name": "com.loom.usa.repeater"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "810925929680-kvlpugn85rultkmj78vt6bd18013hb4h.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "810925929680-iro3eh0m5c4kd9gsdoc7ojvjjfgfptn1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.loom.usa.repeater"
+              }
             }
           ]
         }
