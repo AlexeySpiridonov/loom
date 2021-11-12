@@ -354,11 +354,11 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     }
 
     //чекаем лум
-    _result = await wifiApiProvider.connectWifi(
+    var _result2 = await wifiApiProvider.connectWifi(
       loomName,
       password,
     );
-    if (_result != "successful" && _result != "already associated.") {
+    if (_result2 != "successful" && _result2 != "already associated.") {
       openScreen(
         screenName: 'Reset 106',
         emit: emit,
