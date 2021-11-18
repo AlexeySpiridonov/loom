@@ -147,6 +147,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     emit(state);
     logger.i("Open screen $screenName");
     FirebaseAnalytics().setCurrentScreen(screenName: screenName);
+    FirebaseAnalytics().logEvent(name: "Screen: $screenName");
   }
 
   //screens
