@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/screens/info2_screen.dart';
@@ -18,10 +19,15 @@ import 'screens/reset106_screen.dart';
 import 'screens/reset_screen.dart';
 import 'screens/settings_network_screen.dart';
 import 'screens/successful_screen.dart';
+import 'services/firebase_analytics_service.dart';
 import 'services/http_api_provider.dart';
+import 'services/service_locator.dart';
 import 'services/wifi_api_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  setUp();
   runApp(const MyApp());
 }
 
@@ -64,6 +70,9 @@ class MyApp extends StatelessWidget {
             elevation: 0,
           ),
         ),
+        navigatorObservers: [
+          serviceLocator<FirebaseAnalyticsService>().appAnalyticsObserver(),
+        ],
         home: BlocConsumer<LoomBloc, LoomState>(
           listener: (context, state) {
             if (state is LoomInfo1State) {
