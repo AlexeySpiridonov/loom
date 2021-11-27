@@ -18,6 +18,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   final HttpApiProvider httpApiProvider;
   late SharedPreferences prefs;
   String networkName = "WiFi Extender";
+  String networkPostfix = "-plus";
   String loomName = "";
   String password = "";
   String ssid = "";
@@ -274,7 +275,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     networkName = event.networkModel.wl_ss_ssid;
     ssid = event.networkModel.wl_ss_bssid;
     channel = event.networkModel.wl_ss_channel;
-    loomName = networkName + "-plus";
+    loomName = networkName + networkPostfix;
 
     openSettingsNetworkScreen(emit, event);
   }
