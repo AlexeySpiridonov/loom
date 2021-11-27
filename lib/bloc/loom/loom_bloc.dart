@@ -27,6 +27,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   String logs = "";
   var logger = Logger(output: LoomConsoleOutput());
   final info = NetworkInfo();
+  var fb = FirebaseAnalytics();
 
   LoomBloc({
     required this.httpApiProvider,
@@ -96,7 +97,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     });
     loading();
     openScreen(
-      screenName: 'Reset 106',
+      screenName: 'Reset_106',
       emit: emit,
       state: LoomReset106State(),
     );
@@ -146,8 +147,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   }) async {
     emit(state);
     logger.i("Open screen $screenName");
-    FirebaseAnalytics().setCurrentScreen(screenName: screenName);
-    FirebaseAnalytics().logEvent(name: "Screen: $screenName");
+    fb.setCurrentScreen(screenName: screenName);
+    fb.logEvent(name: screenName, parameters: null);
   }
 
   //screens
@@ -161,7 +162,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   Future<void> openInfo1Screen(emit, event) async {
     openScreen(
-      screenName: 'info 1',
+      screenName: 'info_1',
       emit: emit,
       state: LoomInfo1State(),
     );
@@ -169,7 +170,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   Future<void> openInfo2Screen(emit, event) async {
     openScreen(
-      screenName: 'info 2',
+      screenName: 'info_2',
       emit: emit,
       state: LoomInfo2State(),
     );
@@ -177,7 +178,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   Future<void> openInfo3Screen(emit, event) async {
     openScreen(
-      screenName: 'info 3',
+      screenName: 'info_3',
       emit: emit,
       state: LoomInfo3State(),
     );
@@ -242,7 +243,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
       if (netList == null) {
         openScreen(
-          screenName: 'Error 105',
+          screenName: 'Error_105',
           emit: emit,
           state: LoomErrorState(error: 105),
         );
@@ -261,7 +262,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     } else {
       logger.w(await info.getWifiName());
       openScreen(
-        screenName: 'Error 102',
+        screenName: 'Error_102',
         emit: emit,
         state: LoomErrorState(error: 102),
       );
@@ -280,7 +281,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   Future<void> openSettingsNetworkScreen(emit, event) async {
     openScreen(
-      screenName: 'Settings network',
+      screenName: 'Settings_network',
       emit: emit,
       state: LoomSettingsNetworkState(
         networkName: networkName,
@@ -300,7 +301,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   Future<void> saveSettings(emit, event) async {
     prefs.setString('loom_name', loomName);
     openScreen(
-      screenName: 'Settings network',
+      screenName: 'Settings_network',
       emit: emit,
       state: LoomSettingsNetworkState(
         networkName: networkName,
@@ -326,7 +327,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     );
     if (formSetRepeater == null) {
       openScreen(
-        screenName: 'Error 103',
+        screenName: 'Error_103',
         emit: emit,
         state: LoomErrorState(error: 103),
       );
@@ -347,7 +348,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     );
     if (_result != "successful" && _result != "already associated.") {
       openScreen(
-        screenName: 'Reset 106',
+        screenName: 'Reset_106',
         emit: emit,
         state: LoomReset106State(),
       );
@@ -361,7 +362,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     );
     if (_result2 != "successful" && _result2 != "already associated.") {
       openScreen(
-        screenName: 'Reset 106',
+        screenName: 'Reset_106',
         emit: emit,
         state: LoomReset106State(),
       );
@@ -376,7 +377,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     String? resp = await httpApiProvider.getGoogle();
     if (resp == null) {
       openScreen(
-        screenName: 'Error 104',
+        screenName: 'Error_104',
         emit: emit,
         state: LoomErrorState(error: 104),
       );
