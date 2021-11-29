@@ -9,6 +9,9 @@ PODS:
   - Firebase/Crashlytics (8.9.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 8.9.0)
+  - Firebase/Messaging (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 8.9.0)
   - firebase_analytics (8.3.4):
     - Firebase/Analytics (= 8.9.0)
     - firebase_core
@@ -18,6 +21,10 @@ PODS:
     - Flutter
   - firebase_crashlytics (2.3.0):
     - Firebase/Crashlytics (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - firebase_messaging (11.1.0):
+    - Firebase/Messaging (= 8.9.0)
     - firebase_core
     - Flutter
   - FirebaseAnalytics (8.9.1):
@@ -67,6 +74,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.6)
     - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseMessaging (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Reachability (~> 7.6)
+    - GoogleUtilities/UserDefaults (~> 7.6)
+    - nanopb (~> 2.30908.0)
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
@@ -132,6 +148,7 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -147,6 +164,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseCrashlytics
     - FirebaseInstallations
+    - FirebaseMessaging
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -161,6 +179,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_crashlytics:
     :path: ".symlinks/plugins/firebase_crashlytics/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 8.9.0
@@ -185,12 +205,14 @@ SPEC CHECKSUMS:
   firebase_analytics: 7a7528bb2abf4ca22cff7a57bbf909dcab73e13d
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
   firebase_crashlytics: ed8c1d66dc407d617cbed798f05a5d9115da7494
+  firebase_messaging: 0c8d1a1732487db7f332fb65232053e93201e2fb
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
   FirebaseCrashlytics: 40efbd81157dae307ec95612fa1328347284d2c2
   FirebaseFirestore: 7c22bff6c0e1f222920cd110e9da13a117b61fea
   FirebaseInstallations: caa7c8e0d3e2345b8829d2fa9ca1b4dfbf2fcc85
+  FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
