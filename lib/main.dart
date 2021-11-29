@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Aj',
+        title: 'Loom',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: L10n.all,
         theme: ThemeData(
