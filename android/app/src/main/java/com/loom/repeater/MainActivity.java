@@ -94,10 +94,6 @@ public class MainActivity extends FlutterActivity {
                 //e.printStackTrace();
             }
         } else {
-            if (!Settings.System.canWrite(getApplicationContext())) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 200);
-            }
             Intent panelIntent = new Intent("android.settings.panel.action.WIFI");
             startActivityForResult(panelIntent, 545);
             //result.success("successful");
