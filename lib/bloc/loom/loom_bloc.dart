@@ -336,8 +336,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     }
     ;
 
-    // ждем 20 сек
-    for (int i = 20; i > 0; i--) {
+    // ждем 30 сек
+    for (int i = 30; i >= 0; i--) {
       emit(LoomWaitState(sec: i, messageId: 3));
       await Future.delayed(const Duration(seconds: 1), () {});
     }
@@ -375,6 +375,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     saveValues();
 
     //проверяем инет на всякий случай
+    /*
     String? resp = await httpApiProvider.getGoogle();
     if (resp == null) {
       openScreen(
@@ -384,6 +385,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       );
       return;
     }
+    */
 
     //все успешно
     openScreen(

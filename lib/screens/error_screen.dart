@@ -42,7 +42,6 @@ class ErrorScreen extends StatelessWidget {
             nofaq: true,
           ),
           SizedBox(height: 20 * devicePixelRatio),
-          const LoomText("error log"),
           LoomText(
             allLogs,
             top: 0,
