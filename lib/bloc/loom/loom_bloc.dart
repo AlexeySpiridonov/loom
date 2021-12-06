@@ -26,6 +26,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   bool isScannings = false;
   int status = 0;
   String logs = "";
+  String email = "";
+
   var logger = Logger(output: LoomConsoleOutput());
   final info = NetworkInfo();
   var fb = FirebaseAnalytics();
@@ -38,6 +40,15 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       switch (event.runtimeType) {
         case LoomOpenFAQEvent: // Открыть скрин с FAQ
           await openFAQScreen(emit, event);
+          break;
+        case LoomOpenStartEvent: //Открыть стартовый скрин
+          await openStartScreen(emit, event);
+          break;
+        case LoomChangeEmailEvent: //Смена email
+          await changeEmail(emit, event);
+          break;
+        case LoomSendEmailEvent: //Смена email
+          await sendEmail(emit, event);
           break;
         case LoomOpenInfo1Event: //Открыть скрин info 1
           await openInfo1Screen(emit, event);
@@ -110,7 +121,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     if (status == 2) {
       add(LoomOpenButtonsEvent());
     } else {
-      add(LoomOpenInfo1Event());
+      add(LoomOpenStartEvent()); //LoomOpenSuccessfulEvent
     }
   }
 
@@ -159,6 +170,23 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       emit: emit,
       state: LoomFAQState(loomEvent: event.loomEvent),
     );
+  }
+
+  Future<void> openStartScreen(emit, event) async {
+    openScreen(
+      screenName: 'start',
+      emit: emit,
+      state: LoomStartState(),
+    );
+  }
+
+  Future<void> changeEmail(emit, event) async {
+    email = event.email;
+  }
+
+  Future<void> sendEmail(emit, event) async {
+    httpApiProvider.sendEmail(email);
+    openInfo1Screen(emit, event);
   }
 
   Future<void> openInfo1Screen(emit, event) async {

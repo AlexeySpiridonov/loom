@@ -10,6 +10,8 @@ class LoomFAQState extends LoomState {
   LoomFAQState({required this.loomEvent});
 }
 
+class LoomStartState extends LoomState {}
+
 class LoomInfo1State extends LoomState {}
 
 class LoomInfo2State extends LoomState {}
