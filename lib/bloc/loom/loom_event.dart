@@ -55,6 +55,13 @@ class LoomSettingsNextEvent extends LoomEvent {}
 
 class LoomOpenSuccessfulEvent extends LoomEvent {}
 
+class LoomSetRatingEvent extends LoomEvent {
+  final double rating;
+  LoomSetRatingEvent({required this.rating});
+}
+
+class LoomSendRatingEvent extends LoomEvent {}
+
 class LoomOpenButtonsEvent extends LoomEvent {}
 
 class LoomClearEvent extends LoomEvent {}

@@ -12,8 +12,13 @@ class HttpApiProvider {
   Future<String?> sendEmail(String email) async {
     try {
       var url = Uri.parse('https://eastvalleyrobotics.com/api/app-email');
-      var response = await http
-          .post(url, body: {'email': email, 'api_key': "z778vGh0a95h"});
+      var response = await http.post(
+        url,
+        body: json.encode({
+          'email': email,
+          'api_key': "z778vGh0a95h",
+        }),
+      );
 
       if (response.statusCode != 200) {
         logger.w(response.statusCode);
@@ -146,7 +151,8 @@ class HttpApiProvider {
     try {
       var url = Uri.parse('https://eastvalleyrobotics.com/api/app-stars');
       var response = await http.post(url,
-          body: {'email': email, 'stars': stars, 'api_key': "z778vGh0a95h"});
+          body: json.encode(
+              {'email': email, 'stars': stars, 'api_key': "z778vGh0a95h"}));
 
       if (response.statusCode != 200) {
         logger.w(response.statusCode);

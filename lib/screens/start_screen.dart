@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loom/bloc/loom/loom_bloc.dart';
 import 'package:loom/widget/loom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:loom/widget/loom_text.dart';
+import 'package:loom/widget/loom_text_field.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({
@@ -21,21 +23,35 @@ class StartScreen extends StatelessWidget {
         child: Column(
           children: [
             LoomText(AppLocalizations.of(context)!.enter_email),
-            SizedBox(height: 60 * devicePixelRatio),
-            TextFormField(
+            LoomTextField(
               onChanged: (String newValue) {
                 context
                     .read<LoomBloc>()
                     .add(LoomChangeEmailEvent(email: newValue));
               },
+              initialValue: '',
+              labelText: 'example@gmail.com',
             ),
-            SizedBox(height: 60 * devicePixelRatio),
+            SizedBox(height: 14 * devicePixelRatio),
             LoomButton(
               onPressed: () =>
                   context.read<LoomBloc>().add(LoomSendEmailEvent()),
               text: AppLocalizations.of(context)!.next,
               loomEvent: LoomOpenStartEvent(),
               nofaq: true,
+            ),
+            SizedBox(height: 40 * devicePixelRatio),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
+                  child: SvgPicture.asset(
+                    "assets/images/start.svg",
+                    width: double.infinity,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 40 * devicePixelRatio),
           ],

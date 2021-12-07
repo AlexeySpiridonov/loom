@@ -177,8 +177,7 @@ class MyApp extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (c, a1, a2) => SuccessfulScreen(
-                    networkName: state.networkName,
-                    loomName: state.loomName,
+                    rate: state.rate,
                   ),
                   transitionsBuilder: animBuilder,
                   transitionDuration: duration,

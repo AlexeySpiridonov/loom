@@ -39,9 +39,8 @@ class LoomWaitState extends LoomState {
 }
 
 class LoomSuccessfulState extends LoomState {
-  final String networkName;
-  final String loomName;
-  LoomSuccessfulState({required this.networkName, required this.loomName});
+  final int rate;
+  LoomSuccessfulState({required this.rate});
 }
 
 class LoomButtonsConnectState extends LoomState {

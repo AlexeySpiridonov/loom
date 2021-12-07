@@ -5,11 +5,13 @@ class LoomText extends StatelessWidget {
     this.text, {
     Key? key,
     this.top,
+    this.bottom,
     this.textSize,
   }) : super(key: key);
 
   final String text;
   final int? top;
+  final int? bottom;
   final int? textSize;
 
   @override
@@ -19,7 +21,9 @@ class LoomText extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         top: top != null ? (top! * devicePixelRatio) : 52.0 * devicePixelRatio,
-        bottom: 37.0 * devicePixelRatio,
+        bottom: bottom != null
+            ? (bottom! * devicePixelRatio)
+            : 37.0 * devicePixelRatio,
       ),
       child: Align(
         alignment: Alignment.topLeft,

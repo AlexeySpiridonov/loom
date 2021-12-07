@@ -31,7 +31,8 @@
   "error105": "List of Wi-Fi networks not received",
   "error106": "The password for the home network does not fit. You need to reset Extender. Hold the Reset button for 10 seconds. Wait until the LED blinks and then becomes steady.",
 
-  "enter_email": "Enter email",
+  "enter_email": "Email name for Loom",
+  "please_rate": "Please rate what the setup process was like",
   "startAnew": "Start over",
   "rescan": "Rescan",
   "next": "Next",
@@ -40,5 +41,5 @@
   "light_on": "The light is ON",
   "no": "No",
   "faq": "FAQ",
-  "perfectly": "Perfectly"
+  "finish": "Finish"
 }
