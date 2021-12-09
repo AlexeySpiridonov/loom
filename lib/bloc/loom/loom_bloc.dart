@@ -9,6 +9,7 @@ import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 part 'loom_event.dart';
 part 'loom_state.dart';
@@ -32,6 +33,8 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   var logger = Logger(output: LoomConsoleOutput());
   final info = NetworkInfo();
   var fb = FirebaseAnalytics();
+
+  RemoteConfig remoteConfig = RemoteConfig.instance;
 
   LoomBloc({
     required this.httpApiProvider,
@@ -124,11 +127,16 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   void loading() async {
     prefs = await SharedPreferences.getInstance();
+    bool updated = await remoteConfig.fetchAndActivate();
     loadValues();
     if (status == 2) {
       add(LoomOpenButtonsEvent());
     } else {
-      add(LoomOpenStartEvent());
+      if (updated && remoteConfig.getBool('enter_email')) {
+        add(LoomOpenStartEvent());
+      } else {
+        add(LoomOpenInfo1Event());
+      }
       // add(LoomOpenSuccessfulEvent());
     }
   }
