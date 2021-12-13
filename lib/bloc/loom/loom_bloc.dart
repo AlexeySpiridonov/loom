@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -137,6 +138,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       } else {
         add(LoomOpenInfo1Event());
       }
+      add(LoomOpenStartEvent());
       // add(LoomOpenSuccessfulEvent());
     }
   }
@@ -204,8 +206,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   }
 
   Future<void> sendEmail(emit, event) async {
-    httpApiProvider.sendEmail(email);
-    openInfo1Screen(emit, event);
+    if (EmailValidator.validate(email)) {
+      httpApiProvider.sendEmail(email);
+      openInfo1Screen(emit, event);
+    }
   }
 
   Future<void> openInfo1Screen(emit, event) async {
