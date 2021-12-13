@@ -158,11 +158,6 @@ class ButtonsConnectScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 56 * devicePixelRatio),
-                    SvgPicture.asset(
-                      "assets/images/loom.svg",
-                      height: 18 * devicePixelRatio,
-                    ),
-                    SizedBox(height: 11 * devicePixelRatio),
                     Text(
                       AppLocalizations.of(context)!.message19,
                       style: TextStyle(
