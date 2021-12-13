@@ -28,7 +28,7 @@ class SuccessfulScreen extends StatelessWidget {
             SizedBox(height: 20 * devicePixelRatio),
             LoomText(
               AppLocalizations.of(context)!.please_rate,
-              top: 0,
+              top: 15,
               bottom: 15,
             ),
             RatingBar.builder(
@@ -48,8 +48,12 @@ class SuccessfulScreen extends StatelessWidget {
                     .add(LoomSetRatingEvent(rating: rating));
               },
             ),
-            SizedBox(height: 60 * devicePixelRatio),
-            LoomText(AppLocalizations.of(context)!.message9_4),
+            SizedBox(height: 15 * devicePixelRatio),
+            LoomText(
+              AppLocalizations.of(context)!.message9_4,
+              top: 0,
+              bottom: 15,
+            ),
             Expanded(
               child: Center(
                 child: Padding(
