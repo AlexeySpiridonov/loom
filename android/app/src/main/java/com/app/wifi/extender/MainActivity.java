@@ -1,4 +1,4 @@
-package com.loom.repeater;
+package com.app.wifi.extender;
 
 import static android.net.wifi.WifiManager.*;
 import static android.provider.Settings.ACTION_WIFI_ADD_NETWORKS;

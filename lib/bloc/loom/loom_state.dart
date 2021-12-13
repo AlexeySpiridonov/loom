@@ -10,6 +10,8 @@ class LoomFAQState extends LoomState {
   LoomFAQState({required this.loomEvent});
 }
 
+class LoomStartState extends LoomState {}
+
 class LoomInfo1State extends LoomState {}
 
 class LoomInfo2State extends LoomState {}
@@ -37,9 +39,8 @@ class LoomWaitState extends LoomState {
 }
 
 class LoomSuccessfulState extends LoomState {
-  final String networkName;
-  final String loomName;
-  LoomSuccessfulState({required this.networkName, required this.loomName});
+  final int rate;
+  LoomSuccessfulState({required this.rate});
 }
 
 class LoomButtonsConnectState extends LoomState {

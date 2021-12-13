@@ -8,6 +8,15 @@ class LoomOpenFAQEvent extends LoomEvent {
   LoomOpenFAQEvent({required this.loomEvent});
 }
 
+class LoomOpenStartEvent extends LoomEvent {}
+
+class LoomChangeEmailEvent extends LoomEvent {
+  final String email;
+  LoomChangeEmailEvent({required this.email});
+}
+
+class LoomSendEmailEvent extends LoomEvent {}
+
 class LoomOpenInfo1Event extends LoomEvent {}
 
 class LoomOpenInfo2Event extends LoomEvent {}
@@ -45,6 +54,13 @@ class LoomSettingsSaveEvent extends LoomEvent {}
 class LoomSettingsNextEvent extends LoomEvent {}
 
 class LoomOpenSuccessfulEvent extends LoomEvent {}
+
+class LoomSetRatingEvent extends LoomEvent {
+  final double rating;
+  LoomSetRatingEvent({required this.rating});
+}
+
+class LoomSendRatingEvent extends LoomEvent {}
 
 class LoomOpenButtonsEvent extends LoomEvent {}
 

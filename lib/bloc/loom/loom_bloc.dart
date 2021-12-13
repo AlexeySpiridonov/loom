@@ -9,6 +9,7 @@ import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 part 'loom_event.dart';
 part 'loom_state.dart';
@@ -26,9 +27,14 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   bool isScannings = false;
   int status = 0;
   String logs = "";
+  String email = "";
+  int rate = 0;
+
   var logger = Logger(output: LoomConsoleOutput());
   final info = NetworkInfo();
   var fb = FirebaseAnalytics();
+
+  RemoteConfig remoteConfig = RemoteConfig.instance;
 
   LoomBloc({
     required this.httpApiProvider,
@@ -38,6 +44,15 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       switch (event.runtimeType) {
         case LoomOpenFAQEvent: // Открыть скрин с FAQ
           await openFAQScreen(emit, event);
+          break;
+        case LoomOpenStartEvent: //Открыть стартовый скрин
+          await openStartScreen(emit, event);
+          break;
+        case LoomChangeEmailEvent: //Смена email
+          await changeEmail(emit, event);
+          break;
+        case LoomSendEmailEvent: //Смена email
+          await sendEmail(emit, event);
           break;
         case LoomOpenInfo1Event: //Открыть скрин info 1
           await openInfo1Screen(emit, event);
@@ -78,6 +93,12 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
         case LoomOpenSuccessfulEvent: //Открыть скрин успеха
           await openSuccessfulScreen(emit, event);
           break;
+        case LoomSetRatingEvent: //Нажатие на звездочки
+          await setRating(emit, event);
+          break;
+        case LoomSendRatingEvent: //Отправка рейтинг
+          await sendRating(emit, event);
+          break;
         case LoomOpenButtonsEvent: //Открыть скрин с кнопками
           await openButtonsScreen(emit, event);
           break;
@@ -106,11 +127,17 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   void loading() async {
     prefs = await SharedPreferences.getInstance();
+    bool updated = await remoteConfig.fetchAndActivate();
     loadValues();
     if (status == 2) {
       add(LoomOpenButtonsEvent());
     } else {
-      add(LoomOpenInfo1Event());
+      if (updated && remoteConfig.getBool('enter_email')) {
+        add(LoomOpenStartEvent());
+      } else {
+        add(LoomOpenInfo1Event());
+      }
+      // add(LoomOpenSuccessfulEvent());
     }
   }
 
@@ -120,6 +147,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     prefs.setString('password', password);
     prefs.setString('ssid', ssid);
     prefs.setInt('status', status);
+    prefs.setString('email', email);
   }
 
   void loadValues() {
@@ -128,6 +156,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     password = prefs.getString('password') ?? password;
     ssid = prefs.getString('ssid') ?? ssid;
     status = prefs.getInt('status') ?? status;
+    email = prefs.getString('email') ?? email;
   }
 
   void initValues() {
@@ -136,6 +165,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     password = "";
     ssid = "";
     channel = "";
+    email = "";
     isScannings = false;
     status = 0;
     saveValues();
@@ -159,6 +189,23 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       emit: emit,
       state: LoomFAQState(loomEvent: event.loomEvent),
     );
+  }
+
+  Future<void> openStartScreen(emit, event) async {
+    openScreen(
+      screenName: 'start',
+      emit: emit,
+      state: LoomStartState(),
+    );
+  }
+
+  Future<void> changeEmail(emit, event) async {
+    email = event.email;
+  }
+
+  Future<void> sendEmail(emit, event) async {
+    httpApiProvider.sendEmail(email);
+    openInfo1Screen(emit, event);
   }
 
   Future<void> openInfo1Screen(emit, event) async {
@@ -392,8 +439,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       screenName: 'Successful',
       emit: emit,
       state: LoomSuccessfulState(
-        networkName: networkName,
-        loomName: loomName,
+        rate: rate,
       ),
     );
   }
@@ -403,10 +449,25 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       screenName: 'Successful',
       emit: emit,
       state: LoomSuccessfulState(
-        networkName: networkName,
-        loomName: loomName,
+        rate: rate,
       ),
     );
+  }
+
+  Future<void> setRating(emit, event) async {
+    rate = event.rating.toInt();
+    openScreen(
+      screenName: 'Successful',
+      emit: emit,
+      state: LoomSuccessfulState(
+        rate: rate,
+      ),
+    );
+  }
+
+  Future<void> sendRating(emit, event) async {
+    httpApiProvider.sendEmailAndStars(email, rate);
+    openButtonsScreen(emit, event);
   }
 
   Future<void> openButtonsScreen(emit, event) async {

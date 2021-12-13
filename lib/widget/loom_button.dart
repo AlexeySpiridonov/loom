@@ -59,7 +59,7 @@ class LoomButton extends StatelessWidget {
           // elevation: MaterialStateProperty.all(3),
           shadowColor: MaterialStateProperty.all(Colors.transparent),
         ),
-        onPressed: onPressed,
+        onPressed: disabled != true ? onPressed : () {},
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 7 * devicePixelRatio,

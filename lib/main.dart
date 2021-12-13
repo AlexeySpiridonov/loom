@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/screens/info2_screen.dart';
+import 'package:loom/screens/start_screen.dart';
 import 'package:loom/screens/wait_screen.dart';
 import 'bloc/loom/loom_bloc.dart';
 import 'l10n/l10n.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Loom',
+        title: 'WiFi Set',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: L10n.all,
         theme: ThemeData(
@@ -75,6 +76,17 @@ class MyApp extends StatelessWidget {
         ],
         home: BlocConsumer<LoomBloc, LoomState>(
           listener: (context, state) {
+            if (state is LoomStartState) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (c, a1, a2) => const StartScreen(),
+                  transitionsBuilder: animBuilder,
+                  transitionDuration: duration,
+                ),
+              );
+            }
+
             if (state is LoomInfo1State) {
               Navigator.push(
                 context,
@@ -85,6 +97,7 @@ class MyApp extends StatelessWidget {
                 ),
               );
             }
+
             if (state is LoomInfo2State) {
               Navigator.push(
                 context,
@@ -164,8 +177,7 @@ class MyApp extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (c, a1, a2) => SuccessfulScreen(
-                    networkName: state.networkName,
-                    loomName: state.loomName,
+                    rate: state.rate,
                   ),
                   transitionsBuilder: animBuilder,
                   transitionDuration: duration,

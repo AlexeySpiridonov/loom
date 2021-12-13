@@ -9,6 +9,30 @@ class HttpApiProvider {
   HttpApiProvider();
   var logger = Logger(output: LoomConsoleOutput());
 
+  Future<String?> sendEmail(String email) async {
+    try {
+      var url = Uri.parse('https://eastvalleyrobotics.com/api/app-email');
+      var response = await http.post(
+        url,
+        body: json.encode({
+          'email': email,
+          'api_key': "z778vGh0a95h",
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
+
+      logger.i(response.body);
+      return response.body;
+    } catch (e) {
+      logger.w(e.toString());
+      return null;
+    }
+  }
+
   Future<String?> formScanningAp() async {
     try {
       var url = Uri.parse('http://192.168.10.1/mobile/form_scanning_ap.htm');
@@ -109,6 +133,26 @@ class HttpApiProvider {
     try {
       var url = Uri.parse('https://www.google.com');
       var response = await http.get(url);
+
+      if (response.statusCode != 200) {
+        logger.w(response.statusCode);
+        return null;
+      }
+
+      logger.i(response.body);
+      return response.body;
+    } catch (e) {
+      logger.w(e.toString());
+      return null;
+    }
+  }
+
+  Future<String?> sendEmailAndStars(String email, int stars) async {
+    try {
+      var url = Uri.parse('https://eastvalleyrobotics.com/api/app-stars');
+      var response = await http.post(url,
+          body: json.encode(
+              {'email': email, 'stars': stars, 'api_key': "z778vGh0a95h"}));
 
       if (response.statusCode != 200) {
         logger.w(response.statusCode);
