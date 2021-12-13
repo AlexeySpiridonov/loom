@@ -41,12 +41,12 @@ class ErrorScreen extends StatelessWidget {
             loomEvent: LoomOpenInfo1Event(),
             nofaq: true,
           ),
-          SizedBox(height: 20 * devicePixelRatio),
-          LoomText(
-            allLogs,
-            top: 0,
-            textSize: 8,
-          ),
+          //SizedBox(height: 20 * devicePixelRatio),
+          //LoomText(
+          //  allLogs,
+          //  top: 0,
+          //  textSize: 8,
+          //),
           SizedBox(height: 40 * devicePixelRatio),
         ],
       ),

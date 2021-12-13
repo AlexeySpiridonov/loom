@@ -25,19 +25,6 @@ class SuccessfulScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
         child: Column(
           children: [
-            LoomText(AppLocalizations.of(context)!.message9_4),
-            Expanded(
-              child: Center(
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
-                  child: SvgPicture.asset(
-                    "assets/images/pic_done.svg",
-                    width: double.infinity,
-                  ),
-                ),
-              ),
-            ),
             SizedBox(height: 20 * devicePixelRatio),
             LoomText(
               AppLocalizations.of(context)!.please_rate,
@@ -60,6 +47,20 @@ class SuccessfulScreen extends StatelessWidget {
                     .read<LoomBloc>()
                     .add(LoomSetRatingEvent(rating: rating));
               },
+            ),
+            SizedBox(height: 60 * devicePixelRatio),
+            LoomText(AppLocalizations.of(context)!.message9_4),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.0 * devicePixelRatio),
+                  child: SvgPicture.asset(
+                    "assets/images/pic_done.svg",
+                    width: double.infinity,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 20 * devicePixelRatio),
             LoomButton(
