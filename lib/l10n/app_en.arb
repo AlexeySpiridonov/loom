@@ -41,5 +41,6 @@
   "light_on": "The light is ON",
   "no": "No",
   "faq": "FAQ",
+  "valid_email": "Please enter a valid email",
   "finish": "Finish"
 }

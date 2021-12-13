@@ -7,12 +7,14 @@ class LoomTextField extends StatelessWidget {
     required this.onChanged,
     required this.labelText,
     this.autofocus,
+    this.validator,
   }) : super(key: key);
 
   final String initialValue;
   final Function(String)? onChanged;
   final String labelText;
   final bool? autofocus;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class LoomTextField extends StatelessWidget {
         fontSize: 18 * devicePixelRatio,
         decoration: TextDecoration.none,
       ),
+      validator: validator,
       decoration: InputDecoration(
         labelText: labelText,
         contentPadding:
