@@ -137,7 +137,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       } else {
         add(LoomOpenInfo1Event());
       }
-      // add(LoomOpenSuccessfulEvent());
+      add(LoomOpenSuccessfulEvent());
     }
   }
 
@@ -501,6 +501,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   }
 
   Future<void> openReset(emit, event) async {
+    logger.e("loading reset screen...");
     openScreen(
       screenName: 'Reset',
       emit: emit,

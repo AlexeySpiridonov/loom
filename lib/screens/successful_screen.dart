@@ -64,8 +64,9 @@ class SuccessfulScreen extends StatelessWidget {
             ),
             SizedBox(height: 20 * devicePixelRatio),
             LoomButton(
-              onPressed: () =>
-                  context.read<LoomBloc>().add(LoomSendRatingEvent()),
+              onPressed: (rate != 0)
+                  ? () => context.read<LoomBloc>().add(LoomSendRatingEvent())
+                  : () {},
               text: AppLocalizations.of(context)!.finish,
               loomEvent: LoomOpenSuccessfulEvent(),
               nofaq: true,
