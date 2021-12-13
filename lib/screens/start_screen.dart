@@ -19,7 +19,7 @@ class StartScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
+        padding: EdgeInsets.symmetric(horizontal: 40.0 * devicePixelRatio),
         child: Column(
           children: [
             LoomText(AppLocalizations.of(context)!.enter_email),
