@@ -128,14 +128,17 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
 
   void loading() async {
     prefs = await SharedPreferences.getInstance();
-    bool updated = await remoteConfig.fetchAndActivate();
+    remoteConfig.setDefaults(<String, dynamic>{'enter_email': false});
+    await remoteConfig.fetch();
     loadValues();
     if (status == 2) {
       add(LoomOpenButtonsEvent());
     } else {
-      if (updated && remoteConfig.getBool('enter_email')) {
+      if (remoteConfig.getBool('enter_email')) {
+        logger.e("1");
         add(LoomOpenStartEvent());
       } else {
+        logger.e("2");
         add(LoomOpenInfo1Event());
       }
       // add(LoomOpenStartEvent());
