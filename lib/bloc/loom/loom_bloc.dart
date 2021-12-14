@@ -138,7 +138,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       } else {
         add(LoomOpenInfo1Event());
       }
-      add(LoomOpenStartEvent());
+      // add(LoomOpenStartEvent());
       // add(LoomOpenSuccessfulEvent());
     }
   }
