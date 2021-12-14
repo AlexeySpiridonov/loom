@@ -11,7 +11,10 @@ import 'package:loom/widget/loom_text_field.dart';
 class StartScreen extends StatelessWidget {
   const StartScreen({
     Key? key,
+    required this.email,
   }) : super(key: key);
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +35,8 @@ class StartScreen extends StatelessWidget {
                       .read<LoomBloc>()
                       .add(LoomChangeEmailEvent(email: newValue));
                 },
-                initialValue: '',
-                labelText: 'example@gmail.com',
+                initialValue: email,
+                labelText: 'E-Mail',
                 validator: (value) => EmailValidator.validate(value ?? "")
                     ? null
                     : AppLocalizations.of(context)!.valid_email,

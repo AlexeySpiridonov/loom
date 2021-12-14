@@ -10,7 +10,10 @@ class LoomFAQState extends LoomState {
   LoomFAQState({required this.loomEvent});
 }
 
-class LoomStartState extends LoomState {}
+class LoomStartState extends LoomState {
+  final String email;
+  LoomStartState({required this.email});
+}
 
 class LoomInfo1State extends LoomState {}
 

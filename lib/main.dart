@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
               Navigator.push(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (c, a1, a2) => const StartScreen(),
+                  pageBuilder: (c, a1, a2) => StartScreen(email: state.email),
                   transitionsBuilder: animBuilder,
                   transitionDuration: duration,
                 ),
