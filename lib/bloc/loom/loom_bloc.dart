@@ -135,13 +135,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       add(LoomOpenButtonsEvent());
     } else {
       if (remoteConfig.getBool('enter_email')) {
-        logger.e("1");
         add(LoomOpenStartEvent());
       } else {
-        logger.e("2");
         add(LoomOpenInfo1Event());
       }
-      // add(LoomOpenStartEvent());
       // add(LoomOpenSuccessfulEvent());
     }
   }
