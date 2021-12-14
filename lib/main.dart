@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/screens/info2_screen.dart';
@@ -28,10 +29,16 @@ import 'services/wifi_api_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  remoteConfig = RemoteConfig.instance;
+  remoteConfig.setDefaults(<String, dynamic>{'enter_email': false});
+  await remoteConfig.fetch();
+
   setUp();
   runApp(const MyApp());
 }
 
+late RemoteConfig remoteConfig;
 late List<String> infoPagesTexts;
 late List<InfoScreenModel> infoScreenModels;
 

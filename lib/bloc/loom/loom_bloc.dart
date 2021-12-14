@@ -3,6 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:loom/main.dart';
 import 'package:loom/models/network_model.dart';
 import 'package:loom/services/http_api_provider.dart';
 import 'package:loom/services/logger.dart';
@@ -34,8 +35,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   var logger = Logger(output: LoomConsoleOutput());
   final info = NetworkInfo();
   var fb = FirebaseAnalytics();
-
-  RemoteConfig remoteConfig = RemoteConfig.instance;
 
   LoomBloc({
     required this.httpApiProvider,
@@ -119,17 +118,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       }
     });
     loading();
-    openScreen(
-      screenName: 'Reset_106',
-      emit: emit,
-      state: LoomReset106State(),
-    );
   }
 
   void loading() async {
     prefs = await SharedPreferences.getInstance();
-    remoteConfig.setDefaults(<String, dynamic>{'enter_email': false});
-    await remoteConfig.fetch();
     loadValues();
     if (status == 2) {
       add(LoomOpenButtonsEvent());
