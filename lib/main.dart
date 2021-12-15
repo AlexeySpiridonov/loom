@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -227,6 +228,8 @@ class MyApp extends StatelessWidget {
                   transitionDuration: duration,
                 ),
               );
+
+              FirebaseCrashlytics.instance.crash();
             }
 
             if (state is LoomErrorState) {
@@ -238,6 +241,7 @@ class MyApp extends StatelessWidget {
                   transitionDuration: duration,
                 ),
               );
+              FirebaseCrashlytics.instance.crash();
             }
 
             if (state is LoomReset106State) {
@@ -249,6 +253,7 @@ class MyApp extends StatelessWidget {
                   transitionDuration: duration,
                 ),
               );
+              FirebaseCrashlytics.instance.crash();
             }
           },
           builder: (context, state) {
