@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:loom/main.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 String allLogs = "";
@@ -17,7 +18,7 @@ class LoomConsoleOutput extends LogOutput {
 class MyPrinter extends LogPrinter {
   @override
   List<String> log(LogEvent event) {
-    Sentry.captureMessage(event.message);
+    if (debug) Sentry.captureMessage(event.message);
     return [event.message];
   }
 }

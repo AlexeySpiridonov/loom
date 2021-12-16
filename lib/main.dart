@@ -28,6 +28,8 @@ import 'services/http_api_provider.dart';
 import 'services/service_locator.dart';
 import 'services/wifi_api_provider.dart';
 
+const bool debug = true;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
