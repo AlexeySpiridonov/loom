@@ -189,7 +189,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
     openScreen(
       screenName: 'start',
       emit: emit,
-      state: LoomStartState(),
+      state: LoomStartState(email: email),
     );
   }
 
@@ -200,6 +200,7 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   Future<void> sendEmail(emit, event) async {
     if (EmailValidator.validate(email)) {
       httpApiProvider.sendEmail(email);
+      saveValues();
       openInfo1Screen(emit, event);
     }
   }
