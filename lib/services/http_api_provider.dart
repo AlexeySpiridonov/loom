@@ -7,7 +7,10 @@ import 'logger.dart';
 
 class HttpApiProvider {
   HttpApiProvider();
-  var logger = Logger(output: LoomConsoleOutput());
+  var logger = Logger(
+    printer: MyPrinter(),
+    output: LoomConsoleOutput(),
+  );
 
   Future<String?> sendEmail(String email) async {
     try {

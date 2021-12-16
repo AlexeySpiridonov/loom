@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loom/screens/info2_screen.dart';
 import 'package:loom/screens/start_screen.dart';
 import 'package:loom/screens/wait_screen.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'bloc/loom/loom_bloc.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,7 +37,17 @@ void main() async {
   await remoteConfig.fetch();
 
   setUp();
-  runApp(const MyApp());
+
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://7ed315a456974a05b63872cd8e3098f8@o1091458.ingest.sentry.io/6108407';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(MyApp()),
+  );
 }
 
 late RemoteConfig remoteConfig;
@@ -228,8 +239,6 @@ class MyApp extends StatelessWidget {
                   transitionDuration: duration,
                 ),
               );
-
-              FirebaseCrashlytics.instance.crash();
             }
 
             if (state is LoomErrorState) {
@@ -241,7 +250,6 @@ class MyApp extends StatelessWidget {
                   transitionDuration: duration,
                 ),
               );
-              FirebaseCrashlytics.instance.crash();
             }
 
             if (state is LoomReset106State) {
@@ -253,7 +261,6 @@ class MyApp extends StatelessWidget {
                   transitionDuration: duration,
                 ),
               );
-              FirebaseCrashlytics.instance.crash();
             }
           },
           builder: (context, state) {
