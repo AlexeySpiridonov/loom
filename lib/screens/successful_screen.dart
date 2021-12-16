@@ -25,7 +25,7 @@ class SuccessfulScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0 * devicePixelRatio),
         child: Column(
           children: [
-            SizedBox(height: 60 * devicePixelRatio),
+            SizedBox(height: 80 * devicePixelRatio),
             LoomText(
               AppLocalizations.of(context)!.please_rate,
               top: 15,
@@ -48,7 +48,8 @@ class SuccessfulScreen extends StatelessWidget {
                     .add(LoomSetRatingEvent(rating: rating));
               },
             ),
-            SizedBox(height: 15 * devicePixelRatio),
+            SizedBox(height: 100 * devicePixelRatio),
+            /*
             Expanded(
               child: Center(
                 child: Padding(
@@ -61,7 +62,9 @@ class SuccessfulScreen extends StatelessWidget {
                 ),
               ),
             ),
+            
             SizedBox(height: 20 * devicePixelRatio),
+            */
             LoomText(
               AppLocalizations.of(context)!.message9_4,
               top: 0,

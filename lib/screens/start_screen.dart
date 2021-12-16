@@ -33,7 +33,7 @@ class StartScreen extends StatelessWidget {
                       .add(LoomChangeEmailEvent(email: newValue));
                 },
                 initialValue: '',
-                labelText: 'example@gmail.com',
+                labelText: 'E-Mail',
                 validator: (value) => EmailValidator.validate(value ?? "")
                     ? null
                     : AppLocalizations.of(context)!.valid_email,
