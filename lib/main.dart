@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +36,7 @@ void main() async {
   remoteConfig = RemoteConfig.instance;
   remoteConfig.setDefaults(<String, dynamic>{
     'enter_email': false,
-    'debug': false,
+    'debug': true,
   });
   await remoteConfig.fetch();
 
@@ -53,7 +52,7 @@ void main() async {
       // We recommend adjusting this value in production.
       options.tracesSampleRate = 1.0;
     },
-    appRunner: () => runApp(MyApp()),
+    appRunner: () => runApp(const MyApp()),
   );
 }
 

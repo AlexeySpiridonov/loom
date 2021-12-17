@@ -7,8 +7,8 @@ String allLogs = "";
 class LoomConsoleOutput extends LogOutput {
   @override
   void output(OutputEvent event) {
-    //Sentry.captureMessage(event.lines.join('\n'));
     for (var line in event.lines) {
+      // ignore: avoid_print
       print(line);
       allLogs += line + "\n";
     }
@@ -18,7 +18,13 @@ class LoomConsoleOutput extends LogOutput {
 class MyPrinter extends LogPrinter {
   @override
   List<String> log(LogEvent event) {
-    if (debug) Sentry.captureMessage(event.message);
+    if (debug) {
+      sendWifiName(event);
+    }
     return [event.message];
+  }
+
+  Future<void> sendWifiName(LogEvent event) async {
+    Sentry.captureMessage(event.message);
   }
 }
