@@ -10,8 +10,8 @@ import 'package:loom/services/logger.dart';
 import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 part 'loom_event.dart';
 part 'loom_state.dart';
@@ -32,7 +32,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
   String email = "";
   int rate = 0;
 
-  var logger = Logger(output: LoomConsoleOutput());
+  var logger = Logger(
+    printer: MyPrinter(),
+    output: LoomConsoleOutput(),
+  );
   final info = NetworkInfo();
   var fb = FirebaseAnalytics();
 
@@ -133,6 +136,10 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       }
       // add(LoomOpenSuccessfulEvent());
     }
+  }
+
+  Future<void> createError() async {
+    throw Exception('FooException');
   }
 
   void saveValues() {
