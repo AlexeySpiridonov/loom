@@ -1,6 +1,5 @@
 import 'package:logger/logger.dart';
 import 'package:loom/main.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 String allLogs = "";
@@ -26,8 +25,6 @@ class MyPrinter extends LogPrinter {
   }
 
   Future<void> sendWifiName(LogEvent event) async {
-    final info = NetworkInfo();
-    String? wifiName = await info.getWifiName();
-    Sentry.captureMessage(event.message, params: [wifiName]);
+    Sentry.captureMessage(event.message);
   }
 }
