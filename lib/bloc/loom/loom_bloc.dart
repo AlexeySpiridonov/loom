@@ -10,7 +10,6 @@ import 'package:loom/services/logger.dart';
 import 'package:loom/services/wifi_api_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'loom_event.dart';
@@ -385,7 +384,6 @@ class LoomBloc extends Bloc<LoomEvent, LoomState> {
       );
       return;
     }
-    ;
 
     // ждем 30 сек
     for (int i = 30; i >= 0; i--) {

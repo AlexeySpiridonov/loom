@@ -5,7 +5,10 @@ import 'logger.dart';
 
 class WifiApiProvider {
   WifiApiProvider();
-  var logger = Logger(output: LoomConsoleOutput());
+  var logger = Logger(
+    printer: MyPrinter(),
+    output: LoomConsoleOutput(),
+  );
 
   static const platform = MethodChannel('loom/wifi');
 
