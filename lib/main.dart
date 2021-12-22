@@ -48,9 +48,9 @@ void main() async {
     (options) {
       options.dsn =
           'https://7ed315a456974a05b63872cd8e3098f8@o1091458.ingest.sentry.io/6108407';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
       options.tracesSampleRate = 1.0;
+      options.release = 'wifi-set@1.0.8+8';
+      options.environment = 'prod';
     },
     appRunner: () => runApp(const MyApp()),
   );
